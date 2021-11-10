@@ -1,0 +1,32 @@
+City: Toulouse
+Made at: 2021-11-06_14-05-00
+Was production enough?: true
+
+{
+Consumers
+{
+House of José
+fridge - Day constant profile with power in W sinusoidal with maximum 45.0, minimum 35.0, and day of maximum 180. Lasts the whole year. Lasts the whole week
+car charger - Constant squared profile with power 40.0W. Lasts for in minutes 360.0 minutes starting at minute of the day 360.0. Not periodic. Lasts the whole year. Lasts the whole week
+water warmer - Constant squared profile with power sinusoidal with maximum 42.0, minimum 38.0, and day of maximum 2W. Lasts for in minutes 20.0 minutes starting at minute of the day 20.0. Not periodic. Lasts the whole year. Comprises only the weekdays
+heating - Constant squared profile with power sinusoidal with maximum 12.0, minimum 8.0, and day of maximum 0W. Lasts for in minutes 720.0 minutes starting at minute of the day 720.0. Not periodic. Starts at 28-09 and lasts for 180 days. Lasts the whole week
+}
+
+{
+Office of José
+Lights - Constant squared profile with power 200.0W. Lasts for in minutes 660.0 minutes starting at minute of the day 660.0. Not periodic. Lasts the whole year. Comprises only the weekdays
+{
+computers
+computers finishing - Linear squared profile with power in W at left 200.0 and power at right 0.1. Lasts for in minutes 60.0 minutes starting at minute of the day 60.0. Not periodic. Lasts the whole year. Comprises only the weekdays
+computers starting - Linear squared profile with power in W at left 0.1 and power at right 200.0. Lasts for in minutes 60.0 minutes starting at minute of the day 60.0. Not periodic. Lasts the whole year. Comprises only the weekdays
+computers normal - Constant squared profile with power 200.0W. Lasts for in minutes 540.0 minutes starting at minute of the day 540.0. Not periodic. Lasts the whole year. Comprises only the weekdays
+}
+
+}
+
+}
+{
+Producers
+coal plant - Day constant profile with power in W 150.0. Lasts the whole year. Lasts the whole week
+solar plant - Quadratic squared profile with power in W at left 0.1, at center sinusoidal with maximum 550.0, minimum 450.0, and day of maximum 180 and at right 0.1. Lasts for in minutes sinusoidal with maximum 840.0, minimum 600.0, and day of maximum 180 minutes starting at minute of the day sinusoidal with maximum 840.0, minimum 600.0, and day of maximum 180. Not periodic. Lasts the whole year. Lasts the whole week
+}
