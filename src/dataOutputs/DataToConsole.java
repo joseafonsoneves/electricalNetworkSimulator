@@ -8,9 +8,9 @@ import results.Results;
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Neves
  */
-public class DataToConsole implements DataOutput {
+public class DataToConsole {
     // it cannot be static because it has to implement the interface
-    public void outputData(String destinationFolder, Results dataset) {
+    public static void outputData(Results dataset) {
         double consumption;
         double production;
         double consumedEnergy;

@@ -1,4 +1,1 @@
-adicionar dia da semana à info e aos results
-
-aprender a salvar plots
-guardar os ultimos results no simulador
+ajouter jour de la semaine dans le fichier d'informations et aux resultats

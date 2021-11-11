@@ -1,7 +1,5 @@
 package executables;
 
-import city.City;
-import dataOutputs.DataToCSV;
 import dataOutputs.dataToPlots.DataToPlots;
 import dataOutputs.dataToPlots.PlotType;
 import profiles.DayConstantProfile;
@@ -14,7 +12,10 @@ import profiles.WeekVariation;
 import profiles.YearVariation;
 import profiles.parameters.YearConstant;
 import profiles.parameters.YearSinusoid;
+import results.Results;
 import results.SimType;
+import simulator.City;
+import simulator.Simulator;
 
 /**
  * Fifth example of simulator. Created to show a more complex scenario
@@ -24,7 +25,7 @@ import results.SimType;
 public class Sim5_ComplexScenario {
         public static void main(String[] args) {
                 // creates the city
-                City city = new City("Toulouse", "outputs");
+                City city = new City("Toulouse");
 
                 // creates a house
                 ProfilesGroup joseHouse = new ProfilesGroup("House of José");
@@ -89,12 +90,16 @@ public class Sim5_ComplexScenario {
                                 new Square(new YearSinusoid(14 * 60, 10 * 60, 180),
                                                 new YearSinusoid(8 * 60, 6 * 60, 365 / 2 - 180))));
 
-                // adds all the data visualization tools to the city
-                city.addDataOutput(new DataToCSV());
-                city.addDataOutput(new DataToPlots(800, 600, PlotType.POWER));
+                // creates a simulator
+                Simulator sim = new Simulator("outputs");
 
+                // uses the simulator and the created city to make a simulation
                 int day = 180;
-                city.daySimulate(day);
                 System.out.println(SimType.getNameOfDayOfTheWeek(SimType.getDayOfTheWeek(day)));
+                Results results = sim.daySimulate(city, day);
+
+                // creates a power plot
+                DataToPlots powerPlot = new DataToPlots(800, 600);
+                powerPlot.outputData(results, PlotType.POWER);
         }
 }

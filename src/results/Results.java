@@ -12,6 +12,8 @@ public class Results {
     private String city;
     /** String containing the date and time of the simulation */
     private String date;
+    /** Relative path to the folder of the simulation */
+    private String folder;
     /** If it was obtained for a day or a year */
     private SimType type;
     /** Boolean value to save if the provided consumption is or is not enough */
@@ -31,16 +33,21 @@ public class Results {
      * Creates a variable that groups all the results that are provided by the
      * simulator and treats them to create new overviews over them
      * 
-     * @param city        name of the city for which the results were obtained
-     * @param type        wether the simulation was obtained for a day of a year
-     * @param production  joint power produced in each time unit by the producers
-     * @param consumption joint power consumed in each time unit by the consumers
+     * @param city          name of the city for which the results were obtained
+     * @param type          wether the simulation was obtained for a day of a year
+     * @param date          String describing the date of the simulation
+     * @param outputsFolder String of the relative path to the folder of outputs
+     * @param production    joint power produced in each time unit by the producers
+     * @param consumption   joint power consumed in each time unit by the consumers
      */
-    public Results(String city, SimType type, double[] production, double[] consumption) {
+    public Results(String city, SimType type, String outputsFolder, double[] production, double[] consumption) {
         this.city = city;
         this.type = type;
         this.production = production;
         this.consumption = consumption;
+
+        this.date = SimType.nowDateTime();
+        this.folder = outputsFolder + "/" + this.getSimName();
 
         this.energyConsumption = getEnergy(consumption, type);
         this.energyProduction = getEnergy(production, type);
@@ -49,8 +56,6 @@ public class Results {
         for (int i = 0; i < powerLoss.length; i++) {
             powerLoss[i] = production[i] - consumption[i];
         }
-
-        this.date = SimType.nowDateTime();
 
         // to make sure the production is enough in a year it would be necessary to
         // check it for every minute of every day. Therefore it is still being
@@ -119,6 +124,16 @@ public class Results {
      */
     public String getSimName() {
         return this.date + "_" + this.city + "_" + this.type.getId();
+    }
+
+    /**
+     * The name of the folder that must be created for the simulation or is already
+     * created
+     * 
+     * @return String describing its relative path
+     */
+    public String getSimFolder() {
+        return this.folder;
     }
 
     /**

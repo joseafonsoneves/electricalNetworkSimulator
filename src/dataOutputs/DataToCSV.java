@@ -13,16 +13,16 @@ import results.Results;
  * @author DE OLIVEIRA MORENO NEVES, José Neves
  * @see https://www.geeksforgeeks.org/writing-a-csv-file-in-java-using-opencsv/
  */
-public class DataToCSV implements DataOutput {
+public class DataToCSV {
     // it cannot be static because it has to implement the interface
-    public void outputData(String destinationFolder, Results dataset) {
+    public static void outputData(Results dataset) {
         double consumption;
         double production;
         double consumedEnergy;
         double producedEnergy;
 
         // creates a file object for the csv file to be created
-        File f1 = new File(destinationFolder + "/data.csv");
+        File f1 = new File(dataset.getSimFolder() + "/data.csv");
 
         try {
             // create FileWriter object with file as parameter. This may throw a

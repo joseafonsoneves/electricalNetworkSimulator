@@ -1,3 +1,5 @@
+Projet pour le cours d'Informatique de l'ISAE-Supaéro qui consiste à la simulation d'une réseau électrique
+
 ## Profiles
 
 Tout d’abord, j’ai choisi de mettre en œuvre les consommateurs et les producteurs comme les mêmes objets car, du moins à ce stade, ils ne sont caractérisés que par leurs profils de puissance quisont équivalents. Ensuite, pour pouvoir regrouper des profils implementés par différentes classes, j’ai créé une interface que j’ai appelé «Profile». Si, à l’avenir, des fonctionnalités sont ajoutées au simulateur qui nécessitent la distinction entre producteurs et consommateurs, il faudra modifier cette construction. Cependant, l’interface que j’ai créée peut être utilisée comme un attribut des nouveaux producteurs ou consommateurs.

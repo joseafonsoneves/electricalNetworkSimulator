@@ -1,6 +1,5 @@
 package executables;
 
-import city.City;
 import dataOutputs.DataToCSV;
 import dataOutputs.dataToPlots.DataToPlots;
 import dataOutputs.dataToPlots.PlotType;
@@ -11,6 +10,9 @@ import profiles.Square;
 import profiles.WeekVariation;
 import profiles.YearVariation;
 import profiles.parameters.YearConstant;
+import results.Results;
+import simulator.City;
+import simulator.Simulator;
 
 /**
  * Second example of simulator. Created to show week and year variations
@@ -20,7 +22,7 @@ import profiles.parameters.YearConstant;
 public class Sim2_WeekYearGroup {
         public static void main(String[] args) {
                 // creates the city
-                City city = new City("Toulouse", "outputs");
+                City city = new City("Toulouse");
 
                 // creates a house
                 ProfilesGroup joseHouse = new ProfilesGroup("House of José");
@@ -52,10 +54,15 @@ public class Sim2_WeekYearGroup {
                 // creates and adds all the created producers to the city
                 city.addProducer(new DayConstantProfile("coal plant", new YearConstant(150)));
 
-                // adds all the data visualization tools to the city
-                city.addDataOutput(new DataToCSV());
-                city.addDataOutput(new DataToPlots(800, 600, PlotType.POWER));
+                // creates a simulator
+                Simulator sim = new Simulator("outputs");
 
-                city.daySimulate(0);
+                // uses the simulator and the created city to make a simulation
+                Results results = sim.daySimulate(city, 0);
+
+                // creates some outputs
+                DataToCSV.outputData(results);
+                DataToPlots powerPlot = new DataToPlots(800, 600);
+                powerPlot.outputData(results, PlotType.POWER);
         }
 }

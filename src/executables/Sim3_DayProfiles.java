@@ -1,13 +1,14 @@
 package executables;
 
-import city.City;
-import dataOutputs.DataToCSV;
 import dataOutputs.dataToPlots.DataToPlots;
 import dataOutputs.dataToPlots.PlotType;
 import profiles.DayLinearSquaredProfile;
 import profiles.DayQuadraticSquaredProfile;
 import profiles.Square;
 import profiles.parameters.YearConstant;
+import results.Results;
+import simulator.City;
+import simulator.Simulator;
 
 /**
  * Third example of simulator. Created to show the more complex profiles created
@@ -17,7 +18,7 @@ import profiles.parameters.YearConstant;
 public class Sim3_DayProfiles {
         public static void main(String[] args) {
                 // creates the city
-                City city = new City("Toulouse", "outputs");
+                City city = new City("Toulouse");
 
                 // adds consumers to the city
                 city.addConsumer(new DayLinearSquaredProfile("linear1", new YearConstant(40), new YearConstant(50),
@@ -33,10 +34,14 @@ public class Sim3_DayProfiles {
                                 new YearConstant(50), new YearConstant(60),
                                 new Square(new YearConstant(60 * 2), new YearConstant(3 * 60), 4, 5 * 60)));
 
-                // adds all the data visualization tools to the city
-                city.addDataOutput(new DataToCSV());
-                city.addDataOutput(new DataToPlots(800, 600, PlotType.POWER));
+                // creates a simulator
+                Simulator sim = new Simulator("outputs");
 
-                city.daySimulate(0);
+                // uses the simulator and the created city to make a simulation
+                Results results = sim.daySimulate(city, 0);
+
+                // creates a power plot
+                DataToPlots powerPlot = new DataToPlots(800, 600);
+                powerPlot.outputData(results, PlotType.POWER);
         }
 }

@@ -3,8 +3,6 @@ package dataOutputs.dataToPlots;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import ptolemy.plot.Plot;
-
-import dataOutputs.DataOutput;
 import results.Results;
 
 /**
@@ -13,13 +11,11 @@ import results.Results;
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Neves
  */
-public class DataToPlots implements DataOutput {
+public class DataToPlots {
     /** Plot object */
     private Plot plot;
     /** Frame object */
     private JFrame frame;
-    /** Type of plot to make from the results object received */
-    private PlotType plotType;
 
     /**
      * Create an empty plotting window of size width x height, e.g. 800x600 (4/3) or
@@ -28,10 +24,8 @@ public class DataToPlots implements DataOutput {
      * @param width  Width in pixels
      * @param height Height in pixels
      */
-    public DataToPlots(int width, int height, PlotType plotType) {
+    public DataToPlots(int width, int height) {
         if (width > 0 && height > 0) {
-            this.plotType = plotType;
-
             // initialize PtPlot's plotter widget with the specified size
             plot = new Plot();
             plot.setMarksStyle("points");
@@ -49,7 +43,7 @@ public class DataToPlots implements DataOutput {
         }
     }
 
-    public void outputData(String destinationFolder, Results dataset) {
+    public void outputData(Results dataset, PlotType plotType) {
         // auxiliary variable to save the points to add to the plots
         double[] series;
 
