@@ -8,10 +8,9 @@ import results.Results;
 import results.SimType;
 
 /**
- * and allows to compute joint productions, consumptions, and energies.
- * Moreover, it contains a set of data visualization tools that can be applied
- * to the results. Therefore, this class acts not only as a way of storing the
- * lists of consumers and a list of producers but as well as a simulator
+ * This class receives the reference of a city and allows to compute joint
+ * productions and consumptions under the format of a Results object which on
+ * his own will also conduct further analysis on the results
  */
 
 public class Simulator {
