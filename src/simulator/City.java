@@ -20,8 +20,7 @@ public class City {
      * Creates city with only the identifier of the city and initializes the lists
      * of producers and consumers
      * 
-     * @param id            the identifier of the city
-     * @param outputsFolder the name of the folder of the outputs
+     * @param id the identifier of the city
      */
     public City(String id) {
         this.id = id;
