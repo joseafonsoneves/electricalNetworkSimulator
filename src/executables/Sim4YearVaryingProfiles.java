@@ -14,7 +14,7 @@ import simulator.Simulator;
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class Sim4_YearVaryingProfiles {
+public class Sim4YearVaryingProfiles {
     public static void main(String[] args) {
         // creates the city
         City city = new City("City1");
