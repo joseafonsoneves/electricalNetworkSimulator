@@ -15,6 +15,7 @@ public class City {
     private ProfilesGroup producers;
     /** list of consumers in the city */
     private ProfilesGroup consumers;
+    private Position pos = new Position();
 
     /**
      * Creates city with only the identifier of the city and initializes the lists
@@ -22,10 +23,11 @@ public class City {
      * 
      * @param id the identifier of the city
      */
-    public City(String id) {
+    public City(String id, Position pos) {
         this.id = id;
         this.producers = new ProfilesGroup("Producers");
         this.consumers = new ProfilesGroup("Consumers");
+        this.pos = pos;
     }
 
     /**
@@ -71,6 +73,9 @@ public class City {
      */
     public String getId() {
         return this.id;
+    }
+    public Position getPos() {
+        return this.pos;
     }
 
     /**
