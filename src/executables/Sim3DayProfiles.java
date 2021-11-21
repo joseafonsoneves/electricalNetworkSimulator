@@ -15,7 +15,7 @@ import simulator.Simulator;
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class Sim3_DayProfiles {
+public class Sim3DayProfiles {
         public static void main(String[] args) {
                 // creates the city
                 City city = new City("Toulouse");
