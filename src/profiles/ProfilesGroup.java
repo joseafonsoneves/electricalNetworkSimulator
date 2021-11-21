@@ -1,5 +1,6 @@
 package profiles;
 
+import java.util.Collection;
 import java.util.HashMap;
 
 import results.SimType;
@@ -54,6 +55,15 @@ public class ProfilesGroup implements Profile {
      */
     public void remove(String id) {
         this.map.remove(id);
+    }
+
+    /**
+     * Gets a collection of the profiles in the group
+     * 
+     * @return collection of profiles in the group
+     */
+    public Collection<Profile> getProfiles() {
+        return this.map.values();
     }
 
     /**

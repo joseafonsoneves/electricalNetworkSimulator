@@ -19,7 +19,7 @@ import simulator.Simulator;
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class Sim2_WeekYearGroup {
+public class Sim2WeekYearGroup {
         public static void main(String[] args) {
                 // creates the city
                 City city = new City("Toulouse");

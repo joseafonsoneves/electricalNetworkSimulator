@@ -22,7 +22,7 @@ import simulator.Simulator;
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class Sim5_ComplexScenario {
+public class Sim5ComplexScenario {
         public static void main(String[] args) {
                 // creates the city
                 City city = new City("Toulouse");

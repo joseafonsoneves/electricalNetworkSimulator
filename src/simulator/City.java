@@ -47,6 +47,15 @@ public class City {
     }
 
     /**
+     * Gets the group of producers
+     * 
+     * @return profiles group of producers
+     */
+    public ProfilesGroup getProducers() {
+        return this.producers;
+    }
+
+    /**
      * Removes consumer from the list of consumers
      * 
      * @param consumer consumer to
@@ -62,6 +71,15 @@ public class City {
      */
     public void removeConsumer(String consumerId) {
         this.consumers.remove(consumerId);
+    }
+
+    /**
+     * Gets the group of consumers
+     * 
+     * @return profiles group of consumers
+     */
+    public ProfilesGroup getConsumers() {
+        return this.consumers;
     }
 
     /**
