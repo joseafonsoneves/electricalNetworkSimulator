@@ -58,12 +58,12 @@ public class ProfilesGroup implements Profile {
     }
 
     /**
-     * Gets the profiles in this group of profiles as a collection
+     * Gets a collection of the profiles in the group
      * 
-     * @return a collection of the profiles in the group
+     * @return collection of profiles in the group
      */
     public Collection<Profile> getProfiles() {
-        return map.values();
+        return this.map.values();
     }
 
     /**
