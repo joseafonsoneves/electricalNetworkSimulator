@@ -47,7 +47,7 @@ public class City {
     }
 
     /**
-     * Gets the group of producers of the city
+     * Gets the group of producers
      * 
      * @return profiles group of producers
      */
@@ -74,7 +74,7 @@ public class City {
     }
 
     /**
-     * Gets the group of consumers of the city
+     * Gets the group of consumers
      * 
      * @return profiles group of consumers
      */
