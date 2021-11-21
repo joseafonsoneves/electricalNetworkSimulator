@@ -37,7 +37,7 @@ public class UserInterface {
 	 * Creates all the objects present in the interface so that one can afterwards
 	 * give them functions and display them
 	 */
-	public UserInterface(City city) {
+	public UserInterface() {
 		// Creates the panel in a GridBagLayout form
 		this.panel = new JPanel();
 		this.panel.setLayout(new GridBagLayout());
@@ -46,7 +46,7 @@ public class UserInterface {
 
 		// Creates the controller for the main window. It will be able to use the plot
 		// of the main window so it is created after it
-		this.controller = new Controller(city);
+		this.controller = new Controller();
 
 		// Creates a small vertical toolbar compared to the plot and places at the right
 		// of the plot
@@ -61,6 +61,19 @@ public class UserInterface {
 		this.frame = new JFrame("Electrical Simulator Interface");
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.frame.setContentPane(this.panel);
+	}
+
+	/**
+	 * Sets the city to use at the actions performed by the buttons. The interface
+	 * designed is ready to work in two configurations: with the setting of a city
+	 * exteriorly to it or with the setting of the city using it. In the case of
+	 * exterior setting this is the method that passes the city to the controller
+	 * where the reference to it will be stored
+	 * 
+	 * @param city city to choose
+	 */
+	public void setCity(City city) {
+		controller.setCity(city);
 	}
 
 	/** Creates the plot at the left side of the window */
