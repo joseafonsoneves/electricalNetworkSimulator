@@ -2,6 +2,7 @@ package userInterface;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import simulator.City;
 
@@ -12,17 +13,18 @@ import simulator.City;
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
 public class Controller implements ActionListener {
-    /** Reference to the city to which apply the actions of the controller */
+    /** Reference to the city to which to apply the actions of the controller */
     City city;
 
-    DataTree tree;
+    public Controller() {
+    }
 
     /**
-     * Creates a controller that uses the data from the given city
+     * Sets the city to use in the toolbar
      * 
-     * @param city city whose data one will use to plot
+     * @param city city to use
      */
-    public Controller(City city) {
+    public void setCity(City city) {
         this.city = city;
     }
 
@@ -33,13 +35,14 @@ public class Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
         case "New":
-            System.out.println("New");
+            File fc = ConfigChooser.getFile();
+            this.city = readCSVMask.fromFileToCity(fc);
             break;
         case "Losses":
             System.out.println("Losses");
             break;
         case "Selection":
-            tree = new DataTree(city);
+            DataTree tree = new DataTree(city);
             tree.show();
             break;
         case "Clear":

@@ -87,7 +87,8 @@ public class SimInterface1DataTree {
                                                 new YearSinusoid(8 * 60, 6 * 60, 365 / 2 - 180))));
 
                 // ------- After creating the city, creates the data tree -------
-                UserInterface ui = new UserInterface(city);
+                UserInterface ui = new UserInterface();
                 ui.show();
+                ui.setCity(city);
         }
 }

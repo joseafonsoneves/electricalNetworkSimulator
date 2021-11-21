@@ -3,8 +3,10 @@ package userInterface;
 import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import profiles.Profile;
@@ -29,20 +31,27 @@ public class DataTree {
      * @param city city whose profiles one wants to present
      */
     public DataTree(City city) {
-        DefaultMutableTreeNode root = getCityNodes(city);
-
-        // create the tree by passing in the root node
-        tree = new JTree(root);
-        // hides the root node
-        tree.setRootVisible(false);
-        // expands all the tree so that the user hasn't got to
-        this.expandAllNodes();
-
         // Creates and sets up the window adding it the panel
         this.frame = new JFrame("Data to Show");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        // makes the tree scrollable
-        this.frame.add(new JScrollPane(tree));
+
+        // if the city was not yet added
+        if (city == null) {
+            JLabel warning = new JLabel("Warning: No city yet added", SwingConstants.CENTER);
+            this.frame.add(warning);
+        } else {
+            DefaultMutableTreeNode root = getCityNodes(city);
+
+            // create the tree by passing in the root node
+            tree = new JTree(root);
+            // hides the root node
+            tree.setRootVisible(false);
+            // expands all the tree so that the user hasn't got to
+            this.expandAllNodes();
+
+            // makes the tree scrollable
+            this.frame.add(new JScrollPane(tree));
+        }
     }
 
     /**
