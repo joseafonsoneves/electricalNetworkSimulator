@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import simulator.City;
+import userInterface.dataChooser.DataChooser;
 
 /**
  * Allows the functioning of the buttons. It was widely inspired by the class
@@ -31,18 +32,24 @@ public class Controller implements ActionListener {
     /**
      * Called when the activation action is launched on the view
      */
-    @Override
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
         case "New":
+            // gets the file
             File fc = ConfigChooser.getFile();
-            this.city = readCSVMask.fromFileToCity(fc);
+            // if it is not null
+            if (fc != null) {
+                // presents its name
+                System.out.println(fc.getName());
+                // reads the file and creates a city from it
+                this.city = readCSVMask.fromFileToCity(fc);
+            }
             break;
         case "Losses":
             System.out.println("Losses");
             break;
         case "Selection":
-            DataTree tree = new DataTree(city);
+            DataChooser tree = new DataChooser(city);
             tree.show();
             break;
         case "Clear":

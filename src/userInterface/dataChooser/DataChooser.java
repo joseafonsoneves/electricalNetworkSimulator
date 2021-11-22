@@ -1,27 +1,30 @@
-package userInterface;
+package userInterface.dataChooser;
 
 import java.awt.Dimension;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.GridLayout;
 
 import profiles.Profile;
 import profiles.ProfilesGroup;
 import simulator.City;
+import userInterface.dataChooser.checkBoxTree.CheckBoxTree;
 
-public class DataTree {
+public class DataChooser {
     /**
      * Proportion between the dimensions of the screen and the initial dimensions of
      * the frame
      */
-    private static final double screenToFrame = 3;
+    private static final double screenToFrame = 2;
 
     /** Object of a tree */
-    private JTree tree;
+    private CheckBoxTree tree;
     /** Object of a window */
     private JFrame frame;
 
@@ -30,7 +33,7 @@ public class DataTree {
      * 
      * @param city city whose profiles one wants to present
      */
-    public DataTree(City city) {
+    public DataChooser(City city) {
         // Creates and sets up the window adding it the panel
         this.frame = new JFrame("Data to Show");
         this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -40,17 +43,27 @@ public class DataTree {
             JLabel warning = new JLabel("Warning: No city yet added", SwingConstants.CENTER);
             this.frame.add(warning);
         } else {
-            DefaultMutableTreeNode root = getCityNodes(city);
-
             // create the tree by passing in the root node
-            tree = new JTree(root);
+            tree = new CheckBoxTree(addCityNodes(city));
             // hides the root node
             tree.setRootVisible(false);
             // expands all the tree so that the user hasn't got to
             this.expandAllNodes();
 
-            // makes the tree scrollable
-            this.frame.add(new JScrollPane(tree));
+            // creates a panel for the frame
+            JPanel panel = new JPanel();
+            // divides it in a grid layout
+            panel.setLayout(new GridLayout(1, 2));
+            // to which adds the tree in a scrollable pane at the left
+            panel.add(new JScrollPane(tree));
+            // and then a button to validate the selection at the right
+            JButton button = new JButton("Validate");
+            button.setActionCommand("Validate");
+            button.addActionListener(new ButtonController(tree, frame));
+            panel.add(button);
+
+            // then adds the panel to the frame
+            this.frame.add(panel);
         }
     }
 
@@ -95,7 +108,7 @@ public class DataTree {
      * @param city city whose producers and consumers one wants to present
      * @return root node of the created tree
      */
-    private DefaultMutableTreeNode getCityNodes(City city) {
+    private DefaultMutableTreeNode addCityNodes(City city) {
         // create the root node
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
 
@@ -106,8 +119,8 @@ public class DataTree {
         root.add(consumersNode);
 
         // creates the nodes of the producers and consumers of a city
-        getChildNodes(producersNode, city.getProducers());
-        getChildNodes(consumersNode, city.getConsumers());
+        addChildNodes(producersNode, city.getProducers());
+        addChildNodes(consumersNode, city.getConsumers());
 
         return root;
     }
@@ -118,7 +131,7 @@ public class DataTree {
      * @param parentNode    node of the initial profile
      * @param parentProfile initial profile
      */
-    private void getChildNodes(DefaultMutableTreeNode parentNode, Profile parentProfile) {
+    private void addChildNodes(DefaultMutableTreeNode parentNode, Profile parentProfile) {
         DefaultMutableTreeNode auxNode;
 
         // if the parent profile is a group of profiles
@@ -129,7 +142,7 @@ public class DataTree {
                 auxNode = new DefaultMutableTreeNode(profile.getId());
                 parentNode.add(auxNode);
                 // and recursively sees if the child has children to add
-                getChildNodes(auxNode, profile);
+                addChildNodes(auxNode, profile);
             }
         }
     }

@@ -20,10 +20,10 @@ public class ConfigChooser {
         // Creates a file chooser
         JFileChooser fc = new JFileChooser("configFiles");
         // adds a filter for .csv files
-        fc.addChoosableFileFilter(new FileNameExtensionFilter("*.csv", "csv"));
+        fc.setFileFilter(new FileNameExtensionFilter("CSV files", "csv"));
 
         // Creates and sets up the window
-        JFrame frame = new JFrame("Data to Show");
+        JFrame frame = new JFrame("");
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
         // Validates the value returned by the file chooser
