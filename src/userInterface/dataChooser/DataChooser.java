@@ -3,12 +3,15 @@ package userInterface.dataChooser;
 import java.awt.Dimension;
 
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
+
 import java.awt.GridLayout;
 
 import profiles.Profile;
@@ -16,32 +19,32 @@ import profiles.ProfilesGroup;
 import simulator.City;
 import userInterface.dataChooser.checkBoxTree.CheckBoxTree;
 
-public class DataChooser {
+public class DataChooser extends JDialog {
     /**
      * Proportion between the dimensions of the screen and the initial dimensions of
      * the frame
      */
     private static final double screenToFrame = 2;
 
-    /** Object of a tree */
+    /** Object of a check box tree */
     private CheckBoxTree tree;
-    /** Object of a window */
-    private JFrame frame;
+    /** Checked paths */
+    private TreePath[] checkedPaths;
 
     /**
      * Creates a data tree out of the profiles present in a city
      * 
      * @param city city whose profiles one wants to present
      */
-    public DataChooser(City city) {
-        // Creates and sets up the window adding it the panel
-        this.frame = new JFrame("Data to Show");
-        this.frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    public DataChooser(JFrame owner, City city) {
+        // Creates and sets up the dialog
+        super(owner, "Select the profiles to present", true);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         // if the city was not yet added
         if (city == null) {
             JLabel warning = new JLabel("Warning: No city yet added", SwingConstants.CENTER);
-            this.frame.add(warning);
+            this.add(warning);
         } else {
             // create the tree by passing in the root node
             tree = new CheckBoxTree(addCityNodes(city));
@@ -59,30 +62,34 @@ public class DataChooser {
             // and then a button to validate the selection at the right
             JButton button = new JButton("Validate");
             button.setActionCommand("Validate");
-            button.addActionListener(new ButtonController(tree, frame));
+            button.addActionListener(new ButtonController(tree, this));
             panel.add(button);
 
             // then adds the panel to the frame
-            this.frame.add(panel);
+            this.add(panel);
         }
     }
 
     /**
-     * Shows the window of selection of data to be plotted
+     * Displays the window of selection of data to be plotted
      */
-    public void show() {
+    public TreePath[] getProfiles() {
         // gets the dimensions of the screen
-        Dimension dim = frame.getToolkit().getScreenSize();
+        Dimension dim = this.getToolkit().getScreenSize();
         // the initial dimensions of the window must be proportional to the dimensions
         // of the screen
         int frameWidth = (int) Math.round(dim.width / screenToFrame);
         int frameHeight = (int) Math.round(dim.height / screenToFrame);
 
         // defines the initial dimensions of the frame
-        frame.setSize(frameWidth, frameHeight);
+        this.setSize(frameWidth, frameHeight);
         // defines it initial location to be in the center of the window
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+        this.setLocationRelativeTo(null);
+        this.setVisible(true);
+
+        // waits here for the dialog to be closed so that it can return the checked
+        // paths
+        return this.checkedPaths;
     }
 
     /**
@@ -145,5 +152,9 @@ public class DataChooser {
                 addChildNodes(auxNode, profile);
             }
         }
+    }
+
+    public void setCheckedPaths(TreePath[] checkedPaths) {
+        this.checkedPaths = checkedPaths;
     }
 }

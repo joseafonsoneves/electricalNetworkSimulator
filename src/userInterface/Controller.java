@@ -4,6 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.JFrame;
+import javax.swing.tree.TreePath;
+
 import simulator.City;
 import userInterface.dataChooser.DataChooser;
 
@@ -16,8 +19,11 @@ import userInterface.dataChooser.DataChooser;
 public class Controller implements ActionListener {
     /** Reference to the city to which to apply the actions of the controller */
     City city;
+    /** Frame to which the controller is applied */
+    JFrame frame;
 
-    public Controller() {
+    public Controller(JFrame frame) {
+        this.frame = frame;
     }
 
     /**
@@ -49,8 +55,11 @@ public class Controller implements ActionListener {
             System.out.println("Losses");
             break;
         case "Selection":
-            DataChooser tree = new DataChooser(city);
-            tree.show();
+            DataChooser chooser = new DataChooser(frame, city);
+            TreePath[] profilesPaths = chooser.getProfiles();
+            for (TreePath profilePath : profilesPaths) {
+                System.out.println(profilePath);
+            }
             break;
         case "Clear":
             System.out.println("Clear");

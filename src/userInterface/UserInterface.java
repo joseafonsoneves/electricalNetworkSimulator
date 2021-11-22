@@ -46,7 +46,7 @@ public class UserInterface {
 
 		// Creates the controller for the main window. It will be able to use the plot
 		// of the main window so it is created after it
-		this.controller = new Controller();
+		this.controller = new Controller(this.frame);
 
 		// Creates a small vertical toolbar compared to the plot and places at the right
 		// of the plot

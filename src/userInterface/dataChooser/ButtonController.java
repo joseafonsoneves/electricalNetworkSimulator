@@ -2,7 +2,6 @@ package userInterface.dataChooser;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JFrame;
 
 import userInterface.dataChooser.checkBoxTree.CheckBoxTree;
 
@@ -18,16 +17,16 @@ public class ButtonController implements ActionListener {
      * Reference to the frame of the button so that it can close it upon selection
      * of the profiles
      */
-    private JFrame frame;
+    private DataChooser dialog;
 
     /**
      * Saves the reference to the tree so that it can be used upon click
      * 
      * @param tree reference to the tree to use
      */
-    public ButtonController(CheckBoxTree tree, JFrame frame) {
+    public ButtonController(CheckBoxTree tree, DataChooser frame) {
         this.tree = tree;
-        this.frame = frame;
+        this.dialog = frame;
     }
 
     /**
@@ -40,11 +39,12 @@ public class ButtonController implements ActionListener {
         switch (e.getActionCommand()) {
         // when the Validate button is clicked
         case "Validate":
-            System.out.println(this.tree.getCheckedPathsString());
+            // passes to the dialog the checked paths in the tree
+            dialog.setCheckedPaths(this.tree.getCheckedPaths());
             // hides the data chooser frame
-            frame.setVisible(false);
+            dialog.setVisible(false);
             // and then kills it
-            frame.dispose();
+            dialog.dispose();
             break;
         }
     }
