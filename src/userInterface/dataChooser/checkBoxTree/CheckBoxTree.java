@@ -107,17 +107,4 @@ public class CheckBoxTree extends JTree {
     public TreePath[] getCheckedPaths() {
         return checkedPaths.toArray(new TreePath[checkedPaths.size()]);
     }
-
-    public String getCheckedPathsString() {
-        String res = "";
-
-        for (TreePath tp : this.getCheckedPaths()) {
-            for (Object pathPart : tp.getPath()) {
-                res = res + pathPart + ",";
-            }
-            res = res + "\n";
-        }
-
-        return res;
-    }
 }

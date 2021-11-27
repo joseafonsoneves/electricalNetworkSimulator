@@ -60,7 +60,7 @@ public class VerticalToolbar {
      * 
      * @param panel JPanel to which to add the toolbar
      */
-    public void createToolbar(JPanel panel, Controller controller) {
+    public void addToPanel(JPanel panel, Controller controller) {
         // Selects the characteristics of the buttons on the toolbar
         GridBagConstraints c = new GridBagConstraints();
         // Buttons shall fill the window in both directions

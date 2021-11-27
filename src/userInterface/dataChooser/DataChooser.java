@@ -28,8 +28,6 @@ public class DataChooser extends JDialog {
 
     /** Object of a check box tree */
     private CheckBoxTree tree;
-    /** Checked paths */
-    private TreePath[] checkedPaths;
 
     /**
      * Creates a data tree out of the profiles present in a city
@@ -62,7 +60,7 @@ public class DataChooser extends JDialog {
             // and then a button to validate the selection at the right
             JButton button = new JButton("Validate & Leave");
             button.setActionCommand("Validate & Leave");
-            button.addActionListener(new ButtonController(tree, this));
+            button.addActionListener(new ButtonController(this));
             panel.add(button);
 
             // then adds the panel to the frame
@@ -73,7 +71,7 @@ public class DataChooser extends JDialog {
     /**
      * Displays the window of selection of data to be plotted
      */
-    public TreePath[] getProfiles() {
+    public TreePath[] getSelection() {
         // gets the dimensions of the screen
         Dimension dim = this.getToolkit().getScreenSize();
         // the initial dimensions of the window must be proportional to the dimensions
@@ -89,7 +87,7 @@ public class DataChooser extends JDialog {
 
         // waits here for the dialog to be closed so that it can return the checked
         // paths
-        return this.checkedPaths;
+        return this.tree.getCheckedPaths();
     }
 
     /**
@@ -152,9 +150,5 @@ public class DataChooser extends JDialog {
                 addChildNodes(auxNode, profile);
             }
         }
-    }
-
-    public void setCheckedPaths(TreePath[] checkedPaths) {
-        this.checkedPaths = checkedPaths;
     }
 }

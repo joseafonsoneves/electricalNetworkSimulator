@@ -70,7 +70,7 @@ public class Controller implements ActionListener {
                 // creates the dialog to choose the profiles to use
                 DataChooser chooser = new DataChooser(frame, city);
                 // gets the paths of the profiles to use
-                TreePath[] profilePaths = chooser.getProfiles();
+                TreePath[] profilePaths = chooser.getSelection();
                 // gets the data of the desired profiles into the plot
                 this.plotProfiles(profilePaths);
                 break;
@@ -123,7 +123,7 @@ public class Controller implements ActionListener {
             }
 
             // gets the series of powers of the profile in the given day
-            series = profile.getDayPower(0);
+            series = profile.getDayPower(180);
             // adds the legend as the id of the profile
             plot.addLegend(i, profile.getId());
             // adds each point of the series to the plot

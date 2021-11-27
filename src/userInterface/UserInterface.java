@@ -24,12 +24,6 @@ public class UserInterface {
 
 	/** Frame object of the interface */
 	private JFrame frame;
-	/** Panel object of the main window */
-	private JPanel panel;
-	/** Plot object to be used inside the interface */
-	private Plot plot;
-	/** Vertical toolbar to contain the buttons needed in the interface */
-	private VerticalToolbar toolbar;
 	/** Controller to the buttons implemented in the interface */
 	private Controller controller;
 
@@ -43,25 +37,40 @@ public class UserInterface {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Creates the panel in a GridBagLayout form
-		this.panel = new JPanel();
-		this.panel.setLayout(new GridBagLayout());
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridBagLayout());
 
-		createPlot();
+		// Creates the plot
+		Plot plot = new Plot();
+		plot.setMarksStyle("points");
+		plot.setTitle("Selected Data");
+		plot.setYLabel("Power in W");
+		GridBagConstraints c = new GridBagConstraints();
+		// Placed in the origin of the window
+		c.gridx = 0;
+		c.gridy = 0;
+		// Allows it to resize itself in both directions
+		c.fill = GridBagConstraints.BOTH;
+		// Gives it more size than the toolbar in the x direction
+		c.weightx = 0.99;
+		// Occupies the vertical direction till the end of it
+		c.gridheight = GridBagConstraints.REMAINDER;
+		panel.add(plot, c);
 
 		// Creates the controller for the main window. It will be able to use the plot
 		// of the main window so it is created after it
-		this.controller = new Controller(this.frame, this.plot);
+		this.controller = new Controller(this.frame, plot);
 
 		// Creates a small vertical toolbar compared to the plot and places at the right
 		// of the plot
-		toolbar = new VerticalToolbar(0.05, 1);
+		VerticalToolbar toolbar = new VerticalToolbar(0.05, 1);
 		toolbar.addButton("New", "Uses a new configuration file");
 		toolbar.addButton("Losses", "Simulates the losses");
 		toolbar.addButton("Selection", "Selects new elements");
-		toolbar.createToolbar(this.panel, this.controller);
+		toolbar.addToPanel(panel, this.controller);
 
 		// adds the panel to the frame
-		this.frame.setContentPane(this.panel);
+		this.frame.setContentPane(panel);
 	}
 
 	/**
@@ -75,26 +84,6 @@ public class UserInterface {
 	 */
 	public void setCity(City city) {
 		controller.setCity(city);
-	}
-
-	/** Creates the plot at the left side of the window */
-	private void createPlot() {
-		// Creates the plot
-		this.plot = new Plot();
-		this.plot.setMarksStyle("points");
-		this.plot.setTitle("Selected Data");
-		this.plot.setYLabel("Power in W");
-		GridBagConstraints c = new GridBagConstraints();
-		// Placed in the origin of the window
-		c.gridx = 0;
-		c.gridy = 0;
-		// Allows it to resize itself in both directions
-		c.fill = GridBagConstraints.BOTH;
-		// Gives it more size than the toolbar in the x direction
-		c.weightx = 0.99;
-		// Occupies the vertical direction till the end of it
-		c.gridheight = GridBagConstraints.REMAINDER;
-		this.panel.add(this.plot, c);
 	}
 
 	/** Shows the main window */
