@@ -67,6 +67,17 @@ public class ProfilesGroup implements Profile {
     }
 
     /**
+     * Returns the profile with the given id. It makes use of the fact that profiles
+     * are stored with their id as key
+     * 
+     * @param id id of the profile to get
+     * @return profile with the given name
+     */
+    public Profile getProfile(String id) {
+        return this.map.get(id);
+    }
+
+    /**
      * Gets the joint power of all profiles in the group in every minute of the day
      * 
      * @param day day in which to compute the power

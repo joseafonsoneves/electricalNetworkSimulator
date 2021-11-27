@@ -60,8 +60,8 @@ public class DataChooser extends JDialog {
             // to which adds the tree in a scrollable pane at the left
             panel.add(new JScrollPane(tree));
             // and then a button to validate the selection at the right
-            JButton button = new JButton("Validate");
-            button.setActionCommand("Validate");
+            JButton button = new JButton("Validate & Leave");
+            button.setActionCommand("Validate & Leave");
             button.addActionListener(new ButtonController(tree, this));
             panel.add(button);
 

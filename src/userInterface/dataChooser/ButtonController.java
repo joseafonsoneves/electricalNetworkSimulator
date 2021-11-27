@@ -37,15 +37,15 @@ public class ButtonController implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-        // when the Validate button is clicked
-        case "Validate":
-            // passes to the dialog the checked paths in the tree
-            dialog.setCheckedPaths(this.tree.getCheckedPaths());
-            // hides the data chooser frame
-            dialog.setVisible(false);
-            // and then kills it
-            dialog.dispose();
-            break;
+            // when the Validate button is clicked
+            case "Validate & Leave":
+                // passes to the dialog the checked paths in the tree
+                dialog.setCheckedPaths(this.tree.getCheckedPaths());
+                // hides the data chooser frame
+                dialog.setVisible(false);
+                // and then kills it
+                dialog.dispose();
+                break;
         }
     }
 }

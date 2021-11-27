@@ -38,6 +38,10 @@ public class UserInterface {
 	 * give them functions and display them
 	 */
 	public UserInterface() {
+		// Creates the window
+		this.frame = new JFrame("Electrical Simulator Interface");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 		// Creates the panel in a GridBagLayout form
 		this.panel = new JPanel();
 		this.panel.setLayout(new GridBagLayout());
@@ -46,7 +50,7 @@ public class UserInterface {
 
 		// Creates the controller for the main window. It will be able to use the plot
 		// of the main window so it is created after it
-		this.controller = new Controller(this.frame);
+		this.controller = new Controller(this.frame, this.plot);
 
 		// Creates a small vertical toolbar compared to the plot and places at the right
 		// of the plot
@@ -54,12 +58,9 @@ public class UserInterface {
 		toolbar.addButton("New", "Uses a new configuration file");
 		toolbar.addButton("Losses", "Simulates the losses");
 		toolbar.addButton("Selection", "Selects new elements");
-		toolbar.addButton("Clear", "Clears the plot");
 		toolbar.createToolbar(this.panel, this.controller);
 
-		// Creates and sets up the window adding it the panel
-		this.frame = new JFrame("Electrical Simulator Interface");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// adds the panel to the frame
 		this.frame.setContentPane(this.panel);
 	}
 
@@ -82,6 +83,7 @@ public class UserInterface {
 		this.plot = new Plot();
 		this.plot.setMarksStyle("points");
 		this.plot.setTitle("Selected Data");
+		this.plot.setYLabel("Power in W");
 		GridBagConstraints c = new GridBagConstraints();
 		// Placed in the origin of the window
 		c.gridx = 0;
