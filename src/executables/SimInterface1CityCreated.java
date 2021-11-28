@@ -50,7 +50,7 @@ public class SimInterface1CityCreated {
                 tv.add(new DayConstantSquaredProfile("tv weekend", new YearConstant(20),
                                 new Square(new YearConstant(4 * 60), new YearConstant(14 * 60)),
                                 new WeekVariation(-2)));
-                // joseHouse.add(tv);
+                joseHouse.add(tv);
 
                 // creates an office
                 ProfilesGroup joseOffice = new ProfilesGroup("Office of José");

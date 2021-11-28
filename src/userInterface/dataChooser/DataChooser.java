@@ -28,6 +28,13 @@ public class DataChooser extends JDialog {
 
     /** Object of a check box tree */
     private CheckBoxTree tree;
+    /**
+     * Validated paths. There is a difference between the paths that were selected
+     * and the paths that were validated. If you hit the exit button instead of the
+     * validate button, that means you are just cancelling the selection so you do
+     * not require a change in the paths selected
+     */
+    private TreePath[] validatedPaths;
 
     /**
      * Creates a data tree out of the profiles present in a city
@@ -60,7 +67,7 @@ public class DataChooser extends JDialog {
             // and then a button to validate the selection at the right
             JButton button = new JButton("Validate & Leave");
             button.setActionCommand("Validate & Leave");
-            button.addActionListener(new ButtonController(this));
+            button.addActionListener(new ButtonController(this, this.tree));
             panel.add(button);
 
             // then adds the panel to the frame
@@ -85,9 +92,9 @@ public class DataChooser extends JDialog {
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 
-        // waits here for the dialog to be closed so that it can return the checked
+        // waits here for the dialog to be closed so that it can return the validated
         // paths
-        return this.tree.getCheckedPaths();
+        return this.validatedPaths;
     }
 
     /**
@@ -150,5 +157,14 @@ public class DataChooser extends JDialog {
                 addChildNodes(auxNode, profile);
             }
         }
+    }
+
+    /**
+     * Sets a new array of paths as the selected ones
+     * 
+     * @param validatedPaths new array of validated paths to consider
+     */
+    public void setValidatedPaths(TreePath[] validatedPaths) {
+        this.validatedPaths = validatedPaths;
     }
 }

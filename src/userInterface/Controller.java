@@ -33,6 +33,8 @@ public class Controller implements ActionListener {
     SimType simType;
     /** If the simulation is of type day, it needs to know it is */
     int day;
+    /** Saves the paths of the profiles selected */
+    TreePath[] profilePaths;
 
     /**
      * Creates a controller instance to take care of user input
@@ -48,7 +50,6 @@ public class Controller implements ActionListener {
         // the 180th day of the year
         this.simType = SimType.DAY;
         this.day = 180;
-
         // According to this initial setting the title and the x label of the plot are
         // set
         this.setPlotLabels();
@@ -88,9 +89,13 @@ public class Controller implements ActionListener {
                 // creates the dialog to choose the profiles to use
                 DataChooser chooser = new DataChooser(frame, city);
                 // gets the paths of the profiles to use
-                TreePath[] profilePaths = chooser.getSelection();
+                TreePath[] newPaths = chooser.getSelection();
+                // only updates the paths saved if the selection is valid
+                if (newPaths != null) {
+                    this.profilePaths = newPaths;
+                }
                 // gets the data of the desired profiles into the plot
-                this.plotProfiles(profilePaths);
+                this.plotProfiles();
                 break;
             case "Simulation type":
                 this.setSimType();
@@ -100,27 +105,26 @@ public class Controller implements ActionListener {
 
     /**
      * Plots the data of the selected profiles in the plot of the userInterface
-     * 
-     * @param profilePaths paths to the profiles
      */
-    private void plotProfiles(TreePath[] profilePaths) {
+    private void plotProfiles() {
         // to hold the profiles that will be recovered
         Profile profile;
         // to hold the series of powers that will be recovered
         double[] series;
 
         // if there were no paths selected or there was an error in selection aborts
-        if (profilePaths == null)
+        if (this.profilePaths == null) {
             return;
+        }
 
         // clears the plot and the legends but not the axis labels or the title
         this.plot.clear(false);
         this.plot.clearLegends();
 
         // for every path in the list of selected paths
-        for (int i = 0; i < profilePaths.length; i++) {
+        for (int i = 0; i < this.profilePaths.length; i++) {
             // gets the current path
-            TreePath path = profilePaths[i];
+            TreePath path = this.profilePaths[i];
 
             // if it is a consumer
             if (path.getPathComponent(1).toString().compareTo("Consumers") == 0) {
@@ -179,6 +183,8 @@ public class Controller implements ActionListener {
     }
 
     private void setSimType() {
+        boolean plotNeedsUpdate = false;
+
         // creates a dialog to choose between them
         String s = (String) JOptionPane.showInputDialog(
                 frame,
@@ -192,8 +198,13 @@ public class Controller implements ActionListener {
         // if something has really been chosen
         if (s != null) {
             if (s.compareTo(SimType.DAY.getId()) == 0) {
-                // changes the simulation type to day
-                this.simType = SimType.DAY;
+                // if the simulation type has been changed
+                if (this.simType != SimType.DAY) {
+                    // records the change
+                    this.simType = SimType.DAY;
+                    // and records that the plot needs to be updated
+                    plotNeedsUpdate = true;
+                }
                 // gets the array of possible days from the simType enum and then transforms
                 // each one of them into a string that saves in the array possibleDays
                 String[] possibleDays = Arrays.stream(SimType.getPossibleDays())
@@ -211,16 +222,30 @@ public class Controller implements ActionListener {
 
                 // if something has really been chosen
                 if (s != null) {
-                    // it will be the day that the user wants to use
-                    this.day = Integer.parseInt(s);
+                    // gets the selected day as an integer
+                    int newDay = Integer.parseInt(s);
+                    if (this.day != newDay) {
+                        // it will be the day that the user wants to use
+                        this.day = newDay;
+                        plotNeedsUpdate = true;
+                    }
                 }
             } else {
-                // changes the simulation type to day
-                this.simType = SimType.YEAR;
+                // if the simulation type has been changed
+                if (this.simType != SimType.YEAR) {
+                    // records the change
+                    this.simType = SimType.YEAR;
+                    // and the need to update the plot
+                    plotNeedsUpdate = true;
+                }
             }
+        }
 
+        if (plotNeedsUpdate) {
             // updates the plot labels
             this.setPlotLabels();
+            // updates the plots of the profiles shown
+            this.plotProfiles();
         }
     }
 }

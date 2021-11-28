@@ -3,6 +3,8 @@ package userInterface.dataChooser;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import userInterface.dataChooser.checkBoxTree.CheckBoxTree;
+
 /**
  * Controls the button implemented in the data chooser panel
  * 
@@ -14,14 +16,21 @@ public class ButtonController implements ActionListener {
      * of the profiles
      */
     private DataChooser dialog;
+    /**
+     * Reference to the tree of profiles
+     * 
+     * @param frame
+     */
+    private CheckBoxTree tree;
 
     /**
      * Saves the reference to the tree so that it can be used upon click
      * 
      * @param tree reference to the tree to use
      */
-    public ButtonController(DataChooser frame) {
+    public ButtonController(DataChooser frame, CheckBoxTree tree) {
         this.dialog = frame;
+        this.tree = tree;
     }
 
     /**
@@ -34,6 +43,7 @@ public class ButtonController implements ActionListener {
         switch (e.getActionCommand()) {
             // when the Validate button is clicked
             case "Validate & Leave":
+                dialog.setValidatedPaths(this.tree.getCheckedPaths());
                 // hides the data chooser frame
                 dialog.setVisible(false);
                 // and then kills it
