@@ -77,17 +77,21 @@ public class Controller implements ActionListener {
         switch (e.getActionCommand()) {
             case "New":
                 // gets the file
-                File fc = ConfigChooser.getFile();
+                File profilesFile = CSVChooser.getFile(frame, "configFiles");
                 // if it is not null
-                if (fc != null) {
-                    // presents its name
-                    System.out.println(fc.getName());
+                if (profilesFile != null) {
                     // reads the file and creates a city from it
-                    this.cities = readCSVMask.fromFileToCity(fc);
+                    this.cities = readCSVMask.fromFileToCity(profilesFile);
                 }
                 break;
             case "Losses":
-                System.out.println("Losses");
+                // gets the file
+                File lossesFile = CSVChooser.getFile(frame, "configFiles");
+                // if it is not null
+                if (lossesFile != null) {
+                    // presents its name
+                    System.out.println(lossesFile.getName());
+                }
                 break;
             case "Profiles":
                 // creates the dialog to choose the profiles to use
