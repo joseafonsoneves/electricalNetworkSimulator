@@ -43,8 +43,6 @@ public class UserInterface {
 		// Creates the plot
 		Plot plot = new Plot();
 		plot.setMarksStyle("points");
-		plot.setTitle("Selected Data");
-		plot.setYLabel("Power in W");
 		GridBagConstraints c = new GridBagConstraints();
 		// Placed in the origin of the window
 		c.gridx = 0;
@@ -65,8 +63,9 @@ public class UserInterface {
 		// of the plot
 		VerticalToolbar toolbar = new VerticalToolbar(0.05, 1);
 		toolbar.addButton("New", "Uses a new configuration file");
-		toolbar.addButton("Losses", "Simulates the losses");
 		toolbar.addButton("Selection", "Selects new elements");
+		toolbar.addButton("Simulation type", "Selects the type of simulation to perform: day or year");
+		toolbar.addButton("Losses", "Simulates the losses");
 		toolbar.addToPanel(panel, this.controller);
 
 		// adds the panel to the frame

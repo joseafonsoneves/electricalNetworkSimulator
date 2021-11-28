@@ -1,1 +1,0 @@
-ajouter jour de la semaine dans le fichier d'informations et aux resultats

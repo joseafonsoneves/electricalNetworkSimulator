@@ -3,13 +3,16 @@ package userInterface;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
 
 import profiles.Profile;
 import profiles.ProfilesGroup;
 import ptolemy.plot.Plot;
+import results.SimType;
 import simulator.City;
 import userInterface.dataChooser.DataChooser;
 
@@ -26,6 +29,10 @@ public class Controller implements ActionListener {
     JFrame frame;
     /** Reference to the plot so that it can add it graphs */
     Plot plot;
+    /** Saves the type of simulation to perform */
+    SimType simType;
+    /** If the simulation is of type day, it needs to know it is */
+    int day;
 
     /**
      * Creates a controller instance to take care of user input
@@ -36,6 +43,17 @@ public class Controller implements ActionListener {
     public Controller(JFrame frame, Plot plot) {
         this.frame = frame;
         this.plot = plot;
+
+        // When the controller is created it is automatically set to a day simulation at
+        // the 180th day of the year
+        this.simType = SimType.DAY;
+        this.day = 180;
+
+        // According to this initial setting the title and the x label of the plot are
+        // set
+        this.setPlotLabels();
+        // the y label will always be in powers
+        plot.setYLabel("Power in W");
     }
 
     /**
@@ -74,8 +92,8 @@ public class Controller implements ActionListener {
                 // gets the data of the desired profiles into the plot
                 this.plotProfiles(profilePaths);
                 break;
-            case "Clear":
-                System.out.println("Clear");
+            case "Simulation type":
+                this.setSimType();
                 break;
         }
     }
@@ -122,8 +140,13 @@ public class Controller implements ActionListener {
                 profile = ((ProfilesGroup) profile).getProfile(path.getPathComponent(j + 1).toString());
             }
 
-            // gets the series of powers of the profile in the given day
-            series = profile.getDayPower(180);
+            // gets the series of powers depending on the simulation type
+            if (this.simType == SimType.DAY) {
+                series = profile.getDayPower(this.day);
+            } else {
+                series = profile.getYearPower();
+            }
+
             // adds the legend as the id of the profile
             plot.addLegend(i, profile.getId());
             // adds each point of the series to the plot
@@ -134,5 +157,70 @@ public class Controller implements ActionListener {
 
         // presents the changes to the user
         plot.updateUI();
+    }
+
+    /**
+     * When you change the type of simulation or the day of the simulation to
+     * perform, this function may be called to update the plot
+     */
+    private void setPlotLabels() {
+        // depending on the type of simulation updates the title
+        if (this.simType == SimType.DAY) {
+            plot.setTitle("Selected Data at day " + this.day);
+        } else {
+            plot.setTitle("Selected Data during a year");
+        }
+
+        // the x label already comes in the sim type enum
+        plot.setXLabel(this.simType.getXLabel());
+
+        // presents the changes to the user
+        plot.updateUI();
+    }
+
+    private void setSimType() {
+        // creates a dialog to choose between them
+        String s = (String) JOptionPane.showInputDialog(
+                frame,
+                "Type of simulation to perform?",
+                "Simulation type choice",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                SimType.getPossibleSimTypes(),
+                this.simType.getId());
+
+        // if something has really been chosen
+        if (s != null) {
+            if (s.compareTo(SimType.DAY.getId()) == 0) {
+                // changes the simulation type to day
+                this.simType = SimType.DAY;
+                // gets the array of possible days from the simType enum and then transforms
+                // each one of them into a string that saves in the array possibleDays
+                String[] possibleDays = Arrays.stream(SimType.getPossibleDays())
+                        .mapToObj(String::valueOf)
+                        .toArray(String[]::new);
+                // creates a dialog to choose between possible days
+                s = (String) JOptionPane.showInputDialog(
+                        frame,
+                        "Type of simulation to perform?",
+                        "Simulation type choice",
+                        JOptionPane.PLAIN_MESSAGE,
+                        null,
+                        possibleDays,
+                        String.valueOf(this.day));
+
+                // if something has really been chosen
+                if (s != null) {
+                    // it will be the day that the user wants to use
+                    this.day = Integer.parseInt(s);
+                }
+            } else {
+                // changes the simulation type to day
+                this.simType = SimType.YEAR;
+            }
+
+            // updates the plot labels
+            this.setPlotLabels();
+        }
     }
 }
