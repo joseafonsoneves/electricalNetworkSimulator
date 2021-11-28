@@ -1,7 +1,8 @@
 Projet pour le cours d'Informatique de l'ISAE-Supaéro qui consiste à la simulation d'une réseau électrique
 
 # Individual part
-### DE OLIVEIRA MORENO NEVES, José Afonso
+DE OLIVEIRA MORENO NEVES, José Afonso
+
 ## Profiles
 
 Tout d’abord, j’ai choisi de mettre en œuvre les consommateurs et les producteurs comme les mêmes objets car, du moins à ce stade, ils ne sont caractérisés que par leurs profils de puissance quisont équivalents. Ensuite, pour pouvoir regrouper des profils implementés par différentes classes, j’ai créé une interface que j’ai appelé «Profile». Si, à l’avenir, des fonctionnalités sont ajoutées au simulateur qui nécessitent la distinction entre producteurs et consommateurs, il faudra modifier cette construction. Cependant, l’interface que j’ai créée peut être utilisée comme un attribut des nouveaux producteurs ou consommateurs.
@@ -21,14 +22,15 @@ Jusqu’à présent, j’ai créé deux types d’outils de visualisation de don
 J’ai également créé un simulateur que j’ai appelé «City», qui reçoit des «ProfileGroups» de pro-ducteurs et de consommateurs et des «DataOutputs» et simule la production et la consommation. Il envoie également les résultats à travers la classe «Résultats», que j’ai définie pour les outils de visualisation, crée un dossier et un fichier dédié à la simulation et applique les outilsaux résultats.
 
 # Group part
-### TEXIER, Aurélien
+
 ## Extension 1 : réseau de distribution électrique
+TEXIER, Aurélien
 
-### PIGAMO, Antoine
 ## Extension 2 : paramétrage de la simulation par fichier
+PIGAMO, Antoine
 
-### DE OLIVEIRA MORENO NEVES, José Afonso
 ## Extension 3 : interface utilisateur graphique Swing
+DE OLIVEIRA MORENO NEVES, José Afonso
 
 Cette extension consiste à ajouter une interface utilisateur graphique qui permette de sélectionner des producteurs ou consommateurs dont on souhaite visualiser la courbe de production ou consommation électrique. Les courbes de production ou consommation seront affichées au moyen de la bibliothèque Ptplot. L'interphace graphique est basée sur un "Plot" à la gauche et une "Toolbar" vertical à la droite. Dans cette "Toolbar", chaque button permet d'accéder à un dialogue. Dans chacun de ces dialogues, l'utilisateur peut choisir un nouveau fichier de configuration, choisir un nouveau ensemble de profiles pour montrer leurs courbes, changer le type de simulation ou calculer les pertes associés à la transmission d'énergie.
 Pour créer l'interface, il faut seulement ajouter
@@ -41,5 +43,5 @@ et importer la classe avec
 import userInterface.UserInterface;
 ```
 
-### BERNARD, Rémi
 ## Extension 4 : construction de modèles
+BERNARD, Rémi
