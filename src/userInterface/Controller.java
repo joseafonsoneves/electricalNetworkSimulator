@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -23,8 +24,8 @@ import userInterface.dataChooser.DataChooser;
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
 public class Controller implements ActionListener {
-    /** Reference to the city to which to apply the actions of the controller */
-    City city;
+    /** Reference to the cities to which apply the actions of the controller */
+    HashMap<String, City> cities;
     /** Frame to which the controller is applied */
     JFrame frame;
     /** Reference to the plot so that it can add it graphs */
@@ -55,15 +56,18 @@ public class Controller implements ActionListener {
         this.setPlotLabels();
         // the y label will always be in powers
         plot.setYLabel("Power in W");
+
+        // creates the hash map of cities
+        cities = new HashMap<String, City>();
     }
 
     /**
-     * Sets the city to use in the toolbar
+     * Adds the city to use to the hash map of cities
      * 
      * @param city city to use
      */
-    public void setCity(City city) {
-        this.city = city;
+    public void addCity(City city) {
+        this.cities.put(city.getId(), city);
     }
 
     /**
@@ -79,7 +83,7 @@ public class Controller implements ActionListener {
                     // presents its name
                     System.out.println(fc.getName());
                     // reads the file and creates a city from it
-                    this.city = readCSVMask.fromFileToCity(fc);
+                    this.cities = readCSVMask.fromFileToCity(fc);
                 }
                 break;
             case "Losses":
@@ -87,7 +91,7 @@ public class Controller implements ActionListener {
                 break;
             case "Profiles":
                 // creates the dialog to choose the profiles to use
-                DataChooser chooser = new DataChooser(frame, city);
+                DataChooser chooser = new DataChooser(this.frame, this.cities);
                 // gets the paths of the profiles to use
                 TreePath[] newPaths = chooser.getSelection();
                 // only updates the paths saved if the selection is valid
@@ -107,6 +111,8 @@ public class Controller implements ActionListener {
      * Plots the data of the selected profiles in the plot of the userInterface
      */
     private void plotProfiles() {
+        // to hold the cities that will be recovered
+        City city;
         // to hold the profiles that will be recovered
         Profile profile;
         // to hold the series of powers that will be recovered
@@ -126,8 +132,11 @@ public class Controller implements ActionListener {
             // gets the current path
             TreePath path = this.profilePaths[i];
 
+            // gets the corresponding city
+            city = this.cities.get(path.getPathComponent(1).toString());
+
             // if it is a consumer
-            if (path.getPathComponent(1).toString().compareTo("Consumers") == 0) {
+            if (path.getPathComponent(2).toString().compareTo("Consumers") == 0) {
                 // gets the group of consumers
                 profile = city.getConsumers();
             }
@@ -138,7 +147,7 @@ public class Controller implements ActionListener {
             }
 
             // for element in the path
-            for (int j = 1; j < path.getPathCount() - 1; j++) {
+            for (int j = 2; j < path.getPathCount() - 1; j++) {
                 // surfs the tree of profiles taking into consideration that until the last each
                 // one of them will be a group of profiles
                 profile = ((ProfilesGroup) profile).getProfile(path.getPathComponent(j + 1).toString());

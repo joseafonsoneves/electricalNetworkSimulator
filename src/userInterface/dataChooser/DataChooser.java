@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
 import java.awt.GridLayout;
+import java.util.HashMap;
 
 import profiles.Profile;
 import profiles.ProfilesGroup;
@@ -35,22 +36,22 @@ public class DataChooser extends JDialog {
     private TreePath[] validatedPaths;
 
     /**
-     * Creates a data tree out of the profiles present in a city
+     * Creates a data tree out of the profiles present in a map of cities
      * 
-     * @param city city whose profiles one wants to present
+     * @param cities map of cities whose profiles one wants to present
      */
-    public DataChooser(JFrame owner, City city) {
+    public DataChooser(JFrame owner, HashMap<String, City> cities) {
         // Creates and sets up the dialog
         super(owner, "Select the profiles to present", true);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         // if the city was not yet added
-        if (city == null) {
+        if (cities == null || cities.size() == 0) {
             JLabel warning = new JLabel("Warning: No city yet added", SwingConstants.CENTER);
             this.add(warning);
         } else {
             // create the tree by passing in the root node
-            CheckBoxTree tree = new CheckBoxTree(addCityNodes(city));
+            CheckBoxTree tree = new CheckBoxTree(addNodes(cities), 1);
             // hides the first node
             tree.setRootVisible(false);
             // expands all the nodes of the tree
@@ -96,25 +97,38 @@ public class DataChooser extends JDialog {
     }
 
     /**
-     * Adds the nodes of a city which correspond to its producers and consumers into
-     * a tree
+     * Adds the nodes of a group of cities which correspond to its producers and
+     * consumers into a tree
      * 
-     * @param city city whose producers and consumers one wants to present
+     * @param cities group of cities whose producers and consumers one wants to
+     *               present
      * @return root node of the created tree
      */
-    private DefaultMutableTreeNode addCityNodes(City city) {
+    private DefaultMutableTreeNode addNodes(HashMap<String, City> cities) {
         // create the root node
         DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+        // creates the nodes to use in the loop
+        DefaultMutableTreeNode cityNode;
+        DefaultMutableTreeNode producersNode;
+        DefaultMutableTreeNode consumersNode;
 
-        // creates the nodes of the consumers and the producers
-        DefaultMutableTreeNode producersNode = new DefaultMutableTreeNode("Producers");
-        DefaultMutableTreeNode consumersNode = new DefaultMutableTreeNode("Consumers");
-        root.add(producersNode);
-        root.add(consumersNode);
+        // for each city in the group
+        for (City city : cities.values()) {
+            // creates a node for it and connects it to the root node
+            cityNode = new DefaultMutableTreeNode(city.getId());
+            root.add(cityNode);
 
-        // creates the nodes of the producers and consumers of a city
-        addChildNodes(producersNode, city.getProducers());
-        addChildNodes(consumersNode, city.getConsumers());
+            // creates the nodes of the consumers and the producers
+            producersNode = new DefaultMutableTreeNode("Producers");
+            consumersNode = new DefaultMutableTreeNode("Consumers");
+            // and connects them to the node of the city
+            cityNode.add(producersNode);
+            cityNode.add(consumersNode);
+
+            // creates the nodes of the producers and consumers of a city
+            addChildNodes(producersNode, city.getProducers());
+            addChildNodes(consumersNode, city.getConsumers());
+        }
 
         return root;
     }

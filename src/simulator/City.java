@@ -24,8 +24,8 @@ public class City {
      */
     public City(String id) {
         this.id = id;
-        this.producers = new ProfilesGroup("Producers");
-        this.consumers = new ProfilesGroup("Consumers");
+        this.producers = new ProfilesGroup("Producers of " + id);
+        this.consumers = new ProfilesGroup("Consumers of " + id);
     }
 
     /**

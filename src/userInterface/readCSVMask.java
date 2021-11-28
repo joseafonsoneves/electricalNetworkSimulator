@@ -1,6 +1,8 @@
 package userInterface;
 
 import java.io.File;
+import java.util.HashMap;
+
 import profiles.DayConstantProfile;
 import profiles.DayConstantSquaredProfile;
 import profiles.DayLinearSquaredProfile;
@@ -20,9 +22,9 @@ import simulator.City;
  * @author DE OLIVEIRA MORENO NEVES, José Afono
  */
 public class readCSVMask {
-        public static City fromFileToCity(File file) {
+        public static HashMap<String, City> fromFileToCity(File file) {
                 // creates the city
-                City city = new City("Toulouse");
+                City toulouse = new City("Toulouse");
 
                 // creates a house
                 ProfilesGroup joseHouse = new ProfilesGroup("House of José");
@@ -79,16 +81,37 @@ public class readCSVMask {
                 joseOffice.add(computers);
 
                 // adds the consumers
-                city.addConsumer(joseHouse);
-                city.addConsumer(joseOffice);
+                toulouse.addConsumer(joseHouse);
+                toulouse.addConsumer(joseOffice);
 
                 // creates and adds all the created producers to the city
-                city.addProducer(new DayConstantProfile("coal plant", new YearConstant(150)));
-                city.addProducer(new DayQuadraticSquaredProfile("solar plant", new YearConstant(0.1),
+                toulouse.addProducer(new DayConstantProfile("coal plant", new YearConstant(150)));
+                toulouse.addProducer(new DayQuadraticSquaredProfile("solar plant", new YearConstant(0.1),
                                 new YearSinusoid(550, 450, 180), new YearConstant(0.1),
                                 new Square(new YearSinusoid(14 * 60, 10 * 60, 180),
                                                 new YearSinusoid(8 * 60, 6 * 60, 365 / 2 - 180))));
 
-                return city;
+                // creates the city of Brest
+                City brest = new City("Brest");
+
+                // creates a house
+                ProfilesGroup remiHouse = new ProfilesGroup("House of Remi");
+                // adds machines to the house
+                remiHouse.add(new DayConstantProfile("fridge", new YearConstant(200)));
+                remiHouse.add(new DayConstantProfile("app2", new YearConstant(200)));
+
+                // adds consumers to the city including the house created
+                brest.addConsumer(new DayConstantProfile("cons1", new YearConstant(100)));
+                brest.addConsumer(new DayConstantProfile("cons2", new YearConstant(100)));
+                brest.addConsumer(remiHouse);
+
+                // creates and adds producers to the city
+                brest.addProducer(new DayConstantProfile("prod1", new YearConstant(300)));
+                brest.addProducer(new DayConstantProfile("prod2", new YearConstant(600)));
+
+                HashMap<String, City> cities = new HashMap<String, City>();
+                cities.put(toulouse.getId(), toulouse);
+                cities.put(brest.getId(), brest);
+                return cities;
         }
 }

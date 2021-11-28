@@ -40,9 +40,9 @@ Pour créer l'interface, il faut seulement ajouter
 ```
 et importer la classe avec
 ```
-import userInterface.UserInterface;
+    import userInterface.UserInterface;
 ```
-Un example de l'interface est présenté dans la figure au-dessous.
+Un exemple de l'interface est présenté dans la figure au-dessous.
 ![Exemple de l'interface](/images/interfaceExample.png)
 
 ## Extension 4 : construction de modèles
