@@ -13,9 +13,9 @@ import java.time.format.DateTimeFormatter;
  */
 public enum SimType {
     /** Describes the day simulation type and associated values */
-    DAY("day", "minute", 1.0 / 60, 60 * 24),
+    DAY("Day", "Minute", 1.0 / 60, 60 * 24),
     /** Describes the year simulation type and associated values */
-    YEAR("year", "day", 24, 365);
+    YEAR("Year", "Day", 24, 365);
 
     /** Corresponding String description */
     private final String id;
@@ -171,22 +171,41 @@ public enum SimType {
      */
     public static String getNameOfDayOfTheWeek(int dayOfTheWeek) {
         switch (dayOfTheWeek) {
-        case 0:
-            return "Sunday";
-        case 1:
-            return "Monday";
-        case 2:
-            return "Tuesday";
-        case 3:
-            return "Wednesday";
-        case 4:
-            return "Thursday";
-        case 5:
-            return "Friday";
-        case 6:
-            return "Saturday";
-        default:
-            return "Undefined";
+            case 0:
+                return "Sunday";
+            case 1:
+                return "Monday";
+            case 2:
+                return "Tuesday";
+            case 3:
+                return "Wednesday";
+            case 4:
+                return "Thursday";
+            case 5:
+                return "Friday";
+            case 6:
+                return "Saturday";
+            default:
+                return "Undefined";
         }
+    }
+
+    /**
+     * Gets an array of strings containing the ids of the available simulation types
+     * 
+     * @return array of strings containing the ids of the available simulation types
+     */
+    public static String[] getPossibleSimTypes() {
+        return new String[] { DAY.id, YEAR.id };
+    }
+
+    public static int[] getPossibleDays() {
+        int[] res = new int[YEAR.getLength()];
+
+        for (int i = 0; i < res.length; i++) {
+            res[i] = i;
+        }
+
+        return res;
     }
 };
