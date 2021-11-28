@@ -107,4 +107,20 @@ public class CheckBoxTree extends JTree {
     public TreePath[] getCheckedPaths() {
         return checkedPaths.toArray(new TreePath[checkedPaths.size()]);
     }
+
+    /**
+     * Expands every node of the tree so the user has not got to
+     */
+    public void expandAllNodes() {
+        int numRows = this.getRowCount();
+
+        // before the end of the tree
+        for (int row = 0; row < numRows; row++) {
+            // expands every row
+            this.expandRow(row);
+            // which can create more rows so updates the number of rows and goes for the
+            // next one
+            numRows = this.getRowCount();
+        }
+    }
 }

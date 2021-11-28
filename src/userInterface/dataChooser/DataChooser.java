@@ -26,8 +26,6 @@ public class DataChooser extends JDialog {
      */
     private static final double screenToFrame = 2;
 
-    /** Object of a check box tree */
-    private CheckBoxTree tree;
     /**
      * Validated paths. There is a difference between the paths that were selected
      * and the paths that were validated. If you hit the exit button instead of the
@@ -52,11 +50,11 @@ public class DataChooser extends JDialog {
             this.add(warning);
         } else {
             // create the tree by passing in the root node
-            tree = new CheckBoxTree(addCityNodes(city));
-            // hides the root node
+            CheckBoxTree tree = new CheckBoxTree(addCityNodes(city));
+            // hides the first node
             tree.setRootVisible(false);
-            // expands all the tree so that the user hasn't got to
-            this.expandAllNodes();
+            // expands all the nodes of the tree
+            tree.expandAllNodes();
 
             // creates a panel for the frame
             JPanel panel = new JPanel();
@@ -67,7 +65,7 @@ public class DataChooser extends JDialog {
             // and then a button to validate the selection at the right
             JButton button = new JButton("Validate & Leave");
             button.setActionCommand("Validate & Leave");
-            button.addActionListener(new ButtonController(this, this.tree));
+            button.addActionListener(new ButtonController(this, tree));
             panel.add(button);
 
             // then adds the panel to the frame
@@ -95,22 +93,6 @@ public class DataChooser extends JDialog {
         // waits here for the dialog to be closed so that it can return the validated
         // paths
         return this.validatedPaths;
-    }
-
-    /**
-     * Expands every node of the tree so the user has not got to
-     */
-    private void expandAllNodes() {
-        int numRows = tree.getRowCount();
-
-        // before the end of the tree
-        for (int row = 0; row < numRows; row++) {
-            // expands every row
-            tree.expandRow(row);
-            // which can create more rows so updates the number of rows and goes for the
-            // next one
-            numRows = tree.getRowCount();
-        }
     }
 
     /**

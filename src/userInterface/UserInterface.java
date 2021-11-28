@@ -63,8 +63,8 @@ public class UserInterface {
 		// of the plot
 		VerticalToolbar toolbar = new VerticalToolbar(0.05, 1);
 		toolbar.addButton("New", "Uses a new configuration file");
-		toolbar.addButton("Selection", "Selects new elements");
-		toolbar.addButton("Simulation type", "Selects the type of simulation to perform: day or year");
+		toolbar.addButton("Profiles", "Selects new profiles");
+		toolbar.addButton("Simulation type", "Selects the type of simulation to perform");
 		toolbar.addButton("Losses", "Simulates the losses");
 		toolbar.addToPanel(panel, this.controller);
 

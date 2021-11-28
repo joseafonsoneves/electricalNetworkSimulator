@@ -85,7 +85,7 @@ public class Controller implements ActionListener {
             case "Losses":
                 System.out.println("Losses");
                 break;
-            case "Selection":
+            case "Profiles":
                 // creates the dialog to choose the profiles to use
                 DataChooser chooser = new DataChooser(frame, city);
                 // gets the paths of the profiles to use
