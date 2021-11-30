@@ -10,6 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
 
+import extension2.CSVRead;
 import profiles.Profile;
 import profiles.ProfilesGroup;
 import ptolemy.plot.Plot;
@@ -36,6 +37,8 @@ public class Controller implements ActionListener {
     int day;
     /** Saves the paths of the profiles selected */
     TreePath[] profilePaths;
+    /** Configuration file from which the cities were taken out */
+    File citiesDataFile;
 
     /**
      * Creates a controller instance to take care of user input
@@ -55,10 +58,10 @@ public class Controller implements ActionListener {
         // set
         this.setPlotLabels();
         // the y label will always be in powers
-        plot.setYLabel("Power in W");
+        this.plot.setYLabel("Power in W");
 
         // creates the hash map of cities
-        cities = new HashMap<String, City>();
+        this.cities = new HashMap<String, City>();
     }
 
     /**
@@ -77,16 +80,24 @@ public class Controller implements ActionListener {
         switch (e.getActionCommand()) {
             case "New":
                 // gets the file
-                File profilesFile = CSVChooser.getFile(frame, "configFiles");
+                File profilesFile = CSVChooser.getFile(frame, "CityData");
                 // if it is not null
                 if (profilesFile != null) {
                     // reads the file and creates a city from it
-                    this.cities = readCSVMask.fromFileToCity(profilesFile);
+                    City newCity = CSVRead.Read(profilesFile.getAbsolutePath());
+                    // if there was not an error reading the file
+                    if (newCity != null) {
+                        // adds the city to the map of cities
+                        this.cities.put(newCity.getId(), newCity);
+                        // and updates the title
+                        this.citiesDataFile = profilesFile;
+                        this.setPlotLabels();
+                    }
                 }
                 break;
             case "Losses":
                 // gets the file
-                File lossesFile = CSVChooser.getFile(frame, "configFiles");
+                File lossesFile = CSVChooser.getFile(frame, "CityData");
                 // if it is not null
                 if (lossesFile != null) {
                     // presents its name
@@ -181,11 +192,24 @@ public class Controller implements ActionListener {
      * perform, this function may be called to update the plot
      */
     private void setPlotLabels() {
+        // this section of code is already part of the integration and we added it
+        // because it is more easy for the user to know what is happening if he knows
+        // which file we are talking about easily
+        // if the name of the cities data file is not null
+        String str;
+        if (citiesDataFile == null) {
+            // it adds nothing to the title
+            str = "";
+        } else {
+            // else it talks about the file in the file
+            str = " of file " + citiesDataFile.getName();
+        }
+
         // depending on the type of simulation updates the title
         if (this.simType == SimType.DAY) {
-            plot.setTitle("Selected Data at day " + this.day);
+            plot.setTitle("Selected Data at day " + this.day + str);
         } else {
-            plot.setTitle("Selected Data during a year");
+            plot.setTitle("Selected Data during a year" + str);
         }
 
         // the x label already comes in the sim type enum

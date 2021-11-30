@@ -29,6 +29,23 @@ TEXIER, Aurélien
 ## Extension 2 : paramétrage de la simulation par fichier
 PIGAMO, Antoine
 
+La première ligne correspond au nom de la ville.
+
+Ensuite il s'agit soit de la description d'un producer ou d'un consumer
+
+Soit un produceur (ou un consumer) on a : 
+[producer][DayConstantProfile][Puissance][Nom][Y=Year Variation][Début][Durée]
+[producer][DayConstantProfile][Puissance][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayConstantProfile][Puissance][Nom][N=No Variation];
+
+[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance][Nom][Y=Year Variation][Début][Durée]
+[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance][Nom][N=No Variation];
+
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance gauche][Puissance droite][Nom][Y=Year Variation][Début][Durée]
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance gauche][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance gauche][Puissance droite][Nom][N=No Variation];
+
 ## Extension 3 : interface utilisateur graphique Swing
 DE OLIVEIRA MORENO NEVES, José Afonso
 

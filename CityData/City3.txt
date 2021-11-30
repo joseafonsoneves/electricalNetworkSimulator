@@ -1,0 +1,3 @@
+Marseille;0.2;0.5
+producer;DayConstant;100;Centrale1;Y;1;200
+consumer;DayConstantSquared;1;100;50;Antoine;Y;1;200
