@@ -122,6 +122,9 @@ public class Controller implements ActionListener {
                         this.citiesDataFile = profilesFile;
                         // and then updates it in the window of the plot
                         this.setPlotLabels();
+                    } else {
+                        // this is a temporary solution while I do not create a general error window
+                        System.out.println("Error including cities");
                     }
                 }
                 break;

@@ -79,7 +79,7 @@ public class AddProfileMethods {
             // On regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[8].equals("Y")) { // YearVariation
-                city.addProducer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[4])),
+                city.addProducer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[6])),
                         new Square(new YearConstant(Integer.parseInt(tokens[2])),
                                 new YearConstant(Integer.parseInt(tokens[3])), Integer.parseInt(tokens[4]),
                                 Integer.parseInt(tokens[5])),
@@ -89,13 +89,13 @@ public class AddProfileMethods {
                 for (int i = 9; i < tokens.length; i++) {
                     Days_Array[i - 9] = Integer.parseInt(tokens[i]);
                 }
-                city.addProducer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[4])),
+                city.addProducer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[6])),
                         new Square(new YearConstant(Integer.parseInt(tokens[2])),
                                 new YearConstant(Integer.parseInt(tokens[3])), Integer.parseInt(tokens[4]),
                                 Integer.parseInt(tokens[5])),
                         new WeekVariation(Days_Array)));
             } else { // Pas de variations
-                city.addProducer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[4])),
+                city.addProducer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[6])),
                         new Square(new YearConstant(Integer.parseInt(tokens[2])),
                                 new YearConstant(Integer.parseInt(tokens[3])), Integer.parseInt(tokens[4]),
                                 Integer.parseInt(tokens[5]))));
@@ -104,7 +104,7 @@ public class AddProfileMethods {
             // Ensuite on regarde quel type de variation a le consommateur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[6].equals("Y")) {
-                city.addConsumer(new DayConstantSquaredProfile(tokens[5], new YearConstant(Integer.parseInt(tokens[4])),
+                city.addConsumer(new DayConstantSquaredProfile(tokens[5], new YearConstant(Integer.parseInt(tokens[6])),
                         new Square(new YearConstant(Integer.parseInt(tokens[2])),
                                 new YearConstant(Integer.parseInt(tokens[3])), Integer.parseInt(tokens[4]),
                                 Integer.parseInt(tokens[5])),
@@ -114,13 +114,13 @@ public class AddProfileMethods {
                 for (int i = 9; i < tokens.length; i++) {
                     Days_Array[i - 9] = Integer.parseInt(tokens[i]);
                 }
-                city.addConsumer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[4])),
+                city.addConsumer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[6])),
                         new Square(new YearConstant(Integer.parseInt(tokens[2])),
                                 new YearConstant(Integer.parseInt(tokens[3])), Integer.parseInt(tokens[4]),
                                 Integer.parseInt(tokens[5])),
                         new WeekVariation(Days_Array)));
             } else { // Pas de variations
-                city.addConsumer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[4])),
+                city.addConsumer(new DayConstantSquaredProfile(tokens[7], new YearConstant(Integer.parseInt(tokens[6])),
                         new Square(new YearConstant(Integer.parseInt(tokens[2])),
                                 new YearConstant(Integer.parseInt(tokens[3])), Integer.parseInt(tokens[4]),
                                 Integer.parseInt(tokens[5]))));
