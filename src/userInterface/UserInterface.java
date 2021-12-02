@@ -57,19 +57,57 @@ public class UserInterface {
 
 		// Creates the controller for the main window. It will be able to use the plot
 		// of the main window so it is created after it
-		this.controller = new Controller(this.frame, plot);
+		this.controller = this.createController(plot);
 
 		// Creates a small vertical toolbar compared to the plot and places at the right
 		// of the plot
-		VerticalToolbar toolbar = new VerticalToolbar(0.05, 1);
-		toolbar.addButton("New", "Uses a new configuration file");
-		toolbar.addButton("Profiles", "Selects new profiles");
-		toolbar.addButton("Simulation type", "Selects the type of simulation to perform");
-		toolbar.addButton("Losses", "Simulates the losses");
+		VerticalToolbar toolbar = this.createToolbar();
 		toolbar.addToPanel(panel, this.controller);
 
 		// adds the panel to the frame
 		this.frame.setContentPane(panel);
+	}
+
+	/**
+	 * Gets the frame of the user interface window
+	 * 
+	 * @return frame of the user interface window
+	 */
+	protected JFrame getFrame() {
+		return this.frame;
+	}
+
+	/**
+	 * This method creates the toolbar. This method is important because it will be
+	 * overridden in integration steps to add different buttons to the interface.
+	 * For now it only has the buttons that correspond to actions performed by this
+	 * extension or the initial version but in the integration it will have buttons
+	 * that represent actions performed by other extensions
+	 * 
+	 * @return creates a vertical toolbar with the buttons needed for this extension
+	 *         and the initial version only
+	 */
+	protected VerticalToolbar createToolbar() {
+		VerticalToolbar toolbar = new VerticalToolbar(0.05, 1);
+		toolbar.addButton("Profiles", "Selects new profiles");
+		toolbar.addButton("Simulation type", "Selects the type of simulation to perform");
+
+		return toolbar;
+	}
+
+	/**
+	 * This method creates the controller. This method is important because it will
+	 * be overridden in integration steps to add other controllers to the interface.
+	 * For now it controls the buttons that correspond to actions performed by this
+	 * extension or the initial version but in the integration it will control new
+	 * buttons
+	 * 
+	 * @param plot the controller must receive a reference to plot
+	 * @return creates a controller for the buttons needed for this extension
+	 *         and the initial version only
+	 */
+	protected Controller createController(Plot plot) {
+		return new Controller(this.frame, plot);
 	}
 
 	/**

@@ -76,8 +76,8 @@ public class SimComplex1 {
          */
 
         // Scenario accumulateur avec valeur et capacité
-        Linear linearTest = new Linear("test lineaire", weekVar0, yearVar0, 1.0, 0.0, 1240, 1340);
-        Accumulate accumulateWithLinearTest = new Accumulate(linearTest, 50, 1000);
+        Linear linearTest = new Linear("test lineaire", weekVar0, yearVar0, 10.0, 0.0, 1140, 1340);
+        Accumulate accumulateWithLinearTest = new Accumulate(linearTest, 500, 100000);
         double[] power = accumulateWithLinearTest.getDayPower(0);
         for (int i = 0; i < 1440; i++) {
             System.out.println("Min: " + i + ";" + "Power: " + power[i]);

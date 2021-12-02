@@ -65,6 +65,33 @@ public class Controller implements ActionListener {
     }
 
     /**
+     * Gets the frame of the object
+     * 
+     * @return gets the frame of the object
+     */
+    public JFrame getFrame() {
+        return this.frame;
+    }
+
+    /**
+     * Just sets the cities attribute to the value given
+     * 
+     * @param cities new group of cities of the controller
+     */
+    protected void setCities(HashMap<String, City> cities) {
+        this.cities = cities;
+    }
+
+    /**
+     * Just sets the cities file to the value given
+     * 
+     * @param file new file of cities
+     */
+    protected void setCitiesFile(File file) {
+        this.citiesDataFile = file;
+    }
+
+    /**
      * Adds the city to use to the hash map of cities
      * 
      * @param city city to use
@@ -75,6 +102,8 @@ public class Controller implements ActionListener {
 
     /**
      * Called when the activation action is launched on the view
+     * 
+     * @param e event that calls the attention and may lead to do something
      */
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
@@ -151,6 +180,11 @@ public class Controller implements ActionListener {
             // gets the corresponding city
             city = this.cities.get(path.getPathComponent(1).toString());
 
+            // if it cannot recover a valid city it just gives an exception
+            if (city == null) {
+                throw new RuntimeException("Found a null city when plotting profiles in the path " + path);
+            }
+
             // if it is a consumer
             if (path.getPathComponent(2).toString().compareTo("Consumers") == 0) {
                 // gets the group of consumers
@@ -192,7 +226,7 @@ public class Controller implements ActionListener {
      * When you change the type of simulation or the day of the simulation to
      * perform, this function may be called to update the plot
      */
-    private void setPlotLabels() {
+    public void setPlotLabels() {
         // this section of code is already part of the integration and we added it
         // because it is more easy for the user to know what is happening if he knows
         // which file we are talking about easily
@@ -220,7 +254,7 @@ public class Controller implements ActionListener {
         plot.updateUI();
     }
 
-    private void setSimType() {
+    protected void setSimType() {
         boolean plotNeedsUpdate = false;
 
         // creates a dialog to choose between them
@@ -285,5 +319,21 @@ public class Controller implements ActionListener {
             // updates the plots of the profiles shown
             this.plotProfiles();
         }
+    }
+
+    /**
+     * Lets the user choose the profiles to show in the plot
+     */
+    protected void chooseProfiles() {
+        // creates the dialog to choose the profiles to use
+        DataChooser chooser = new DataChooser(this.frame, this.cities);
+        // gets the paths of the profiles to use
+        TreePath[] newPaths = chooser.getSelection();
+        // only updates the paths saved if the selection is valid
+        if (newPaths != null) {
+            this.profilePaths = newPaths;
+        }
+        // gets the data of the desired profiles into the plot
+        this.plotProfiles();
     }
 }
