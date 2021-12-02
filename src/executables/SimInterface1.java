@@ -14,11 +14,12 @@ import simulator.City;
 import userInterface.UserInterface;
 
 /**
- * First example related with the interface. Created from the complex scenario
+ * First example related with the interface. Created from the complex scenario.
+ * It does not use the other extensions
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class SimInterface1CityCreated {
+public class SimInterface1 {
         public static void main(String[] args) {
                 // creates the city of toulouse
                 City toulouse = new City("Toulouse");
