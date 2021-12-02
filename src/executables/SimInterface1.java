@@ -14,14 +14,15 @@ import simulator.City;
 import userInterface.UserInterface;
 
 /**
- * First example related with the interface. Created from the complex scenario
+ * First example related with the interface. Created from the complex scenario.
+ * It does not use the other extensions
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class SimInterface1CityCreated {
+public class SimInterface1 {
         public static void main(String[] args) {
-                // creates the city
-                City city = new City("Toulouse");
+                // creates the city of toulouse
+                City toulouse = new City("Toulouse");
 
                 // creates a house
                 ProfilesGroup joseHouse = new ProfilesGroup("House of José");
@@ -76,19 +77,38 @@ public class SimInterface1CityCreated {
                 joseOffice.add(computers);
 
                 // adds the consumers
-                city.addConsumer(joseHouse);
-                city.addConsumer(joseOffice);
+                toulouse.addConsumer(joseHouse);
+                toulouse.addConsumer(joseOffice);
 
                 // creates and adds all the created producers to the city
-                city.addProducer(new DayConstantProfile("coal plant", new YearConstant(150)));
-                city.addProducer(new DayQuadraticSquaredProfile("solar plant", new YearConstant(0.1),
+                toulouse.addProducer(new DayConstantProfile("coal plant", new YearConstant(150)));
+                toulouse.addProducer(new DayQuadraticSquaredProfile("solar plant", new YearConstant(0.1),
                                 new YearSinusoid(550, 450, 180), new YearConstant(0.1),
                                 new Square(new YearSinusoid(14 * 60, 10 * 60, 180),
                                                 new YearSinusoid(8 * 60, 6 * 60, 365 / 2 - 180))));
 
+                // creates the city of Brest
+                City brest = new City("Brest");
+
+                // creates a house
+                ProfilesGroup remiHouse = new ProfilesGroup("House of Remi");
+                // adds machines to the house
+                remiHouse.add(new DayConstantProfile("fridge", new YearConstant(200)));
+                remiHouse.add(new DayConstantProfile("app2", new YearConstant(200)));
+
+                // adds consumers to the city including the house created
+                brest.addConsumer(new DayConstantProfile("cons1", new YearConstant(100)));
+                brest.addConsumer(new DayConstantProfile("cons2", new YearConstant(100)));
+                brest.addConsumer(remiHouse);
+
+                // creates and adds producers to the city
+                brest.addProducer(new DayConstantProfile("prod1", new YearConstant(300)));
+                brest.addProducer(new DayConstantProfile("prod2", new YearConstant(600)));
+
                 // ------- After creating the city, creates the data tree -------
                 UserInterface ui = new UserInterface();
                 ui.show();
-                ui.setCity(city);
+                ui.addCity(brest);
+                ui.addCity(toulouse);
         }
 }

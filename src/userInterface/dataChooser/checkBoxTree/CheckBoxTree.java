@@ -27,15 +27,16 @@ public class CheckBoxTree extends JTree {
      * 
      * @param root receives the root to a node of a tree
      */
-    public CheckBoxTree(DefaultMutableTreeNode root) {
+    public CheckBoxTree(DefaultMutableTreeNode root, int uncheckableLevelsNb) {
         super(root);
         // Disabling toggling by double-click because it could lead to users toggling
         // the group when selecting it
         this.setToggleClickCount(0);
         // Overriding cell renderer by new one defined above
         this.setCellRenderer(new CheckBoxRenderer(this.nodesState));
-        // Create checking mechanism on mouse click
-        this.addMouseListener(new Selector(this));
+        // Create checking mechanism on mouse click and says how many of the first
+        // levels are uncheckable
+        this.addMouseListener(new Selector(this, uncheckableLevelsNb));
     }
 
     /**

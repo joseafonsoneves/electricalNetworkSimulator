@@ -73,16 +73,16 @@ public class UserInterface {
 	}
 
 	/**
-	 * Sets the city to use at the actions performed by the buttons. The interface
-	 * designed is ready to work in two configurations: with the setting of a city
-	 * exteriorly to it or with the setting of the city using it. In the case of
-	 * exterior setting this is the method that passes the city to the controller
-	 * where the reference to it will be stored
+	 * Adds a city to use. The interface designed is ready to work in two
+	 * configurations: with the adding of a city exteriorly to it or with the
+	 * adding of a city using it. In the case of exterior addition this is the
+	 * method that passes the city to the controller where the reference to it will
+	 * be stored
 	 * 
 	 * @param city city to choose
 	 */
-	public void setCity(City city) {
-		controller.setCity(city);
+	public void addCity(City city) {
+		controller.addCity(city);
 	}
 
 	/** Shows the main window */

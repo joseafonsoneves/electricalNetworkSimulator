@@ -3,12 +3,12 @@ package executables;
 import userInterface.UserInterface;
 
 /**
- * Second example related with the interface. It uses a mask class to the read
- * csv class to anticipate the realization of integration between the two
+ * First example of integration. It illustrates the integration between the
+ * extension 2 and the extension 3
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class SimInterface2CityRead {
+public class SimIntegrationExtensions32 {
     public static void main(String[] args) {
         UserInterface ui = new UserInterface();
         ui.show();

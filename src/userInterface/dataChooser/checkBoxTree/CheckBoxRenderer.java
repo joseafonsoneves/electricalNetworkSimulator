@@ -41,6 +41,7 @@ public class CheckBoxRenderer extends JCheckBox implements TreeCellRenderer {
         this.setText(node.toString());
         // no check box is to have an opaque background
         this.setOpaque(false);
+        this.setVisible(false);
 
         // it returns itself (a checkbox) as leaf of the tree
         return this;

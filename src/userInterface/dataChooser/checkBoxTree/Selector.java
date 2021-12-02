@@ -11,12 +11,17 @@ import javax.swing.tree.TreePath;
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
 public class Selector implements MouseListener {
-    // It receives a reference to the tree so that it can mark the selection in it
+    /**
+     * It receives a reference to the tree so that it can mark the selection in it
+     */
     CheckBoxTree tree;
+    /** Stores how many uncheckable levels there are in the beginning of the tree */
+    int uncheckableLevelsNb;
 
     // Just creates an object of this class passing it a reference to the tree
-    public Selector(CheckBoxTree tree) {
+    public Selector(CheckBoxTree tree, int uncheckableLevelsNb) {
         this.tree = tree;
+        this.uncheckableLevelsNb = uncheckableLevelsNb;
     }
 
     // Specifies what happens upon a mouse click
@@ -27,9 +32,14 @@ public class Selector implements MouseListener {
         if (tp == null) {
             return;
         }
-        // we want to toggle the state of the node so we will impose it to be the
-        // opposite of what it is now
-        this.tree.checkNode(tp, !tree.nodesState.get(tp));
+        // if the selected level is above the uncheckable levels
+        // since we do not consider the root node in uncheckableLevelsNb but the method
+        // getPathCount considers it we have to add 1
+        if (tp.getPathCount() > this.uncheckableLevelsNb + 1) {
+            // we want to toggle the state of the node so we will impose it to be the
+            // opposite of what it is now
+            this.tree.checkNode(tp, !tree.nodesState.get(tp));
+        }
     }
 
     // These are the other methods the MouseEvent interface forces us to implement
