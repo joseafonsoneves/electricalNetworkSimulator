@@ -84,13 +84,12 @@ public class Controller implements ActionListener {
                 // if it is not null
                 if (profilesFile != null) {
                     // reads the file and creates a city from it
-                    City newCity = CSVRead.Read(profilesFile.getAbsolutePath());
+                    this.cities = CSVRead.ReadSeveralCities(profilesFile.getAbsolutePath());
                     // if there was not an error reading the file
-                    if (newCity != null) {
-                        // adds the city to the map of cities
-                        this.cities.put(newCity.getId(), newCity);
-                        // and updates the title
+                    if (this.cities != null && this.cities.size() > 0) {
+                        // updates the name of the file
                         this.citiesDataFile = profilesFile;
+                        // and then updates it in the window of the plot
                         this.setPlotLabels();
                     }
                 }

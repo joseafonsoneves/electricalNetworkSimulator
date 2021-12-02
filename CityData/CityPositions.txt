@@ -1,0 +1,4 @@
+Lyon;1;4
+Bordeaux;2;5
+Marseille;8;6
+Toulouse;4;8

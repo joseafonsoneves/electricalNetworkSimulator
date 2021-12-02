@@ -38,13 +38,21 @@ Soit un produceur (ou un consumer) on a :
 [producer][DayConstantProfile][Puissance][Nom][W=Week Variation][Ensemble des jours];
 [producer][DayConstantProfile][Puissance][Nom][N=No Variation];
 
-[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance][Nom][Y=Year Variation][Début][Durée]
-[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance][Nom][W=Week Variation][Ensemble des jours];
-[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance][Nom][N=No Variation];
+[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][Y=Year Variation][Début][Durée]
+[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][N=No Variation];
 
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance gauche][Puissance droite][Nom][Y=Year Variation][Début][Durée]
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance gauche][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Puissance gauche][Puissance droite][Nom][N=No Variation];
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][Y=Year Variation][Début][Durée]
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][N=No Variation];
+
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][Y=Year Variation][Début][Durée]
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][N=No Variation];
+
+
+De plus on a un fichier qui détaille les positions des villes.
+Chaque ville est suivi de sa position en x et en y : [Ville][x][y].
 
 ## Extension 3 : interface utilisateur graphique Swing
 DE OLIVEIRA MORENO NEVES, José Afonso
