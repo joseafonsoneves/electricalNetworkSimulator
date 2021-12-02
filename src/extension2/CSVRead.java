@@ -208,18 +208,23 @@ public class CSVRead extends AddProfileMethods {
 
                 if (profile.equals("DayConstant")) { // Dans un second temps on regarde quel type de profil on a.
                     AddDayConstant(city_i, type, tokens);
-                }
-                if (profile.equals("DayConstantSquared")) {
+
+                } else if (profile.equals("DayConstantSquared")) {
                     AddDayConstantSquared(city_i, type, tokens);
-                }
-                if (profile.equals("DayLinearSquared")) {
+
+                } else if (profile.equals("DayLinearSquared")) {
                     AddDayLinearSquared(city_i, type, tokens);
-                }
-                if (profile.equals("DayQuadraticSquared")) {
+
+                } else if (profile.equals("DayQuadraticSquared")) {
                     AddDayQuadraticSquared(city_i, type, tokens);
+
+                } else {
+                    return null;
                 }
             }
+
             ListCities.put(city_i.getId(), city_i);
+
         }
         return ListCities;
     }
