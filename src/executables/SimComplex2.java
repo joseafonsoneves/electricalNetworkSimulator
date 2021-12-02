@@ -16,7 +16,6 @@ import model.WhiteNoise;
 
 public class SimComplex2 {
     public static void main(String[] args) {
-
         YearVariation yearVar0 = new YearVariation(0, 364);
         WeekVariation weekVar0 = new WeekVariation(0, 1, 2, 3, 4, 5, 6);
 

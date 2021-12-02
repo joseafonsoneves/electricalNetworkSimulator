@@ -1,6 +1,6 @@
 package executables;
 
-import userInterface.UserInterface;
+import integration.UserInterfaceIntegration;
 
 /**
  * First example of integration. It illustrates the integration between the
@@ -10,7 +10,7 @@ import userInterface.UserInterface;
  */
 public class SimIntegrationExtensions32 {
     public static void main(String[] args) {
-        UserInterface ui = new UserInterface();
+        UserInterfaceIntegration ui = new UserInterfaceIntegration();
         ui.show();
     }
 }
