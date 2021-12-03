@@ -1,0 +1,11 @@
+Toulouse
+producer;DayConstant;100;Coal plant;Y;0;364
+consumer;DayConstant;45;Fridge;Y;0;364
+consumer;DayConstantSquared;20;420;1;0;42;water warmer
+consumer;DayConstantSquared;360;1200;1;0;40;car charger
+consumer;DayConstantSquared;720;1200;1;0;10;heating;Y;270;180
+consumer;DayConstantSquared;20;460;2;780;20;tv
+--
+Brest
+producer;DayConstant;100;Coal plant;Y;0;364
+consumer;DayLinearSquared;360;1200;1;0;40;50;spot this;N
