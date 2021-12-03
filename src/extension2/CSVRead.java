@@ -157,9 +157,11 @@ public class CSVRead extends AddProfileMethods {
     }
 
     /**
-     * @param index
-     * @param filename
-     * @return String
+     * Cette classe permet de retourner une ligne spécifique d'un fichier texte.
+     * 
+     * @param index numéro de la ligne que l'on veut récupérer
+     * @param filename chemin vers le fichier 
+     * @return String la ligne que l'on veut récupérer
      * @throws IOException
      */
     public static String accessLine(int index, String filename) {
@@ -185,6 +187,9 @@ public class CSVRead extends AddProfileMethods {
     }
 
     /**
+     * Cette classe permet de lire plusieurs villes au sein d'un même fichier texte
+     * et de retourner toutes les villes lues dans un même HashMap.
+     * 
      * @param filename le chemin d'accès vers le fichier texte qui contient
      *                 plusieurs villes
      * @return HashMap<String, City> contenant l'ID de la ville ainsi qui l'objet
@@ -245,7 +250,9 @@ public class CSVRead extends AddProfileMethods {
     }
 
     /**
-     * Cette classe ajoute une position à une ville. (Classe réalisable qu'en présence de l'extension 1)
+     * Cette méthode ajoute une position à une ville. (Classe réalisable qu'en
+     * présence de l'extension 1)
+     * 
      * @param city     la ville dont on veut ajouter la position
      * @param filename le chemin vers le fichier texte qui référence les villes et
      *                 leur position
@@ -257,14 +264,16 @@ public class CSVRead extends AddProfileMethods {
             FileReader in = new FileReader(filename);
             BufferedReader bin = new BufferedReader(in);
 
-            int verif = 0;
+            int verif = 0; // Testeur pour vérifier que la position de la ville existe dans le fichier
+                           // texte.
 
             while (bin.ready()) {
 
                 String line = bin.readLine();
                 String[] tokens = line.split(";");
 
-                if (tokens[0].equals(city.getId())) {
+                if (tokens[0].equals(city.getId())) { // Si on trouve la position, alors on modifie la position de la
+                                                      // ville
                     city.moveTo(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
                     verif++;
                 }
@@ -272,7 +281,7 @@ public class CSVRead extends AddProfileMethods {
             }
 
             bin.close();
-            if (verif != 1) {
+            if (verif != 1) { // Si la condition est pas respectée, erreur.
                 throw new IllegalArgumentException("La position de la ville n'existe pas");
             }
         }
@@ -282,40 +291,89 @@ public class CSVRead extends AddProfileMethods {
         }
     }
 
-    static public int getDimensionMatrix(String filename) {
+    /**
+     * Cette méthode permet de donner les dimensions d'une matrice issue d'un
+     * fichier texte.
+     * 
+     * @param filename chemin vers le fichier de la matrice
+     * @return int[] tableau contenant le nombre de lignes puis le nombre de
+     *         colonnes de la matrice
+     */
+    static public int[] getDimensionMatrix(String filename) {
         try {
 
-            int n = 0;
+            int[] size = new int[2]; // Initialisation
 
             FileReader in = new FileReader(filename);
             BufferedReader bin = new BufferedReader(in);
             String line = bin.readLine();
             String[] tokens = line.split(";");
 
-            n = tokens.length;
+            size[1] = tokens.length; // On recupère le nombre de colonnes avec la première ligne. On verifiera par la
+                                     // suite si chaque ligne respecte bien le bon nombre de colonnes
 
+            int lines = 0;
+            while (bin.ready()) {
+                String line2 = bin.readLine();
+                if (!line2.equals("")) { // On incrémente le compteur de ville que si on lit une ligne pas vide
+                    lines++;
+                }
+            }
             bin.close();
-            return n;
+            size[0] = lines + 1; // on rajoute au compteur la ligne qu'on avait lu au début pour trouver le
+                                 // nombre de colonnes
 
-        } catch (IOException fileReadException) {
+            if (size[0] != size[1]) {
+                throw new IllegalArgumentException("La matrice n'est pas carré");
+            } else {
+                return size;
+            }
+        } catch (
+
+        IOException fileReadException) {
             fileReadException.printStackTrace();
-            return 0;
+            return null;
         }
 
     }
 
+    /**
+     * Cette méthode permet de lire une matrice d'un fichier texte. Cela est
+     * notamment utile pour l'extension 1 avec la matrice de connexion entre ville.
+     * 
+     * @param filename chemin vers le fichier de la matrice
+     * @return int[][] la matrice sous forme d'un tableau à 2 dimensions
+     */
     static public int[][] readMatrix(String filename) {
         try {
             FileReader in = new FileReader(filename);
             BufferedReader bin = new BufferedReader(in);
-            int n = getDimensionMatrix(filename);
-            int[][] matrix = new int[n][n];
-            int i = 0;
+
+            int[] size = getDimensionMatrix(filename); // On récupère la taille de la matrice
+            int[][] matrix = new int[size[0]][size[1]]; // On initialise notre matrice
+            int i = 0; // compteur de lignes
             while (bin.ready()) {
+
                 String line = bin.readLine();
+
+                if (line.equals("") || line == null) { // si jamais on lit une ligne vide (comme un saut de ligne), on
+                                                       // sort de la boucle
+                    break;
+                }
+
                 String[] tokens = line.split(";");
+
+                if (tokens.length != size[1]) { // On vérifie que la ligne qu'on lit à la bonne dimension
+                    bin.close();
+                    throw new IllegalArgumentException("La matrice n'est pas au bon format");
+                }
+
                 for (int j = 0; j < tokens.length; j++) {
-                    if (Integer.parseInt(tokens[j])!=0 && Integer.parseInt(tokens[j]) != 1) {
+                    if (Integer.parseInt(tokens[j]) != 0 && Integer.parseInt(tokens[j]) != 1) { // On vérifie que
+                                                                                                // l'élément lu dans la
+                                                                                                // matrice eest bien
+                                                                                                // soit un 1 ou soit un
+                                                                                                // 0.
                         bin.close();
                         throw new IllegalArgumentException("The matrix should be only filled with 0 and 1");
                     }
@@ -324,7 +382,12 @@ public class CSVRead extends AddProfileMethods {
                 i++;
             }
             bin.close();
-            return matrix;
+            if (matrix[0].length == matrix.length) { // Avant de renvoyer la matrice, on vérifie que cette dernière est
+                                                     // bien carré.
+                return matrix;
+            } else {
+                throw new IllegalArgumentException("La matrice n'est carré 2");
+            }
         } catch (IOException fileReadException) {
             fileReadException.printStackTrace();
             return null;
