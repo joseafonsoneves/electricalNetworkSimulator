@@ -8,7 +8,6 @@ import extension4.Linear;
 import extension4.Model;
 import extension4.ModelComposer;
 import extension4.Operations;
-import extension4.Square;
 import extension4.WhiteNoise;
 import profiles.WeekVariation;
 import profiles.YearVariation;

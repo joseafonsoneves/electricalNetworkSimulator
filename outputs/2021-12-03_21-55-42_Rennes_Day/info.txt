@@ -1,0 +1,10 @@
+City: Rennes
+Made at: 2021-12-03_21-55-42
+Was production enough?: true
+
+{
+Consumers of Rennes
+}
+{
+Producers of Rennes
+}

@@ -23,10 +23,10 @@ public class UserInterfaceIntegration extends UserInterface {
     @Override
     protected VerticalToolbar createToolbar() {
         VerticalToolbar toolbar = new VerticalToolbar(0.05, 1);
-        toolbar.addButton("New", "Uses a new configuration file");
+        toolbar.addButton("Load", "Loads a new configuration file");
         toolbar.addButton("Profiles", "Selects new profiles");
         toolbar.addButton("Simulation type", "Selects the type of simulation to perform");
-        toolbar.addButton("Losses", "Simulates the losses");
+        toolbar.addButton("Losses", "Computes the losses");
 
         return toolbar;
     }

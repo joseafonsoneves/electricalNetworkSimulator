@@ -1,8 +1,5 @@
 package executables;
 
-import java.util.ArrayList;
-import java.util.function.BiFunction;
-
 import extension4.Accumulate;
 import extension4.Linear;
 import profiles.WeekVariation;

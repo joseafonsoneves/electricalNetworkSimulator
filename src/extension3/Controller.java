@@ -10,7 +10,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
 
-import extension2.CSVRead;
 import extension3.dataChooser.DataChooser;
 import profiles.Profile;
 import profiles.ProfilesGroup;
@@ -69,8 +68,17 @@ public class Controller implements ActionListener {
      * 
      * @return gets the frame of the object
      */
-    public JFrame getFrame() {
+    protected JFrame getFrame() {
         return this.frame;
+    }
+
+    /**
+     * Gets the group of cities stored in this controller
+     * 
+     * @return group of cities stored
+     */
+    protected HashMap<String, City> getCities() {
+        return this.cities;
     }
 
     /**
@@ -107,47 +115,8 @@ public class Controller implements ActionListener {
      */
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
-            case "New":
-                // gets the file
-                File profilesFile = CSVChooser.getFile(frame, "CityData");
-                // if it is not null
-                if (profilesFile != null) {
-                    // reads the file and creates a city from it
-                    HashMap<String, City> newCities = CSVRead.ReadSeveralCities(profilesFile.getAbsolutePath());
-                    // if there was not an error reading the file
-                    if (newCities != null && newCities.size() > 0) {
-                        // updates the list of cities
-                        this.cities = newCities;
-                        // updates the name of the file
-                        this.citiesDataFile = profilesFile;
-                        // and then updates it in the window of the plot
-                        this.setPlotLabels();
-                    } else {
-                        // this is a temporary solution while I do not create a general error window
-                        System.out.println("Error including cities");
-                    }
-                }
-                break;
-            case "Losses":
-                // gets the file
-                File lossesFile = CSVChooser.getFile(frame, "CityData");
-                // if it is not null
-                if (lossesFile != null) {
-                    // presents its name
-                    System.out.println(lossesFile.getName());
-                }
-                break;
             case "Profiles":
-                // creates the dialog to choose the profiles to use
-                DataChooser chooser = new DataChooser(this.frame, this.cities);
-                // gets the paths of the profiles to use
-                TreePath[] newPaths = chooser.getSelection();
-                // only updates the paths saved if the selection is valid
-                if (newPaths != null) {
-                    this.profilePaths = newPaths;
-                }
-                // gets the data of the desired profiles into the plot
-                this.plotProfiles();
+                this.chooseProfiles();
                 break;
             case "Simulation type":
                 this.setSimType();
@@ -263,9 +232,9 @@ public class Controller implements ActionListener {
         // creates a dialog to choose between them
         String s = (String) JOptionPane.showInputDialog(
                 frame,
-                "Type of simulation to perform?",
+                "Type of simulation to perform?\nIf you choose Day, a new dialog will allow you to choose the day",
                 "Simulation type choice",
-                JOptionPane.PLAIN_MESSAGE,
+                JOptionPane.DEFAULT_OPTION,
                 null,
                 SimType.getPossibleSimTypes(),
                 this.simType.getId());
@@ -288,8 +257,8 @@ public class Controller implements ActionListener {
                 // creates a dialog to choose between possible days
                 s = (String) JOptionPane.showInputDialog(
                         frame,
-                        "Type of simulation to perform?",
-                        "Simulation type choice",
+                        "Day in which to perform the simulation?",
+                        "Simulation day choice",
                         JOptionPane.PLAIN_MESSAGE,
                         null,
                         possibleDays,

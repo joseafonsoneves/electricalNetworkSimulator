@@ -2,8 +2,8 @@ package executables;
 
 import simulator.City;
 import java.util.HashMap;
-import java.util.Map;
 
+import extension1.CityWithPosition;
 import extension2.CSVRead;
 
 /**
@@ -16,21 +16,20 @@ public class SimCSVRead1 {
     public static void main(String[] args) throws Exception {
 
         // Test pour une ville seule
-        City city = CSVRead.Read("CityData/CityTest.txt");
+        City city = CSVRead.read("CityData/CityTest.txt");
         System.out.println(city.getId());
         System.out.println(city.getConsumersDescription());
         System.out.println(city.getProducersDescription());
         // city.getPos().display();
-        CSVRead.AddPosition(city, "CityData/CityPositions.txt");
+        CSVRead.addPosition(new CityWithPosition(city), "CityData/CityPositions.txt");
         // city.getPos().display();
 
         // Test pour plusieurs villes
 
-        HashMap<String, City> map = CSVRead.ReadSeveralCities("CityData/CitiesTest.txt");
+        HashMap<String, City> map = CSVRead.readSeveralCities("CityData/CitiesTest.txt");
 
-        for (Map.Entry<String, City> mapentry : map.entrySet()) {
-            City c = mapentry.getValue();
-            CSVRead.AddPosition(c, "CityData/CityPositions.txt");
+        for (City c : map.values()) {
+            CSVRead.addPosition(new CityWithPosition(c), "CityData/CityPositions.txt");
             System.out.println(c.getId());
             // c.getPos().display();
             System.out.println(c.getConsumersDescription());

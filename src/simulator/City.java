@@ -17,6 +17,18 @@ public class City {
     private ProfilesGroup consumers;
 
     /**
+     * Copy constructor for the object city with only copy of the references of the
+     * attributes
+     * 
+     * @param city city to copy
+     */
+    public City(City city) {
+        this.id = city.id;
+        this.consumers = city.consumers;
+        this.producers = city.producers;
+    }
+
+    /**
      * Creates city with only the identifier of the city and initializes the lists
      * of producers and consumers
      * 

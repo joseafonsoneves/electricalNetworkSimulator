@@ -1,0 +1,10 @@
+City: Nantes
+Made at: 2021-12-03_21-55-34
+Was production enough?: true
+
+{
+Consumers of Nantes
+}
+{
+Producers of Nantes
+}

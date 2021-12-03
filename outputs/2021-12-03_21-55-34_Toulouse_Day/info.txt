@@ -1,0 +1,20 @@
+City: Toulouse
+Made at: 2021-12-03_21-55-34
+Was production enough?: true
+
+{
+Consumers of Toulouse
+{
+House of Jose
+fridge - Day constant profile with power in W 200.0. Lasts the whole year. Lasts the whole week
+app2 - Day constant profile with power in W 200.0. Lasts the whole year. Lasts the whole week
+}
+
+cons2 - Day constant profile with power in W 100.0. Lasts the whole year. Lasts the whole week
+cons1 - Day constant profile with power in W 100.0. Lasts the whole year. Lasts the whole week
+}
+{
+Producers of Toulouse
+prod2 - Day constant profile with power in W 1000.0. Lasts the whole year. Lasts the whole week
+prod1 - Day constant profile with power in W 400.0. Lasts the whole year. Lasts the whole week
+}

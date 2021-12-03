@@ -1,0 +1,11 @@
+City: Toulouse
+Made at: 2021-12-03_21-55-42
+Was production enough?: false
+
+{
+Consumers of Toulouse
+fridge - Day constant profile with power in W 200.0. Lasts the whole year. Lasts the whole week
+}
+{
+Producers of Toulouse
+}

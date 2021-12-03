@@ -30,6 +30,15 @@ public class Results {
     private double[] powerLoss;
 
     /**
+     * Simpler constructor which only takes the type of simulation as argument
+     * 
+     * @param type type of th simulation to be created
+     */
+    public Results(SimType type) {
+        this.type = type;
+    }
+
+    /**
      * Creates a variable that groups all the results that are provided by the
      * simulator and treats them to create new overviews over them
      * 
@@ -262,18 +271,18 @@ public class Results {
      */
     public double[] getColumn(int index) {
         switch (index) {
-        case 0:
-            return getConsumption();
-        case 1:
-            return getProduction();
-        case 2:
-            return getEnergyConsumption();
-        case 3:
-            return getEnergyProduction();
-        case 4:
-            return getPowerLoss();
-        default:
-            return null;
+            case 0:
+                return getConsumption();
+            case 1:
+                return getProduction();
+            case 2:
+                return getEnergyConsumption();
+            case 3:
+                return getEnergyProduction();
+            case 4:
+                return getPowerLoss();
+            default:
+                return null;
         }
     }
 
@@ -302,5 +311,50 @@ public class Results {
      */
     public String getXLabel() {
         return this.type.getXLabel();
+    }
+
+    /**
+     * Sets the production value of a results object
+     * 
+     * @param production new value of production
+     */
+    public void setProduction(double[] production) {
+        this.production = production;
+    }
+
+    /**
+     * Sets the produced energy value of a results object
+     * 
+     * @param energyProduction new value of produced energy
+     */
+    public void setEnergyProduction(double[] energyProduction) {
+        this.energyProduction = energyProduction;
+    }
+
+    /**
+     * Sets the consumption value of a results object
+     * 
+     * @param consumption new value of consumption
+     */
+    public void setConsumption(double[] consumption) {
+        this.consumption = consumption;
+    }
+
+    /**
+     * Sets the consumed energy value of a results object
+     * 
+     * @param energyConsumption new value of consumed energy
+     */
+    public void setEnergyConsumption(double[] energyConsumption) {
+        this.energyConsumption = energyConsumption;
+    }
+
+    /**
+     * Sets the power loss value of a results object
+     * 
+     * @param powerLoss new value of power loss
+     */
+    public void setPowerLoss(double[] powerLoss) {
+        this.powerLoss = powerLoss;
     }
 }

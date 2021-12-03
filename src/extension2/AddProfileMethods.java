@@ -1,6 +1,8 @@
 package extension2;
 
 import simulator.City;
+import extension4.Sinusoid;
+import extension4.WhiteNoise;
 import profiles.DayConstantProfile;
 import profiles.WeekVariation;
 import profiles.YearVariation;
@@ -20,22 +22,24 @@ import profiles.DayQuadraticSquaredProfile;
 public class AddProfileMethods {
 
     /**
-     * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param city        la ville concernée par l'ajout
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayConstant(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayConstant(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // Ensuite on regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[4].equals("Y")) { // YearVariation
                 city.addProducer(new DayConstantProfile(tokens[3], new YearConstant(Integer.parseInt(tokens[2])),
                         new YearVariation(Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]))));
             } else if (tokens[4].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 4];
+                int[] Days_Array = new int[tokens.length - 4]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 5; i < tokens.length; i++) {
                     Days_Array[i - 5] = Integer.parseInt(tokens[i]);
                 }
@@ -52,7 +56,8 @@ public class AddProfileMethods {
                 city.addConsumer(new DayConstantProfile(tokens[3], new YearConstant(Integer.parseInt(tokens[2])),
                         new YearVariation(Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]))));
             } else if (tokens[4].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 4];
+                int[] Days_Array = new int[tokens.length - 4]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 5; i < tokens.length; i++) {
                     Days_Array[i - 5] = Integer.parseInt(tokens[i]);
                 }
@@ -67,15 +72,16 @@ public class AddProfileMethods {
     }
 
     /**
-     * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param city        la ville concernée par l'ajout
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayConstantSquared(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayConstantSquared(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // On regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[8].equals("Y")) { // YearVariation
@@ -85,7 +91,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[9]), Integer.parseInt(tokens[10]))));
             } else if (tokens[8].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 8];
+                int[] Days_Array = new int[tokens.length - 8]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 9; i < tokens.length; i++) {
                     Days_Array[i - 9] = Integer.parseInt(tokens[i]);
                 }
@@ -110,7 +117,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[9]), Integer.parseInt(tokens[10]))));
             } else if (tokens[6].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 8];
+                int[] Days_Array = new int[tokens.length - 8]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 9; i < tokens.length; i++) {
                     Days_Array[i - 9] = Integer.parseInt(tokens[i]);
                 }
@@ -131,15 +139,16 @@ public class AddProfileMethods {
     }
 
     /**
-     * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param city        la ville concernée par l'ajout
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayLinearSquared(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayLinearSquared(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // On regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[9].equals("Y")) { // YearVariation
@@ -150,7 +159,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[10]), Integer.parseInt(tokens[11]))));
             } else if (tokens[9].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 9];
+                int[] Days_Array = new int[tokens.length - 9]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 10; i < tokens.length; i++) {
                     Days_Array[i - 10] = Integer.parseInt(tokens[i]);
                 }
@@ -178,7 +188,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[10]), Integer.parseInt(tokens[11]))));
             } else if (tokens[9].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 9];
+                int[] Days_Array = new int[tokens.length - 9]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 10; i < tokens.length; i++) {
                     Days_Array[i - 10] = Integer.parseInt(tokens[i]);
                 }
@@ -202,14 +213,15 @@ public class AddProfileMethods {
 
     /**
      * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayQuadraticSquared(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayQuadraticSquared(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // On regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[10].equals("Y")) { // YearVariation
@@ -221,7 +233,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[11]), Integer.parseInt(tokens[12]))));
             } else if (tokens[10].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 10];
+                int[] Days_Array = new int[tokens.length - 10]; // On met dans un tableau les jours concernés par la
+                                                                // variation.
                 for (int i = 11; i < tokens.length; i++) {
                     Days_Array[i - 11] = Integer.parseInt(tokens[i]);
                 }
@@ -252,7 +265,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[11]), Integer.parseInt(tokens[12]))));
             } else if (tokens[10].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 10];
+                int[] Days_Array = new int[tokens.length - 10]; // On met dans un tableau les jours concernés par la
+                                                                // variation.
                 for (int i = 11; i < tokens.length; i++) {
                     Days_Array[i - 11] = Integer.parseInt(tokens[i]);
                 }
@@ -276,4 +290,59 @@ public class AddProfileMethods {
         return city;
     }
 
+    public static City addSinusoid(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
+            int[] Days_Array = new int[tokens.length - 11]; // On met dans un tableau les jours concernés par la
+                                                            // variation.
+            for (int i = 12; i < tokens.length; i++) {
+                Days_Array[i - 12] = Integer.parseInt(tokens[i]);
+            }
+            city.addProducer(new Sinusoid(tokens[6], new WeekVariation(Days_Array),
+                    new YearVariation(Integer.parseInt(tokens[8]), Integer.parseInt(tokens[9])),
+                    Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]),
+                    Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6])));
+        } else {
+            int[] Days_Array = new int[tokens.length - 11]; // On met dans un tableau les jours concernés par la
+                                                            // variation.
+            for (int i = 12; i < tokens.length; i++) {
+                Days_Array[i - 12] = Integer.parseInt(tokens[i]);
+            }
+            city.addConsumer(new Sinusoid(tokens[6], new WeekVariation(Days_Array),
+                    new YearVariation(Integer.parseInt(tokens[8]), Integer.parseInt(tokens[9])),
+                    Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]),
+                    Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6])));
+
+        }
+        return city;
+    }
+
+    public static City addWhiteNoise(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
+            int[] Days_Array = new int[tokens.length - 10]; // On met dans un tableau les jours concernés par la
+                                                            // variation.
+            for (int i = 11; i < tokens.length; i++) {
+                Days_Array[i - 11] = Integer.parseInt(tokens[i]);
+            }
+            city.addProducer(new WhiteNoise(tokens[6], new WeekVariation(Days_Array),
+                    new YearVariation(Integer.parseInt(tokens[7]), Integer.parseInt(tokens[8])),
+                    Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
+                    Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5])));
+        } else {
+            int[] Days_Array = new int[tokens.length - 10]; // On met dans un tableau les jours concernés par la
+                                                            // variation.
+            for (int i = 11; i < tokens.length; i++) {
+                Days_Array[i - 11] = Integer.parseInt(tokens[i]);
+            }
+            city.addConsumer(new WhiteNoise(tokens[6], new WeekVariation(Days_Array),
+                    new YearVariation(Integer.parseInt(tokens[7]), Integer.parseInt(tokens[8])),
+                    Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
+                    Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5])));
+
+        }
+        return city;
+    }
+
+    public static City addDelayer(City city, String typeProfile, String[] tokens) {
+        return null;
+    }
 }

@@ -1,0 +1,4 @@
+Toulouse
+producer;Square;100;10;50;80;CentraSquare;Y;1;200;W;2;5;6
+consumer;WhiteNoise;100;10;50;80;CentraSin;Y;1;200;W;2;5;6
+consumer;Sinusoid;100;20;30;50;80;CentralWhite;Y;1;200;W;2;5;6
