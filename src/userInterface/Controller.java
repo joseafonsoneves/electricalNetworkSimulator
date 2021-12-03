@@ -10,7 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.tree.TreePath;
 
-import extension2.CSVRead;
+import extension2.CSVReadWithExtension1;
 import profiles.Profile;
 import profiles.ProfilesGroup;
 import ptolemy.plot.Plot;
@@ -113,7 +113,7 @@ public class Controller implements ActionListener {
                 // if it is not null
                 if (profilesFile != null) {
                     // reads the file and creates a city from it
-                    HashMap<String, City> newCities = CSVRead.readSeveralCities(profilesFile.getAbsolutePath());
+                    HashMap<String, City> newCities = CSVReadWithExtension1.readSeveralCities(profilesFile.getAbsolutePath());
                     // if there was not an error reading the file
                     if (newCities != null && newCities.size() > 0) {
                         // updates the list of cities

@@ -13,7 +13,7 @@ import java.util.HashMap;
  * 
  * @author Antoine Pigamo
  */
-public class CSVRead extends AddProfileMethods {
+public class CSVReadWithExtension1 extends AddProfileMethods {
 
     /**
      * @param filename le chemin vers le fichier texte permettant de créer la ville.
@@ -47,6 +47,14 @@ public class CSVRead extends AddProfileMethods {
                     addDayLinearSquared(city, type, tokens);
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city, type, tokens);
+                } else if (profile.equals("Sinusoid")) {
+
+                } else if (profile.equals("WhiteNoise")) {
+
+                } else if (profile.equals("ModelComposer")) {
+
+                } else if (profile.equals("Delayer")) {
+
                 }
             }
             bin.close();
@@ -218,6 +226,12 @@ public class CSVRead extends AddProfileMethods {
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city_i, type, tokens);
 
+                } else if (profile.equals("Sinusoid")) {
+
+                } else if (profile.equals("WhiteNoise")) {
+
+                } else if (profile.equals("Delayer")) {
+
                 } else {
                     return null; // Si on ne satisfait aucune des conditions précedentes alors le fichier n'est
                                  // pas au bon format. On renvoie alors une valeur nulle pour le HashMap.
@@ -228,5 +242,42 @@ public class CSVRead extends AddProfileMethods {
 
         }
         return ListCities;
+    }
+
+    /**
+     * @param city     la ville dont on veut ajouter la position
+     * @param filename le chemin vers le fichier texte qui référence les villes et
+     *                 leur position
+     * @throws IOException
+     */
+    static public void addPosition(City city, String filename) {
+        try {
+
+            FileReader in = new FileReader(filename);
+            BufferedReader bin = new BufferedReader(in);
+
+            int verif = 0;
+
+            while (bin.ready()) {
+
+                String line = bin.readLine();
+                String[] tokens = line.split(";");
+
+                if (tokens[0].equals(city.getId())) {
+                    city.moveTo(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                    verif++;
+                }
+
+            }
+
+            bin.close();
+            if (verif != 1) {
+                throw new IllegalArgumentException("La position de la ville n'existe pas");
+            }
+        }
+
+        catch (IOException fileReadException) {
+            fileReadException.printStackTrace();
+        }
     }
 }
