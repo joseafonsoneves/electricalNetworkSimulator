@@ -21,7 +21,7 @@ public class CSVRead extends AddProfileMethods {
      *                 le README.txt du package extension2.cityData
      * @return City, la ville créée à partir du fichier texte.
      */
-    public static City Read(String filename) {
+    public static City read(String filename) {
         try {
             FileReader in = new FileReader(filename);
             BufferedReader bin = new BufferedReader(in);
@@ -40,16 +40,21 @@ public class CSVRead extends AddProfileMethods {
 
                 // On regarde si on traite un consommateur ou un producteur.
                 if (profile.equals("DayConstant")) { // Dans un second temps on regarde quel type de profil on a.
-                    AddDayConstant(city, type, tokens);
-                }
-                if (profile.equals("DayConstantSquared")) {
-                    AddDayConstantSquared(city, type, tokens);
-                }
-                if (profile.equals("DayLinearSquared")) {
-                    AddDayLinearSquared(city, type, tokens);
-                }
-                if (profile.equals("DayQuadraticSquared")) {
-                    AddDayQuadraticSquared(city, type, tokens);
+                    addDayConstant(city, type, tokens);
+                } else if (profile.equals("DayConstantSquared")) {
+                    addDayConstantSquared(city, type, tokens);
+                } else if (profile.equals("DayLinearSquared")) {
+                    addDayLinearSquared(city, type, tokens);
+                } else if (profile.equals("DayQuadraticSquared")) {
+                    addDayQuadraticSquared(city, type, tokens);
+                } else if (profile.equals("Sinusoid")) {
+
+                } else if (profile.equals("WhiteNoise")) {
+
+                } else if (profile.equals("ModelComposer")) {
+
+                } else if (profile.equals("Delayer")) {
+
                 }
             }
             bin.close();
@@ -94,7 +99,7 @@ public class CSVRead extends AddProfileMethods {
      *         fichier qui contient plusieurs villes
      * @throws Exception
      */
-    static ArrayList<Integer> EndLines(String filename) {
+    static ArrayList<Integer> endLines(String filename) {
         try {
             ArrayList<Integer> endLinesList = new ArrayList<Integer>();
 
@@ -125,7 +130,7 @@ public class CSVRead extends AddProfileMethods {
      * @return ArrayList<Integer>
      * @throws Exception
      */
-    static ArrayList<Integer> StartLines(String filename) {
+    static ArrayList<Integer> startLines(String filename) {
         try {
             ArrayList<Integer> startLinesList = new ArrayList<Integer>();
 
@@ -157,7 +162,7 @@ public class CSVRead extends AddProfileMethods {
      * @return String
      * @throws IOException
      */
-    public static String AccessLine(int index, String filename) {
+    public static String accessLine(int index, String filename) {
         try {
             String goodLine = null;
 
@@ -186,21 +191,21 @@ public class CSVRead extends AddProfileMethods {
      *         City correspondant
      * @throws Exception
      */
-    public static HashMap<String, City> ReadSeveralCities(String filename) {
+    public static HashMap<String, City> readSeveralCities(String filename) {
 
         HashMap<String, City> ListCities = new HashMap<String, City>();
 
         // On récupère les données importantes pour regarder chaque ville du fichier
         int n = countCities(filename);
-        ArrayList<Integer> ls = CSVRead.StartLines(filename);
-        ArrayList<Integer> le = CSVRead.EndLines(filename);
+        ArrayList<Integer> ls = CSVRead.startLines(filename);
+        ArrayList<Integer> le = CSVRead.endLines(filename);
 
         for (int i = 0; i < n; i++) {
 
-            City city_i = new City(AccessLine(ls.get(i), filename));
+            City city_i = new City(accessLine(ls.get(i), filename));
 
             for (int l = ls.get(i) + 1; l <= le.get(i); l++) {
-                String line = AccessLine(l, filename);
+                String line = accessLine(l, filename);
                 if (line.equals("")) {
                     break; // Si le fichier comporte une ligne vide en trop, alors cela signifie que la
                            // lecture du fichier est fini.
@@ -210,16 +215,16 @@ public class CSVRead extends AddProfileMethods {
                 String profile = tokens[1];
 
                 if (profile.equals("DayConstant")) { // Dans un second temps on regarde quel profil on traite
-                    AddDayConstant(city_i, type, tokens);
+                    addDayConstant(city_i, type, tokens);
 
                 } else if (profile.equals("DayConstantSquared")) {
-                    AddDayConstantSquared(city_i, type, tokens);
+                    addDayConstantSquared(city_i, type, tokens);
 
                 } else if (profile.equals("DayLinearSquared")) {
-                    AddDayLinearSquared(city_i, type, tokens);
+                    addDayLinearSquared(city_i, type, tokens);
 
                 } else if (profile.equals("DayQuadraticSquared")) {
-                    AddDayQuadraticSquared(city_i, type, tokens);
+                    addDayQuadraticSquared(city_i, type, tokens);
 
                 } else if (profile.equals("Sinusoid")) {
 
@@ -247,7 +252,7 @@ public class CSVRead extends AddProfileMethods {
      *                 leur position
      * @throws IOException
      */
-    static public void AddPosition(City city, String filename) {
+    static public void addPosition(City city, String filename) {
         try {
 
             FileReader in = new FileReader(filename);

@@ -21,15 +21,15 @@ public class AddProfileMethods {
 
     /**
      * @param city        la ville concernée par l'ajout
-     * @param TypeProfile le type de profil (consommateur ou producteur)
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
      *                    en fonction du profil concerné et de sa manière de
      *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayConstant(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayConstant(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // Ensuite on regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[4].equals("Y")) { // YearVariation
@@ -71,15 +71,15 @@ public class AddProfileMethods {
 
     /**
      * @param city        la ville concernée par l'ajout
-     * @param TypeProfile le type de profil (consommateur ou producteur)
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
      *                    en fonction du profil concerné et de sa manière de
      *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayConstantSquared(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayConstantSquared(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // On regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[8].equals("Y")) { // YearVariation
@@ -138,15 +138,15 @@ public class AddProfileMethods {
 
     /**
      * @param city        la ville concernée par l'ajout
-     * @param TypeProfile le type de profil (consommateur ou producteur)
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
      *                    en fonction du profil concerné et de sa manière de
      *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayLinearSquared(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayLinearSquared(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // On regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[9].equals("Y")) { // YearVariation
@@ -211,15 +211,15 @@ public class AddProfileMethods {
 
     /**
      * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil (consommateur ou producteur)
+     * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
      *                    en fonction du profil concerné et de sa manière de
      *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
-    public static City AddDayQuadraticSquared(City city, String TypeProfile, String[] tokens) {
-        if (TypeProfile.equals("producer")) {
+    public static City addDayQuadraticSquared(City city, String typeProfile, String[] tokens) {
+        if (typeProfile.equals("producer")) {
             // On regarde quel type de variation a le producteur. L'ajout
             // du producteurs dépend de ses variations.
             if (tokens[10].equals("Y")) { // YearVariation
