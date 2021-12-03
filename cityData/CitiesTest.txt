@@ -1,11 +1,11 @@
 Lyon
 producer;DayConstant;100;Centrale1;Y;1;200
-consumer;DayConstantSquared;1;100;50;20;10;Antoine;Y;1;200
+consumer;DayConstantSquared;1;100;50;20;10;User;Y;1;200
 --
 Bordeaux
 producer;DayConstant;100;Centrale1;Y;1;200
-consumer;DayConstantSquared;1;100;50;20;10;Antoine;Y;1;200
+consumer;DayConstantSquared;1;100;50;20;10;User;Y;1;200
 --
 Marseille
 producer;DayConstant;100;Centrale1;Y;1;200
-consumer;DayConstantSquared;1;100;50;20;10;Antoine;Y;1;200
+consumer;DayConstantSquared;1;100;50;20;10;User;Y;1;200
