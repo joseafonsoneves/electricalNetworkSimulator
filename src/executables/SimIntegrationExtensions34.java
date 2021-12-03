@@ -3,15 +3,14 @@ package executables;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
-import model.Accumulate;
-import model.CompositionWithLinear;
-import model.Linear;
-import model.WhiteNoise;
-import model.Model;
-import model.ModelComposer;
-import model.Operations;
-import userInterface.UserInterface;
-
+import extension3.UserInterface;
+import extension4.Accumulate;
+import extension4.CompositionWithLinear;
+import extension4.Linear;
+import extension4.Model;
+import extension4.ModelComposer;
+import extension4.Operations;
+import extension4.WhiteNoise;
 import profiles.DayConstantProfile;
 import profiles.DayConstantSquaredProfile;
 import profiles.DayLinearSquaredProfile;

@@ -1,9 +1,9 @@
 package integration;
 
+import extension3.Controller;
+import extension3.UserInterface;
+import extension3.VerticalToolbar;
 import ptolemy.plot.Plot;
-import userInterface.Controller;
-import userInterface.UserInterface;
-import userInterface.VerticalToolbar;
 
 /**
  * Class to allow the integration of different extensions with the user

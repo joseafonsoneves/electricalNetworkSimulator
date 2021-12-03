@@ -1,5 +1,6 @@
 package executables;
 
+import extension3.UserInterface;
 import profiles.DayConstantProfile;
 import profiles.DayConstantSquaredProfile;
 import profiles.DayLinearSquaredProfile;
@@ -11,7 +12,6 @@ import profiles.YearVariation;
 import profiles.parameters.YearConstant;
 import profiles.parameters.YearSinusoid;
 import simulator.City;
-import userInterface.UserInterface;
 
 /**
  * First example related with the interface. Created from the complex scenario.

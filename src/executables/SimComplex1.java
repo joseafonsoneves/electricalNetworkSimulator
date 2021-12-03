@@ -3,8 +3,8 @@ package executables;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
-import model.Accumulate;
-import model.Linear;
+import extension4.Accumulate;
+import extension4.Linear;
 import profiles.WeekVariation;
 import profiles.YearVariation;
 

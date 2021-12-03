@@ -7,10 +7,10 @@ import java.util.HashMap;
 import javax.swing.JFrame;
 
 import extension2.CSVRead;
+import extension3.CSVChooser;
+import extension3.Controller;
 import ptolemy.plot.Plot;
 import simulator.City;
-import userInterface.CSVChooser;
-import userInterface.Controller;
 
 /**
  * Allows the functioning of the buttons. It was widely inspired by the class

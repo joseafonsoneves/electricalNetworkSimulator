@@ -3,16 +3,15 @@ package executables;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
-import model.WhiteNoise;
+import extension4.CompositionWithLinear;
+import extension4.Linear;
+import extension4.Model;
+import extension4.ModelComposer;
+import extension4.Operations;
+import extension4.Square;
+import extension4.WhiteNoise;
 import profiles.WeekVariation;
 import profiles.YearVariation;
-import model.Square;
-import model.CompositionWithLinear;
-import model.Linear;
-import model.Model;
-import model.Operations;
-import model.ModelComposer;
-import model.WhiteNoise;
 
 public class SimComplex2 {
     public static void main(String[] args) {
