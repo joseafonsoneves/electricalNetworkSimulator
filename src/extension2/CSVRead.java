@@ -47,6 +47,14 @@ public class CSVRead extends AddProfileMethods {
                     addDayLinearSquared(city, type, tokens);
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city, type, tokens);
+                } else if (profile.equals("Sinusoid")) {
+
+                } else if (profile.equals("WhiteNoise")) {
+
+                } else if (profile.equals("ModelComposer")) {
+
+                } else if (profile.equals("Delayer")) {
+
                 }
             }
             bin.close();
@@ -189,8 +197,8 @@ public class CSVRead extends AddProfileMethods {
 
         // On récupère les données importantes pour regarder chaque ville du fichier
         int n = countCities(filename);
-        ArrayList<Integer> ls = CSVReadWithExtension1.startLines(filename);
-        ArrayList<Integer> le = CSVReadWithExtension1.endLines(filename);
+        ArrayList<Integer> ls = CSVRead.startLines(filename);
+        ArrayList<Integer> le = CSVRead.endLines(filename);
 
         for (int i = 0; i < n; i++) {
 
@@ -218,6 +226,12 @@ public class CSVRead extends AddProfileMethods {
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city_i, type, tokens);
 
+                } else if (profile.equals("Sinusoid")) {
+
+                } else if (profile.equals("WhiteNoise")) {
+
+                } else if (profile.equals("Delayer")) {
+
                 } else {
                     return null; // Si on ne satisfait aucune des conditions précedentes alors le fichier n'est
                                  // pas au bon format. On renvoie alors une valeur nulle pour le HashMap.
@@ -228,5 +242,90 @@ public class CSVRead extends AddProfileMethods {
 
         }
         return ListCities;
+    }
+
+    /**
+     * Cette classe ajoute une position à une ville. (Classe réalisable qu'en présence de l'extension 1)
+     * @param city     la ville dont on veut ajouter la position
+     * @param filename le chemin vers le fichier texte qui référence les villes et
+     *                 leur position
+     * @throws IOException
+     */
+    static public void addPosition(City city, String filename) {
+        try {
+
+            FileReader in = new FileReader(filename);
+            BufferedReader bin = new BufferedReader(in);
+
+            int verif = 0;
+
+            while (bin.ready()) {
+
+                String line = bin.readLine();
+                String[] tokens = line.split(";");
+
+                if (tokens[0].equals(city.getId())) {
+                    city.moveTo(Integer.parseInt(tokens[1]), Integer.parseInt(tokens[2]));
+                    verif++;
+                }
+
+            }
+
+            bin.close();
+            if (verif != 1) {
+                throw new IllegalArgumentException("La position de la ville n'existe pas");
+            }
+        }
+
+        catch (IOException fileReadException) {
+            fileReadException.printStackTrace();
+        }
+    }
+
+    static public int getDimensionMatrix(String filename) {
+        try {
+
+            int n = 0;
+
+            FileReader in = new FileReader(filename);
+            BufferedReader bin = new BufferedReader(in);
+            String line = bin.readLine();
+            String[] tokens = line.split(";");
+
+            n = tokens.length;
+
+            bin.close();
+            return n;
+
+        } catch (IOException fileReadException) {
+            fileReadException.printStackTrace();
+            return 0;
+        }
+
+    }
+
+    static public int[][] readMatrix(String filename) {
+        try {
+            FileReader in = new FileReader(filename);
+            BufferedReader bin = new BufferedReader(in);
+            int n = getDimensionMatrix(filename);
+            int[][] matrix = new int[n][n];
+            int i = 0;
+            while (bin.ready()) {
+                String line = bin.readLine();
+                String[] tokens = line.split(";");
+                for (int j = 0; j < tokens.length; j++) {
+                    if (Integer.parseInt(tokens[j])!=0 && Integer.parseInt(tokens[j]) != 1) {
+                        throw new IllegalArgumentException("The matrix should be only filled with 0 and 1");
+                    }
+                    matrix[i][j] = Integer.parseInt(tokens[j]);
+                }
+                i++;
+            }
+            return matrix;
+        } catch (IOException fileReadException) {
+            fileReadException.printStackTrace();
+            return null;
+        }
     }
 }

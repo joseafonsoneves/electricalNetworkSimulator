@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 import javax.swing.JFrame;
 
-import extension2.CSVReadWithExtension1;
+import extension2.CSVRead;
 import ptolemy.plot.Plot;
 import simulator.City;
 import userInterface.CSVChooser;
@@ -44,7 +44,7 @@ public class ControllerIntegration extends Controller {
                 // if it is not null
                 if (profilesFile != null) {
                     // reads the file and creates a city from it
-                    HashMap<String, City> newCities = CSVReadWithExtension1.readSeveralCities(profilesFile.getAbsolutePath());
+                    HashMap<String, City> newCities = CSVRead.readSeveralCities(profilesFile.getAbsolutePath());
                     // if there was not an error reading the file
                     if (newCities != null && newCities.size() > 0) {
                         // updates the list of cities
