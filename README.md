@@ -47,7 +47,7 @@ Soit un produceur (ou un consumer) on a :
 [producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][N=No Variation];
 
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][Y=Year Variation][Début][Durée]
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][W=Week Variation][Ensemble des jours]
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][N=No Variation];
 
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][Y=Year Variation][Début][Durée]
@@ -56,7 +56,9 @@ Soit un produceur (ou un consumer) on a :
 
 Pour les nouveaux profils de l'extension 4 :
 
-[]
+[producer][Square][Amplitude][période en minutes][Début (minute)][Fin (minute)][ID][Y=Year Variation][Début][Durée][W=Week Variation][Ensemble des jours]
+[producer][WhiteNoise][mu][sigma][Début (minute)][Fin (minute)][ID][Y=Year Variation][Début][Durée][W=Week Variation][Ensemble des jours]
+[producer][Sinusoid][Amplitude][Fréquence][Phase][Début (minute)][Fin (minute)][ID][Y=Year Variation][Début][Durée][W=Week Variation][Ensemble des jours]
 
 Lorsque qu'on a plusieurs villes dans un fichier texte, les villes sont séparés par une ligne"--"
 

@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Classe qui référence les différentes méthodes qui permettent de lire un
@@ -48,13 +49,10 @@ public class CSVRead extends AddProfileMethods {
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city, type, tokens);
                 } else if (profile.equals("Sinusoid")) {
-
+                    addSinusoid(city, type, tokens);
                 } else if (profile.equals("WhiteNoise")) {
 
-                } else if (profile.equals("ModelComposer")) {
-
-                } else if (profile.equals("Delayer")) {
-
+                } else if (profile.equals("Square")) {
                 }
             }
             bin.close();
@@ -159,8 +157,8 @@ public class CSVRead extends AddProfileMethods {
     /**
      * Cette classe permet de retourner une ligne spécifique d'un fichier texte.
      * 
-     * @param index numéro de la ligne que l'on veut récupérer
-     * @param filename chemin vers le fichier 
+     * @param index    numéro de la ligne que l'on veut récupérer
+     * @param filename chemin vers le fichier
      * @return String la ligne que l'on veut récupérer
      * @throws IOException
      */
@@ -232,7 +230,7 @@ public class CSVRead extends AddProfileMethods {
                     addDayQuadraticSquared(city_i, type, tokens);
 
                 } else if (profile.equals("Sinusoid")) {
-
+                    addSinusoid(city_i, type, tokens);
                 } else if (profile.equals("WhiteNoise")) {
 
                 } else if (profile.equals("Delayer")) {
@@ -388,6 +386,58 @@ public class CSVRead extends AddProfileMethods {
             } else {
                 throw new IllegalArgumentException("La matrice n'est carré 2");
             }
+        } catch (IOException fileReadException) {
+            fileReadException.printStackTrace();
+            return null;
+        }
+    }
+
+    static public int[][] readMatrixAndAddPositions(HashMap<String, City> map, String filename) {
+        try {
+            FileReader in = new FileReader(filename);
+            BufferedReader bin = new BufferedReader(in);
+
+            // Partie Positions
+            for (Map.Entry<String, City> mapentry : map.entrySet()) {
+                City c = mapentry.getValue();
+                CSVRead.addPosition(c, filename);
+            }
+
+            // Partie Matrice
+            ArrayList<Integer> separationLine = endLines(filename);
+            int istart = separationLine.get(0) + 2; // On trouve la ligne de départ
+
+            String firstLineMatrix = accessLine(istart, filename);
+            String[] tokens1 = firstLineMatrix.split(";");
+            int n = tokens1.length; // On trouve la taille de la matrice carrée grâce à la première ligne
+            int[][] matrix = new int[n][n]; // Initialisation
+
+            for (int i = istart; i <= istart + n - 1; i++) { // On parcourt chaque ligne
+
+                String line = accessLine(i, filename);
+
+                String[] tokens = line.split(";");
+
+                if (tokens.length != n) { // Si une ligne a un nombre de colonnes différents de n alors la matrice n'est
+                                          // pas carrée.
+                    bin.close();
+                    throw new IllegalArgumentException("La matrice n'est pas carrée");
+                }
+                for (int j = 0; j < n; j++) {
+                    if (Integer.parseInt(tokens[j]) != 0 && Integer.parseInt(tokens[j]) != 1) { // On vérifie que
+                                                                                                // l'élément lu dans la
+                                                                                                // matrice eest bien
+                                                                                                // soit un 1 ou soit un
+                                                                                                // 0.
+                        bin.close();
+                        throw new IllegalArgumentException("The matrix should be only filled with 0 and 1");
+                    }
+                    matrix[i - istart][j] = Integer.parseInt(tokens[j]);
+                }
+            }
+            bin.close();
+            return matrix;
+
         } catch (IOException fileReadException) {
             fileReadException.printStackTrace();
             return null;
