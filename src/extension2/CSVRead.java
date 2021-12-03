@@ -180,15 +180,17 @@ public class CSVRead extends AddProfileMethods {
     }
 
     /**
-     * @param filename
-     * @return HashMap<String, City>
+     * @param filename le chemin d'accès vers le fichier texte qui contient
+     *                 plusieurs villes
+     * @return HashMap<String, City> contenant l'ID de la ville ainsi qui l'objet
+     *         City correspondant
      * @throws Exception
      */
     public static HashMap<String, City> ReadSeveralCities(String filename) {
 
         HashMap<String, City> ListCities = new HashMap<String, City>();
 
-        // ON récupère les données importantes pour regarder chaque ville du fichier
+        // On récupère les données importantes pour regarder chaque ville du fichier
         int n = countCities(filename);
         ArrayList<Integer> ls = CSVRead.StartLines(filename);
         ArrayList<Integer> le = CSVRead.EndLines(filename);
@@ -200,13 +202,14 @@ public class CSVRead extends AddProfileMethods {
             for (int l = ls.get(i) + 1; l <= le.get(i); l++) {
                 String line = AccessLine(l, filename);
                 if (line.equals("")) {
-                    throw new IllegalArgumentException("Le fichier texte comporte une ligne vide");
+                    break; // Si le fichier comporte une ligne vide en trop, alors cela signifie que la
+                           // lecture du fichier est fini.
                 }
                 String[] tokens = line.split(";");
                 String type = tokens[0];
                 String profile = tokens[1];
 
-                if (profile.equals("DayConstant")) { // Dans un second temps on regarde quel type de profil on a.
+                if (profile.equals("DayConstant")) { // Dans un second temps on regarde quel profil on traite
                     AddDayConstant(city_i, type, tokens);
 
                 } else if (profile.equals("DayConstantSquared")) {
@@ -218,8 +221,17 @@ public class CSVRead extends AddProfileMethods {
                 } else if (profile.equals("DayQuadraticSquared")) {
                     AddDayQuadraticSquared(city_i, type, tokens);
 
+                } else if (profile.equals("Sinusoid")) {
+
+                } else if (profile.equals("WhiteNoise")) {
+
+                } else if (profile.equals("ModelComposer")) {
+
+                } else if (profile.equals("Delayer")) {
+
                 } else {
-                    return null;
+                    return null; // Si on ne satisfait aucune des conditions précedentes alors le fichier n'est
+                                 // pas au bon format. On renvoie alors une valeur nulle pour le HashMap.
                 }
             }
 
@@ -230,8 +242,9 @@ public class CSVRead extends AddProfileMethods {
     }
 
     /**
-     * @param city
-     * @param filename
+     * @param city     la ville dont on veut ajouter la position
+     * @param filename le chemin vers le fichier texte qui référence les villes et
+     *                 leur position
      * @throws IOException
      */
     static public void AddPosition(City city, String filename) {

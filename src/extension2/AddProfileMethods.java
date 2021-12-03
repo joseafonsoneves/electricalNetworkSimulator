@@ -20,11 +20,12 @@ import profiles.DayQuadraticSquaredProfile;
 public class AddProfileMethods {
 
     /**
-     * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param city        la ville concernée par l'ajout
+     * @param TypeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
     public static City AddDayConstant(City city, String TypeProfile, String[] tokens) {
@@ -35,7 +36,8 @@ public class AddProfileMethods {
                 city.addProducer(new DayConstantProfile(tokens[3], new YearConstant(Integer.parseInt(tokens[2])),
                         new YearVariation(Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]))));
             } else if (tokens[4].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 4];
+                int[] Days_Array = new int[tokens.length - 4]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 5; i < tokens.length; i++) {
                     Days_Array[i - 5] = Integer.parseInt(tokens[i]);
                 }
@@ -52,7 +54,8 @@ public class AddProfileMethods {
                 city.addConsumer(new DayConstantProfile(tokens[3], new YearConstant(Integer.parseInt(tokens[2])),
                         new YearVariation(Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6]))));
             } else if (tokens[4].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 4];
+                int[] Days_Array = new int[tokens.length - 4]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 5; i < tokens.length; i++) {
                     Days_Array[i - 5] = Integer.parseInt(tokens[i]);
                 }
@@ -67,11 +70,12 @@ public class AddProfileMethods {
     }
 
     /**
-     * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param city        la ville concernée par l'ajout
+     * @param TypeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
     public static City AddDayConstantSquared(City city, String TypeProfile, String[] tokens) {
@@ -85,7 +89,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[9]), Integer.parseInt(tokens[10]))));
             } else if (tokens[8].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 8];
+                int[] Days_Array = new int[tokens.length - 8]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 9; i < tokens.length; i++) {
                     Days_Array[i - 9] = Integer.parseInt(tokens[i]);
                 }
@@ -110,7 +115,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[9]), Integer.parseInt(tokens[10]))));
             } else if (tokens[6].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 8];
+                int[] Days_Array = new int[tokens.length - 8]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 9; i < tokens.length; i++) {
                     Days_Array[i - 9] = Integer.parseInt(tokens[i]);
                 }
@@ -131,11 +137,12 @@ public class AddProfileMethods {
     }
 
     /**
-     * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param city        la ville concernée par l'ajout
+     * @param TypeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
     public static City AddDayLinearSquared(City city, String TypeProfile, String[] tokens) {
@@ -150,7 +157,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[10]), Integer.parseInt(tokens[11]))));
             } else if (tokens[9].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 9];
+                int[] Days_Array = new int[tokens.length - 9]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 10; i < tokens.length; i++) {
                     Days_Array[i - 10] = Integer.parseInt(tokens[i]);
                 }
@@ -178,7 +186,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[10]), Integer.parseInt(tokens[11]))));
             } else if (tokens[9].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 9];
+                int[] Days_Array = new int[tokens.length - 9]; // On met dans un tableau les jours concernés par la
+                                                               // variation.
                 for (int i = 10; i < tokens.length; i++) {
                     Days_Array[i - 10] = Integer.parseInt(tokens[i]);
                 }
@@ -202,10 +211,11 @@ public class AddProfileMethods {
 
     /**
      * @param city        la ville concernée par l'ajout de ce profil
-     * @param TypeProfile le type de profil du consommateur ou du producteur
+     * @param TypeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
      *                    pour créer notre profil. Cette chaîne de caractère change
-     *                    en fonction du type de profil.
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Constant,Linear,Quadratic,...).
      * @return City
      */
     public static City AddDayQuadraticSquared(City city, String TypeProfile, String[] tokens) {
@@ -221,7 +231,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[11]), Integer.parseInt(tokens[12]))));
             } else if (tokens[10].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 10];
+                int[] Days_Array = new int[tokens.length - 10]; // On met dans un tableau les jours concernés par la
+                                                                // variation.
                 for (int i = 11; i < tokens.length; i++) {
                     Days_Array[i - 11] = Integer.parseInt(tokens[i]);
                 }
@@ -252,7 +263,8 @@ public class AddProfileMethods {
                                 Integer.parseInt(tokens[5])),
                         new YearVariation(Integer.parseInt(tokens[11]), Integer.parseInt(tokens[12]))));
             } else if (tokens[10].equals("W")) { // WeekVariation
-                int[] Days_Array = new int[tokens.length - 10];
+                int[] Days_Array = new int[tokens.length - 10]; // On met dans un tableau les jours concernés par la
+                                                                // variation.
                 for (int i = 11; i < tokens.length; i++) {
                     Days_Array[i - 11] = Integer.parseInt(tokens[i]);
                 }
