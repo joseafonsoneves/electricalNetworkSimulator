@@ -316,12 +316,14 @@ public class CSVRead extends AddProfileMethods {
                 String[] tokens = line.split(";");
                 for (int j = 0; j < tokens.length; j++) {
                     if (Integer.parseInt(tokens[j])!=0 && Integer.parseInt(tokens[j]) != 1) {
+                        bin.close();
                         throw new IllegalArgumentException("The matrix should be only filled with 0 and 1");
                     }
                     matrix[i][j] = Integer.parseInt(tokens[j]);
                 }
                 i++;
             }
+            bin.close();
             return matrix;
         } catch (IOException fileReadException) {
             fileReadException.printStackTrace();
