@@ -6,8 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
-import extension1.CityWithPosition;
+import java.util.Map;
 
 /**
  * Classe qui référence les différentes méthodes qui permettent de lire un
@@ -49,11 +48,12 @@ public class CSVRead extends AddProfileMethods {
                     addDayLinearSquared(city, type, tokens);
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city, type, tokens);
-                } else if (profile.equals("Sinusoid")) {
+                } 
+                //Ajout des nouveaux modèles
+                else if (profile.equals("Sinusoid")) {
                     addSinusoid(city, type, tokens);
                 } else if (profile.equals("WhiteNoise")) {
-
-                } else if (profile.equals("Square")) {
+                    addWhiteNoise(city, type, tokens);
                 }
             }
             bin.close();
@@ -207,9 +207,6 @@ public class CSVRead extends AddProfileMethods {
         for (int i = 0; i < n; i++) {
 
             City city_i = new City(accessLine(ls.get(i), filename));
-            if (city_i.getId().compareTo("Losses") == 0) {
-                return null;
-            }
 
             for (int l = ls.get(i) + 1; l <= le.get(i); l++) {
                 String line = accessLine(l, filename);
@@ -223,26 +220,28 @@ public class CSVRead extends AddProfileMethods {
 
                 if (profile.equals("DayConstant")) { // Dans un second temps on regarde quel profil on traite
                     addDayConstant(city_i, type, tokens);
+
                 } else if (profile.equals("DayConstantSquared")) {
                     addDayConstantSquared(city_i, type, tokens);
+
                 } else if (profile.equals("DayLinearSquared")) {
                     addDayLinearSquared(city_i, type, tokens);
+
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city_i, type, tokens);
+
                 } else if (profile.equals("Sinusoid")) {
                     addSinusoid(city_i, type, tokens);
                 } else if (profile.equals("WhiteNoise")) {
                     addWhiteNoise(city_i, type, tokens);
-                } else if (profile.equals("Delayer")) {
-
                 } else {
-                    System.out.println(profile);
                     return null; // Si on ne satisfait aucune des conditions précedentes alors le fichier n'est
                                  // pas au bon format. On renvoie alors une valeur nulle pour le HashMap.
                 }
             }
 
             ListCities.put(city_i.getId(), city_i);
+
         }
         return ListCities;
     }
@@ -256,7 +255,7 @@ public class CSVRead extends AddProfileMethods {
      *                 leur position
      * @throws IOException
      */
-    static public void addPosition(CityWithPosition city, String filename) {
+    static public void addPosition(City city, String filename) {
         try {
 
             FileReader in = new FileReader(filename);
@@ -392,16 +391,12 @@ public class CSVRead extends AddProfileMethods {
         }
     }
 
-    /**
-     * Cette méthode combine la méthode addPositions and readMatrix pour permettre
-     * une meilleure integration avec les autres extension.
-     * 
-     * @param map      HashMap<String, City> qui représente toutes les villes qui
-     *                 doivent recevoir leur position
-     * @param filename le chemin du fichier qui comporte l'ensemble des positions
-     *                 des villes et la matrice
-     * @return int[][] la matrice de conexion, les positions ont, quant à elles, été
-     *         ajoutées durant le fonctionnement de la méthode.
+    
+    /** 
+     * Cette méthode combine la méthode addPositions and readMatrix pour permettre une meilleure integration avec les autres extension.
+     * @param map HashMap<String, City> qui représente toutes les villes qui doivent recevoir leur position
+     * @param filename le chemin du fichier qui comporte l'ensemble des positions des villes et la matrice 
+     * @return int[][] la matrice de conexion, les positions ont, quant à elles, été ajoutées durant le fonctionnement de la méthode.
      */
     static public int[][] readMatrixAndAddPositions(HashMap<String, City> map, String filename) {
         try {
@@ -409,8 +404,9 @@ public class CSVRead extends AddProfileMethods {
             BufferedReader bin = new BufferedReader(in);
 
             // Partie Positions
-            for (City c : map.values()) {
-                CSVRead.addPosition((CityWithPosition) c, filename);
+            for (Map.Entry<String, City> mapentry : map.entrySet()) {
+                City c = mapentry.getValue();
+                CSVRead.addPosition(c, filename);
             }
 
             // Partie Matrice
