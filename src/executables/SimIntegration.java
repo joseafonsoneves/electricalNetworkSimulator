@@ -3,8 +3,7 @@ package executables;
 import integration.UserInterfaceIntegration;
 
 /**
- * First example of integration. It illustrates the integration between the
- * extension 2 and the extension 3
+ * Example of integration. It shows the integration of all the extensions
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */

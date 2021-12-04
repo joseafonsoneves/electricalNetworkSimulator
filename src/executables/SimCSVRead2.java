@@ -24,7 +24,7 @@ public class SimCSVRead2 {
         // CSVRead.addPosition(city, "cityData/CityPositions.txt");
         // city.getPos().display();
 
-        HashMap<String, City> map = CSVRead.readSeveralCities("cityData/CitiesTest.txt");
+        HashMap<String, City> map = CSVRead.readSeveralCities("cityData/CityNewModel.txt");
 
         // for every city in the group
         for (City city : map.values()) {
