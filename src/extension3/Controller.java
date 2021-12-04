@@ -34,8 +34,8 @@ public class Controller implements ActionListener {
     SimType simType;
     /** If the simulation is of type day, it needs to know it is */
     int day;
-    /** Saves the paths of the profiles selected */
-    TreePath[] profilePaths;
+    /** Saves the paths selected */
+    TreePath[] paths;
     /** Configuration file from which the cities were taken out */
     File citiesDataFile;
 
@@ -91,6 +91,33 @@ public class Controller implements ActionListener {
     }
 
     /**
+     * Gets the selected paths of data in the data chooser
+     * 
+     * @return selected paths in the data chooser
+     */
+    protected TreePath[] getSelectedPaths() {
+        return this.paths;
+    }
+
+    /**
+     * Gets the plot
+     * 
+     * @return plot used in this class
+     */
+    protected Plot getPlot() {
+        return this.plot;
+    }
+
+    /**
+     * Gets the day in which to perform the simulation
+     * 
+     * @return day in which to perform the simulation
+     */
+    protected int getDay() {
+        return this.day;
+    }
+
+    /**
      * Just sets the cities attribute to the value given
      * 
      * @param cities new group of cities of the controller
@@ -106,6 +133,13 @@ public class Controller implements ActionListener {
      */
     protected void setCitiesFile(File file) {
         this.citiesDataFile = file;
+    }
+
+    /**
+     * Sets the selected paths
+     */
+    protected void setSelectedPaths(TreePath[] newPaths) {
+        this.paths = newPaths;
     }
 
     /**
@@ -125,7 +159,7 @@ public class Controller implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         switch (e.getActionCommand()) {
             case "Profiles":
-                this.chooseProfiles();
+                this.chooseData();
                 break;
             case "Simulation type":
                 this.setSimType();
@@ -136,16 +170,9 @@ public class Controller implements ActionListener {
     /**
      * Plots the data of the selected profiles in the plot of the userInterface
      */
-    private void plotProfiles() {
-        // to hold the cities that will be recovered
-        City city;
-        // to hold the profiles that will be recovered
-        Profile profile;
-        // to hold the series of powers that will be recovered
-        double[] series;
-
+    protected void updatePlot() {
         // if there were no paths selected or there was an error in selection aborts
-        if (this.profilePaths == null) {
+        if (this.paths == null) {
             return;
         }
 
@@ -154,49 +181,9 @@ public class Controller implements ActionListener {
         this.plot.clearLegends();
 
         // for every path in the list of selected paths
-        for (int i = 0; i < this.profilePaths.length; i++) {
-            // gets the current path
-            TreePath path = this.profilePaths[i];
-
-            // gets the corresponding city
-            city = this.cities.get(path.getPathComponent(1).toString());
-
-            // if it cannot recover a valid city it just gives an exception
-            if (city == null) {
-                throw new RuntimeException("Found a null city when plotting profiles in the path " + path);
-            }
-
-            // if it is a consumer
-            if (path.getPathComponent(2).toString().compareTo("Consumers") == 0) {
-                // gets the group of consumers
-                profile = city.getConsumers();
-            }
-            // if it is not a consumer, it will be a producer
-            else {
-                // gets the group of producers
-                profile = city.getProducers();
-            }
-
-            // for element in the path
-            for (int j = 2; j < path.getPathCount() - 1; j++) {
-                // surfs the tree of profiles taking into consideration that until the last each
-                // one of them will be a group of profiles
-                profile = ((ProfilesGroup) profile).getProfile(path.getPathComponent(j + 1).toString());
-            }
-
-            // gets the series of powers depending on the simulation type
-            if (this.simType == SimType.DAY) {
-                series = profile.getDayPower(this.day);
-            } else {
-                series = profile.getYearPower();
-            }
-
-            // adds the legend as the id of the profile
-            plot.addLegend(i, profile.getId());
-            // adds each point of the series to the plot
-            for (int j = 0; j < series.length; j++) {
-                plot.addPoint(i, j, series[j], true);
-            }
+        for (int i = 0; i < this.paths.length; i++) {
+            // adds the corresponding plot to the plot object
+            this.addProfilePlots(this.paths[i], i);
         }
 
         // presents the changes to the user
@@ -298,23 +285,66 @@ public class Controller implements ActionListener {
             // updates the plot labels
             this.setPlotLabels();
             // updates the plots of the profiles shown
-            this.plotProfiles();
+            this.updatePlot();
         }
     }
 
     /**
      * Lets the user choose the profiles to show in the plot
      */
-    protected void chooseProfiles() {
+    protected void chooseData() {
         // creates the dialog to choose the profiles to use
-        DataChooser chooser = new DataChooser(this.frame, this.cities);
+        DataChooser chooser = new DataChooser(this.frame, cities);
         // gets the paths of the profiles to use
         TreePath[] newPaths = chooser.getSelection();
         // only updates the paths saved if the selection is valid
         if (newPaths != null) {
-            this.profilePaths = newPaths;
+            this.paths = newPaths;
         }
         // gets the data of the desired profiles into the plot
-        this.plotProfiles();
+        this.updatePlot();
+    }
+
+    /**
+     * Adds the plots of a consumer or a producer of a given city to the plot object
+     */
+    protected void addProfilePlots(TreePath path, int seriesIndex) {
+        Profile profile;
+
+        // gets the city corresponding to the path
+        City city = this.cities.get(path.getPathComponent(1).toString());
+
+        // if it is a consumer
+        if (path.getPathComponent(2).toString().compareTo("Consumers") == 0) {
+            // gets the group of consumers
+            profile = city.getConsumers();
+        }
+        // if it is not a consumer, it will be a producer
+        else {
+            // gets the group of producers
+            profile = city.getProducers();
+        }
+
+        // for element in the path
+        for (int j = 2; j < path.getPathCount() - 1; j++) {
+            // surfs the tree of profiles taking into consideration that until the last each
+            // one of them will be a group of profiles
+            profile = ((ProfilesGroup) profile).getProfile(path.getPathComponent(j + 1).toString());
+        }
+
+        // gets the series of powers depending on the simulation type
+        double[] series;
+        if (this.simType == SimType.DAY) {
+            series = profile.getDayPower(this.day);
+        } else {
+            series = profile.getYearPower();
+        }
+
+        // adds the legend as the id of the profile
+        plot.addLegend(seriesIndex, profile.getId());
+        // adds each point of the series to the plot
+        for (int j = 0; j < series.length; j++) {
+            plot.addPoint(seriesIndex, j, series[j], true);
+        }
     }
 }

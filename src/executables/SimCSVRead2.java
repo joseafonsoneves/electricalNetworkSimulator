@@ -42,7 +42,6 @@ public class SimCSVRead2 {
                                                                                                           // temps
 
         for (City c : map.values()) {
-            c = new CityWithPosition(c);
             ((CityWithPosition) c).getPos().display();
         }
 

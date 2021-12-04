@@ -207,6 +207,9 @@ public class CSVRead extends AddProfileMethods {
         for (int i = 0; i < n; i++) {
 
             City city_i = new City(accessLine(ls.get(i), filename));
+            if (city_i.getId().compareTo("Losses") == 0) {
+                return null;
+            }
 
             for (int l = ls.get(i) + 1; l <= le.get(i); l++) {
                 String line = accessLine(l, filename);

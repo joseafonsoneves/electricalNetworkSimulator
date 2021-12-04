@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.tree.TreePath;
 
 import extension1.CityWithPosition;
 import extension1.Map;
@@ -18,8 +19,9 @@ import results.SimType;
 import simulator.City;
 
 /**
- * Allows the functioning of the buttons. It was widely inspired by the class
- * with the same name given in the "SwingExamples" archive.
+ * Class to allow the integration of different extensions with the user
+ * interface extension. It extends the Controller extension so that it is
+ * easy to do the integration
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
@@ -54,7 +56,7 @@ public class ControllerIntegration extends Controller {
                 this.computeLosses();
                 break;
             case "Profiles":
-                this.chooseProfiles();
+                this.chooseData();
                 break;
             case "Simulation type":
                 this.setSimType();
@@ -126,10 +128,6 @@ public class ControllerIntegration extends Controller {
                 } else {
                     this.losses = newMap.lossYear(distanceMap);
                 }
-
-                double[] a = this.losses.get("totalLoss");
-                for (double b : a)
-                    System.out.println(b);
             } else {
                 // presents an error message to the user
                 JOptionPane.showMessageDialog(null,
@@ -223,5 +221,81 @@ public class ControllerIntegration extends Controller {
         } else {
             return cityWithProducers;
         }
+    }
+
+    /**
+     * Plots the data of the selected profiles in the plot of the userInterface
+     */
+    @Override
+    protected void updatePlot() {
+        // if there were no paths selected or there was an error in selection aborts
+        if (this.getSelectedPaths() == null) {
+            return;
+        }
+
+        // clears the plot and the legends but not the axis labels or the title
+        this.getPlot().clear(false);
+        this.getPlot().clearLegends();
+
+        // for every path in the list of selected paths
+        for (int i = 0; i < this.getSelectedPaths().length; i++) {
+            // gets the current path
+            TreePath path = this.getSelectedPaths()[i];
+
+            // if the path corresponds to losses
+            if (path.getPathComponent(1).toString().compareTo("Losses") == 0) {
+                this.addLossesPlots(path, i);
+            }
+            // the path corresponds to the profile of a city
+            else {
+                // adds the corresponding plot to the plot object
+                this.addProfilePlots(path, i);
+            }
+        }
+
+        // presents the changes to the user
+        this.getPlot().updateUI();
+    }
+
+    /**
+     * Adds a plot of losses that was selected by the user
+     * 
+     * @param path        path to the names of the losses that were selected
+     * @param seriesIndex index of the series in which to plot the data
+     */
+    protected void addLossesPlots(TreePath path, int seriesIndex) {
+        if (losses != null) {
+            // gets the data of the losses
+            double[] series = this.losses.get(path.getPathComponent(2).toString());
+
+            // if there was no problem
+            if (series != null) {
+                // adds the legend as the id of the losses
+                this.getPlot().addLegend(seriesIndex, path.getPathComponent(2).toString());
+                // adds each point of the series to the plot
+                for (int j = 0; j < series.length; j++) {
+                    this.getPlot().addPoint(seriesIndex, j, series[j], true);
+                }
+            } else {
+                throw new RuntimeException("Difference between selected losses and losses saved");
+            }
+        }
+    }
+
+    /**
+     * Lets the user choose the profiles to show in the plot
+     */
+    @Override
+    protected void chooseData() {
+        // creates the dialog to choose the profiles to use
+        DataChooserIntegration chooser = new DataChooserIntegration(this.getFrame(), this.getCities(), this.losses);
+        // gets the paths of the profiles to use
+        TreePath[] newPaths = chooser.getSelection();
+        // only updates the paths saved if the selection is valid
+        if (newPaths != null) {
+            this.setSelectedPaths(newPaths);
+        }
+        // gets the data of the desired profiles into the plot
+        this.updatePlot();
     }
 }

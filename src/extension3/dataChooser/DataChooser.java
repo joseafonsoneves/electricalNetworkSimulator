@@ -21,6 +21,12 @@ import profiles.Profile;
 import profiles.ProfilesGroup;
 import simulator.City;
 
+/**
+ * Allows through a data tree with checkboxes and a validate button to choose
+ * the data the user wants to present
+ * 
+ * @author DE OLIVEIRA MORENO NEVES, José Afonso
+ */
 public class DataChooser extends JDialog {
     /**
      * Proportion between the dimensions of the screen and the initial dimensions of
@@ -35,6 +41,18 @@ public class DataChooser extends JDialog {
      * not require a change in the paths selected
      */
     private TreePath[] validatedPaths;
+    /** Saves the tree to use to show the data to the user */
+    private CheckBoxTree tree;
+
+    /**
+     * Simples constructor that corresponds to a simple dialog
+     * 
+     * @param owner frame that owns this dialog
+     */
+    public DataChooser(JFrame owner) {
+        super(owner, "Select the data to present", true);
+        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+    }
 
     /**
      * Creates a data tree out of the profiles present in a map of cities
@@ -43,7 +61,7 @@ public class DataChooser extends JDialog {
      */
     public DataChooser(JFrame owner, HashMap<String, City> cities) {
         // Creates and sets up the dialog
-        super(owner, "Select the profiles to present", true);
+        super(owner, "Select the data to present", true);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
         // if the city was not yet added
@@ -51,28 +69,53 @@ public class DataChooser extends JDialog {
             JLabel warning = new JLabel("Warning: No city yet added", SwingConstants.CENTER);
             this.add(warning);
         } else {
-            // create the tree by passing in the root node
-            CheckBoxTree tree = new CheckBoxTree(addNodes(cities), 1);
-            // hides the first node
-            tree.setRootVisible(false);
-            // expands all the nodes of the tree
-            tree.expandAllNodes();
-
-            // creates a panel for the frame
-            JPanel panel = new JPanel();
-            // divides it in a grid layout
-            panel.setLayout(new GridLayout(1, 2));
-            // to which adds the tree in a scrollable pane at the left
-            panel.add(new JScrollPane(tree));
-            // and then a button to validate the selection at the right
-            JButton button = new JButton("Validate & Leave");
-            button.setActionCommand("Validate & Leave");
-            button.addActionListener(new ButtonController(this, tree));
-            panel.add(button);
-
-            // then adds the panel to the frame
-            this.add(panel);
+            // creates the layout of the window
+            this.createLayout(addProfiles(new DefaultMutableTreeNode("Root"), cities));
         }
+    }
+
+    /**
+     * Creates the layout using the tree created before
+     */
+    protected void createLayout(DefaultMutableTreeNode root) {
+        // create the tree by passing in the root node
+        tree = new CheckBoxTree(root, 1);
+        // hides the first node
+        tree.setRootVisible(false);
+        // expands all the nodes of the tree
+        tree.expandAllNodes();
+        // creates a panel for the frame
+        JPanel panel = new JPanel();
+        // divides it in a grid layout
+        panel.setLayout(new GridLayout(1, 2));
+        // to which adds the tree in a scrollable pane at the left
+        panel.add(new JScrollPane(tree));
+        // and then a button to validate the selection at the right
+        JButton button = new JButton("Validate & Leave");
+        button.setActionCommand("Validate & Leave");
+        button.addActionListener(new ButtonController(this, tree));
+        panel.add(button);
+
+        // then adds the panel to the frame
+        this.add(panel);
+    }
+
+    /**
+     * Gets the tree
+     * 
+     * @return tree of data to present to the user
+     */
+    protected CheckBoxTree getTree() {
+        return tree;
+    }
+
+    /**
+     * Sets the tree
+     * 
+     * @param tree new tree of data to present to the user
+     */
+    protected void setTree(CheckBoxTree tree) {
+        this.tree = tree;
     }
 
     /**
@@ -105,9 +148,7 @@ public class DataChooser extends JDialog {
      *               present
      * @return root node of the created tree
      */
-    private DefaultMutableTreeNode addNodes(HashMap<String, City> cities) {
-        // create the root node
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode("Root");
+    protected DefaultMutableTreeNode addProfiles(DefaultMutableTreeNode root, HashMap<String, City> cities) {
         // creates the nodes to use in the loop
         DefaultMutableTreeNode cityNode;
         DefaultMutableTreeNode producersNode;
