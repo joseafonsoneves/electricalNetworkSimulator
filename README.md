@@ -75,4 +75,8 @@ BERNARD, Rémi
 
 ## Intégration
 
-Nous avons réussi à intégrer les extensions 2 et 3 et les extensions 3 et 4. Pour faire l'intégration entre l'extension 3 et 4 nous, n'avons pas fait rien parce que les modèles créés à l'extension 4 implémentent tous l'interface Profile. Pour faire l'intégration entre l'extension 3 et 2, un paquetage appelé integration a été créé avec deux classes qui extendent les classes UserInterface et Controller pour que il soit possible d'avoir des buttons pour ouvrir un nouveau fichier et calculer les pertes.
+Nous avons réussi à intégrer les extensions 2 et 3 et les extensions 3 et 4. 
+
+Pour faire l'intégration entre l'extension 3 et 4 nous, n'avons pas fait rien parce que les modèles créés à l'extension 4 implémentent tous l'interface Profile.
+
+Pour faire l'intégration entre l'extension 3 et 2, un paquetage appelé integration a été créé avec deux classes qui extendent les classes UserInterface et Controller pour que il soit possible d'avoir des buttons pour ouvrir un nouveau fichier et calculer les pertes.

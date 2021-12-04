@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import extension1.CityWithPosition;
+import extension1.Map;
 import extension2.CSVRead;
 import extension3.CSVChooser;
 import extension3.Controller;
@@ -43,9 +44,11 @@ public class ControllerIntegration extends Controller {
             case "Load":
                 this.loadNewCities();
                 break;
-            case "Losses":
-                this.computeLosses();
-                break;
+            /*
+             * case "Losses":
+             * this.computeLosses();
+             * break;
+             */
             case "Profiles":
                 this.chooseProfiles();
                 break;
@@ -94,16 +97,62 @@ public class ControllerIntegration extends Controller {
         File lossesFile = CSVChooser.getFile(super.getFrame(), "CityData");
         // if it is not null
         if (lossesFile != null) {
-            // presents its name
-            System.out.println(lossesFile.getName());
-            // for every city in the group
-            for (City city : super.getCities().values()) {
-                // if city is not an instance of CityWithPosition
-                if (!(city instanceof CityWithPosition)) {
-                    // puts a city with position at the place of a city in the hash map
-                    super.getCities().put(city.getId(), new CityWithPosition(city));
-                }
+            // adds a position attribute to every city that does not have one
+            convertCitiesToCitiesWithPosition();
+            // puts the cities in the positions read from the file and reads the matrix of
+            // connections as well
+            int[][] connections = CSVRead.readMatrixAndAddPositions(this.getCities(),
+                    lossesFile.getAbsolutePath());
+            // converts the list of cities to the data format used in the extension 1
+            HashMap<CityWithPosition, Integer> graph = convertCitiesToGraph();
+            // creates a map according to extension 1
+            Map newMap = new Map(connections, graph);
+        }
+    }
+
+    /**
+     * Although one starts by only creating cities, when the computation of losses
+     * is needed one has to convert cities to cities with positions so that
+     * positions can be added to the cities
+     */
+    private void convertCitiesToCitiesWithPosition() {
+        HashMap<String, City> cities = this.getCities();
+
+        // for every city in the group
+        for (City city : cities.values()) {
+            // if city is not an instance of CityWithPosition
+            if (!(city instanceof CityWithPosition)) {
+                // puts a city with position at the place of that city in the hash map
+                cities.put(city.getId(), new CityWithPosition(city));
             }
         }
+    }
+
+    /**
+     * Extension 1 receives an hash map of cities as keys and numbers as indexes so
+     * one has to convert from the typical hash map of strings and cities to this
+     * new data format
+     */
+    private HashMap<CityWithPosition, Integer> convertCitiesToGraph() {
+        HashMap<String, City> cities = this.getCities();
+        HashMap<CityWithPosition, Integer> graph = new HashMap<CityWithPosition, Integer>();
+
+        // the index of the first city
+        int count = 1;
+        // for every city in the group
+        for (City city : cities.values()) {
+            // if there is no error of conversion between classes
+            if (city instanceof CityWithPosition) {
+                // adds the city to the graph of cities
+                graph.put((CityWithPosition) city, count);
+            } else {
+                // throws an exception
+                throw new RuntimeException("Unexpected error: city is not an instance of CityWithPosition");
+            }
+            // increases the index
+            count = count + 1;
+        }
+
+        return graph;
     }
 }
