@@ -46,6 +46,24 @@ public class SimCSVRead1 {
             }
             System.out.println(" ");
         }
+        
+        //Test avec la méthodes qui réalise les des méthodes précedentes en une seule fois
+        int[][] connexion2 = CSVRead.readMatrixAndAddPositions(map, "cityData/CityPositionAndMatrix.txt"); // Position et
+                                                                                                          // matrice de
+                                                                                                          // connexion
+                                                                                                          // en même
+                                                                                                          // temps
 
+        for (Map.Entry<String, City> mapentry : map.entrySet()) {
+            City c = mapentry.getValue();
+            c.getPos().display();
+        }
+
+        for (int[] line : connexion2) {
+            for (int j : line) {
+                System.out.print(j + " ");
+            }
+            System.out.println(" ");
+        }
     }
 }

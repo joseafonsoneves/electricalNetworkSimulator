@@ -48,11 +48,12 @@ public class CSVRead extends AddProfileMethods {
                     addDayLinearSquared(city, type, tokens);
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city, type, tokens);
-                } else if (profile.equals("Sinusoid")) {
+                } 
+                //Ajout des nouveaux modèles
+                else if (profile.equals("Sinusoid")) {
                     addSinusoid(city, type, tokens);
                 } else if (profile.equals("WhiteNoise")) {
-
-                } else if (profile.equals("Square")) {
+                    addWhiteNoise(city, type, tokens);
                 }
             }
             bin.close();
@@ -232,9 +233,7 @@ public class CSVRead extends AddProfileMethods {
                 } else if (profile.equals("Sinusoid")) {
                     addSinusoid(city_i, type, tokens);
                 } else if (profile.equals("WhiteNoise")) {
-
-                } else if (profile.equals("Delayer")) {
-
+                    addWhiteNoise(city_i, type, tokens);
                 } else {
                     return null; // Si on ne satisfait aucune des conditions précedentes alors le fichier n'est
                                  // pas au bon format. On renvoie alors une valeur nulle pour le HashMap.
@@ -384,7 +383,7 @@ public class CSVRead extends AddProfileMethods {
                                                      // bien carré.
                 return matrix;
             } else {
-                throw new IllegalArgumentException("La matrice n'est carré 2");
+                throw new IllegalArgumentException("La matrice n'est pas carré 2");
             }
         } catch (IOException fileReadException) {
             fileReadException.printStackTrace();
@@ -392,6 +391,13 @@ public class CSVRead extends AddProfileMethods {
         }
     }
 
+    
+    /** 
+     * Cette méthode combine la méthode addPositions and readMatrix pour permettre une meilleure integration avec les autres extension.
+     * @param map HashMap<String, City> qui représente toutes les villes qui doivent recevoir leur position
+     * @param filename le chemin du fichier qui comporte l'ensemble des positions des villes et la matrice 
+     * @return int[][] la matrice de conexion, les positions ont, quant à elles, été ajoutées durant le fonctionnement de la méthode.
+     */
     static public int[][] readMatrixAndAddPositions(HashMap<String, City> map, String filename) {
         try {
             FileReader in = new FileReader(filename);

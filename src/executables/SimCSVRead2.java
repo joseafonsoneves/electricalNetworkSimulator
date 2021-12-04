@@ -15,15 +15,6 @@ import extension2.CSVRead;
 public class SimCSVRead2 {
     public static void main(String[] args) throws Exception {
 
-        // Test pour une ville seule
-        // City city = CSVRead.read("cityData/CityNewModel.txt");
-        // System.out.println(city.getId());
-        // System.out.println(city.getConsumersDescription());
-        // System.out.println(city.getProducersDescription());
-        // city.getPos().display();
-        // CSVRead.addPosition(city, "cityData/CityPositions.txt");
-        // city.getPos().display();
-
         HashMap<String, City> map = CSVRead.readSeveralCities("cityData/CitiesTest.txt");
 
         int[][] connexion = CSVRead.readMatrixAndAddPositions(map, "cityData/CityPositionAndMatrix.txt"); // Position et
