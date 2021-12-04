@@ -26,6 +26,8 @@ J’ai également créé un simulateur que j’ai appelé «City», qui reçoit 
 ## Extension 1 : réseau de distribution électrique
 TEXIER, Aurélien
 
+Cette extension consiste à prendre en compte la notion de perte énergétique lié à la distance et de donner une dimension spatiale (et donc de réalité) dans notre projet. Chaque ville dispose maintenant d'une position x et y. Les villes sont répertorié dans une nouvelle classe Map qui contient un ensemble de ville et d'un tableau booléen (0 et 1) de connectivité entre les villes représentant les routes de la carte. Les nombreuses méthodes implémentées permettent de créer les chemins entre les villes et son producteur; de calculer ensuite la distance et enfin d'en déduire les pertes liées à la distance. Les pertes sont ensuite affichées dans un format csv.
+
 ## Extension 2 : paramétrage de la simulation par fichier
 PIGAMO, Antoine
 
