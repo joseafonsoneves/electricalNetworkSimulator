@@ -337,7 +337,6 @@ public class AddProfileMethods {
                     new YearVariation(Integer.parseInt(tokens[7]), Integer.parseInt(tokens[8])),
                     Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
                     Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5])));
-
         }
         return city;
     }

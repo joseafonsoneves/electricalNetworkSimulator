@@ -8,7 +8,7 @@ import integration.UserInterfaceIntegration;
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
-public class SimIntegrationExtensions32 {
+public class SimIntegration {
     public static void main(String[] args) {
         UserInterfaceIntegration ui = new UserInterfaceIntegration();
         ui.show();

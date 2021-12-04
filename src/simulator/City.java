@@ -68,6 +68,15 @@ public class City {
     }
 
     /**
+     * Gets the number of producers in a city
+     * 
+     * @return number of producers in a city
+     */
+    public int getProducersNumber() {
+        return this.producers.size();
+    }
+
+    /**
      * Removes consumer from the list of consumers
      * 
      * @param consumer consumer to
@@ -92,6 +101,15 @@ public class City {
      */
     public ProfilesGroup getConsumers() {
         return this.consumers;
+    }
+
+    /**
+     * Gets the number of consumers in a city
+     * 
+     * @return number of consumers in a city
+     */
+    public int getConsumersNumber() {
+        return this.consumers.size();
     }
 
     /**

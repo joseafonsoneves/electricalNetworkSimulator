@@ -72,7 +72,5 @@ public class SimMap1 {
 
         HashMap<String, double[]> loss = France.lossDay(distanceMap);
         System.out.println(loss.get("totalLoss")[1438]); // test OK
-
     }
-
 }
