@@ -31,27 +31,41 @@ Cette extension consiste à prendre en compte la notion de perte énergétique l
 ## Extension 2 : paramétrage de la simulation par fichier
 PIGAMO, Antoine
 
+Cette extension consiste à créer une ou plusieurs villes grâce à un fichier texte. Il suffit d'importer la classe (import extension2.CSVRead) et d'utiliser la méthode Read("chemin d'accès au fichier") ou ReadSeveralCities("chemin d'accès au fichier")
+
+La description du format des fichiers textes est décrite plus bas.
+
 La première ligne correspond au nom de la ville.
 
 Ensuite il s'agit soit de la description d'un producer ou d'un consumer
+Chaque élément doit être séparer par un point virgule : ";"
 
-Soit un produceur (ou un consumer) on a : 
-[producer][DayConstantProfile][Puissance][Nom][Y=Year Variation][Début][Durée]
+Pour les profils DayConstant, les formats acceptés sont :
+[producer][DayConstantProfile][Puissance][Nom][Y=Year Variation][Début][Durée];
 [producer][DayConstantProfile][Puissance][Nom][W=Week Variation][Ensemble des jours];
 [producer][DayConstantProfile][Puissance][Nom][N=No Variation];
 
-[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][Y=Year Variation][Début][Durée]
+Pour les profils DayConstantSquared, les formats acceptés sont :
+[producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][Y=Year Variation][Début][Durée];
 [producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][W=Week Variation][Ensemble des jours];
 [producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][N=No Variation];
 
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][Y=Year Variation][Début][Durée]
+Pour les profils DayLinearSquared, les formats acceptés sont :
+[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][Y=Year Variation][Début][Durée];
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][N=No Variation];
 
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][Y=Year Variation][Début][Durée]
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
-[producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][N=No Variation];
+Pour les profils DayQuadraticSquared, les formats acceptés sont :
+[producer][DayQuadraticSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][Y=Year Variation][Début][Durée];
+[producer][DayQuadraticSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
+[producer][DayQuadraticSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][N=No Variation];
 
+Pour les nouveaux profils de l'extension 4 :
+
+[producer][WhiteNoise][mu][sigma][Début (minute)][Fin (minute)][ID][Y=Year Variation][Début][Durée][W=Week Variation][Ensemble des jours];
+[producer][Sinusoid][Amplitude][Fréquence][Phase][Début (minute)][Fin (minute)][ID][Y=Year Variation][Début][Durée][W=Week Variation][Ensemble des jours];
+
+Lorsque qu'on a plusieurs villes dans un fichier texte, les villes sont séparés par une ligne "--"
 
 De plus on a un fichier qui détaille les positions des villes.
 Chaque ville est suivi de sa position en x et en y : [Ville][x][y].
