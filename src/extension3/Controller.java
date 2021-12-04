@@ -82,6 +82,15 @@ public class Controller implements ActionListener {
     }
 
     /**
+     * Gets the type of simulation that is currently being performed
+     * 
+     * @return type of simulation that is currently being performed
+     */
+    protected SimType getSimType() {
+        return this.simType;
+    }
+
+    /**
      * Just sets the cities attribute to the value given
      * 
      * @param cities new group of cities of the controller

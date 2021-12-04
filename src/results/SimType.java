@@ -199,13 +199,22 @@ public enum SimType {
         return new String[] { DAY.id, YEAR.id };
     }
 
+    /**
+     * Gets an array with all the possible days which corresponds to the indexes of
+     * all days in a year
+     * 
+     * @return indexes of all days in a year
+     */
     public static int[] getPossibleDays() {
+        // creates the array
         int[] res = new int[YEAR.getLength()];
 
+        // just fills it from 0 to the length of a year minus 1
         for (int i = 0; i < res.length; i++) {
             res[i] = i;
         }
 
+        // returns the array
         return res;
     }
 };

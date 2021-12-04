@@ -2,6 +2,7 @@ package integration;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.swing.JFrame;
@@ -13,6 +14,7 @@ import extension2.CSVRead;
 import extension3.CSVChooser;
 import extension3.Controller;
 import ptolemy.plot.Plot;
+import results.SimType;
 import simulator.City;
 
 /**
@@ -22,6 +24,9 @@ import simulator.City;
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
  */
 public class ControllerIntegration extends Controller {
+    /** Saves the losses that were computed */
+    HashMap<String, double[]> losses;
+
     /**
      * Just creates the controller defined in the super class
      * 
@@ -30,6 +35,7 @@ public class ControllerIntegration extends Controller {
      */
     public ControllerIntegration(JFrame frame, Plot plot) {
         super(frame, plot);
+        this.losses = null;
     }
 
     /**
@@ -44,11 +50,9 @@ public class ControllerIntegration extends Controller {
             case "Load":
                 this.loadNewCities();
                 break;
-            /*
-             * case "Losses":
-             * this.computeLosses();
-             * break;
-             */
+            case "Losses":
+                this.computeLosses();
+                break;
             case "Profiles":
                 this.chooseProfiles();
                 break;
@@ -107,6 +111,30 @@ public class ControllerIntegration extends Controller {
             HashMap<CityWithPosition, Integer> graph = convertCitiesToGraph();
             // creates a map according to extension 1
             Map newMap = new Map(connections, graph);
+            // from here it has to discover which is the city with producers so that it can
+            // pass it to extension 1
+            CityWithPosition cityWithProducers = this.getProducerCity();
+            // if it could find one and only one city with producers
+            if (cityWithProducers != null) {
+                // it gets the road map and the distance map
+                HashMap<String, ArrayList<Integer>> roadMap = newMap.roadMap(cityWithProducers);
+                HashMap<String, Double> distanceMap = newMap.distanceMap(roadMap);
+                // we could not reach an agreement over the correctness of this approach but it
+                // was presented here to show that it can nevertheless be integrated
+                if (this.getSimType() == SimType.DAY) {
+                    this.losses = newMap.lossDay(distanceMap);
+                } else {
+                    this.losses = newMap.lossYear(distanceMap);
+                }
+
+                double[] a = this.losses.get("totalLoss");
+                for (double b : a)
+                    System.out.println(b);
+            } else {
+                // presents an error message to the user
+                JOptionPane.showMessageDialog(null,
+                        "The losses computation only works for one and one only city with producers");
+            }
         }
     }
 
@@ -154,5 +182,46 @@ public class ControllerIntegration extends Controller {
         }
 
         return graph;
+    }
+
+    /**
+     * The extension 1 needs to know which city is the one that contains the
+     * producers because it only works for a single city with producers so this
+     * method verifies if only one city has producers in the cities given and if it
+     * is the case returns the city that has them
+     * 
+     * @return only city with producers if there is only one or null if there is
+     *         none or more than one
+     */
+    private CityWithPosition getProducerCity() {
+        // saves if a city with producers has already been seen
+        boolean thereIsOneCityWithProducers = false;
+        CityWithPosition cityWithProducers = null;
+
+        for (City city : this.getCities().values()) {
+            // every time it sees a city with producers
+            if (city.getProducers().size() > 0) {
+                // if no other city with producers has already been registered
+                if (!thereIsOneCityWithProducers) {
+                    // stores that it has seen one
+                    thereIsOneCityWithProducers = true;
+                    // saves it and keeps on checking the others
+                    cityWithProducers = (CityWithPosition) city;
+                }
+                // if another city with producers has already been registered
+                else {
+                    // there two cities with producers so extension 1 is not applicable
+                    // so exits the method with an error
+                    return null;
+                }
+            }
+        }
+
+        // if there is no city with producers it gets an error as well
+        if (!thereIsOneCityWithProducers) {
+            return null;
+        } else {
+            return cityWithProducers;
+        }
     }
 }

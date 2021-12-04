@@ -178,4 +178,13 @@ public class ProfilesGroup implements Profile {
 
         return des;
     }
+
+    /**
+     * Returns the number of profiles in this group
+     * 
+     * @return number of profiles in this group
+     */
+    public int size() {
+        return this.map.size();
+    }
 }
