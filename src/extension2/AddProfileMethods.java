@@ -1,8 +1,8 @@
 package extension2;
 
 import simulator.City;
-import model.Sinusoid;
-import model.WhiteNoise;
+import extension4.Sinusoid;
+import extension4.WhiteNoise;
 import profiles.DayConstantProfile;
 import profiles.WeekVariation;
 import profiles.YearVariation;
@@ -23,6 +23,7 @@ public class AddProfileMethods {
 
     /**
      * Ajoute un profil constant à la ville.
+     * 
      * @param city        la ville concernée par l'ajout
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -74,6 +75,7 @@ public class AddProfileMethods {
 
     /**
      * Ajoute un profil constant dans un carré à la ville.
+     * 
      * @param city        la ville concernée par l'ajout
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -142,6 +144,7 @@ public class AddProfileMethods {
 
     /**
      * Ajoute un profile linéaire dans un carré à la ville.
+     * 
      * @param city        la ville concernée par l'ajout
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -216,6 +219,7 @@ public class AddProfileMethods {
 
     /**
      * Ajoute un profil quadratique dans un carré à la ville.
+     * 
      * @param city        la ville concernée par l'ajout de ce profil
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -294,9 +298,9 @@ public class AddProfileMethods {
         return city;
     }
 
-    
-    /** 
-     * Ajoute un profil sinusoïdale à la ville 
+    /**
+     * Ajoute un profil sinusoïdale à la ville
+     * 
      * @param city        la ville concernée par l'ajout de ce profil
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -305,7 +309,7 @@ public class AddProfileMethods {
      *                    consommer ou produire (Sinusoid,WhiteNoise...).
      * @return City
      */
-    //Méthode pour ajouter les nouveaux profils de l'extension 4
+    // Méthode pour ajouter les nouveaux profils de l'extension 4
 
     public static City addSinusoid(City city, String typeProfile, String[] tokens) {
         if (typeProfile.equals("producer")) {
@@ -333,9 +337,9 @@ public class AddProfileMethods {
         return city;
     }
 
-    
-    /** 
+    /**
      * Ajoute un profil de type bruit blanc à la ville.
+     * 
      * @param city        la ville concernée par l'ajout de ce profil
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
