@@ -22,6 +22,8 @@ import profiles.DayQuadraticSquaredProfile;
 public class AddProfileMethods {
 
     /**
+     * Ajoute un profil constant à la ville.
+     * 
      * @param city        la ville concernée par l'ajout
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -72,6 +74,8 @@ public class AddProfileMethods {
     }
 
     /**
+     * Ajoute un profil constant dans un carré à la ville.
+     * 
      * @param city        la ville concernée par l'ajout
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -139,6 +143,8 @@ public class AddProfileMethods {
     }
 
     /**
+     * Ajoute un profile linéaire dans un carré à la ville.
+     * 
      * @param city        la ville concernée par l'ajout
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -212,6 +218,8 @@ public class AddProfileMethods {
     }
 
     /**
+     * Ajoute un profil quadratique dans un carré à la ville.
+     * 
      * @param city        la ville concernée par l'ajout de ce profil
      * @param typeProfile le type de profil (consommateur ou producteur)
      * @param tokens      la chaîne de caractère contenant toutes les informations
@@ -290,6 +298,19 @@ public class AddProfileMethods {
         return city;
     }
 
+    /**
+     * Ajoute un profil sinusoïdale à la ville
+     * 
+     * @param city        la ville concernée par l'ajout de ce profil
+     * @param typeProfile le type de profil (consommateur ou producteur)
+     * @param tokens      la chaîne de caractère contenant toutes les informations
+     *                    pour créer notre profil. Cette chaîne de caractère change
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Sinusoid,WhiteNoise...).
+     * @return City
+     */
+    // Méthode pour ajouter les nouveaux profils de l'extension 4
+
     public static City addSinusoid(City city, String typeProfile, String[] tokens) {
         if (typeProfile.equals("producer")) {
             int[] Days_Array = new int[tokens.length - 11]; // On met dans un tableau les jours concernés par la
@@ -297,8 +318,8 @@ public class AddProfileMethods {
             for (int i = 12; i < tokens.length; i++) {
                 Days_Array[i - 12] = Integer.parseInt(tokens[i]);
             }
-            city.addProducer(new Sinusoid(tokens[6], new WeekVariation(Days_Array),
-                    new YearVariation(Integer.parseInt(tokens[8]), Integer.parseInt(tokens[9])),
+            city.addProducer(new Sinusoid(tokens[7], new WeekVariation(Days_Array),
+                    new YearVariation(Integer.parseInt(tokens[9]), Integer.parseInt(tokens[10])),
                     Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]),
                     Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6])));
         } else {
@@ -307,8 +328,8 @@ public class AddProfileMethods {
             for (int i = 12; i < tokens.length; i++) {
                 Days_Array[i - 12] = Integer.parseInt(tokens[i]);
             }
-            city.addConsumer(new Sinusoid(tokens[6], new WeekVariation(Days_Array),
-                    new YearVariation(Integer.parseInt(tokens[8]), Integer.parseInt(tokens[9])),
+            city.addConsumer(new Sinusoid(tokens[7], new WeekVariation(Days_Array),
+                    new YearVariation(Integer.parseInt(tokens[9]), Integer.parseInt(tokens[10])),
                     Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]), Double.parseDouble(tokens[4]),
                     Integer.parseInt(tokens[5]), Integer.parseInt(tokens[6])));
 
@@ -316,6 +337,17 @@ public class AddProfileMethods {
         return city;
     }
 
+    /**
+     * Ajoute un profil de type bruit blanc à la ville.
+     * 
+     * @param city        la ville concernée par l'ajout de ce profil
+     * @param typeProfile le type de profil (consommateur ou producteur)
+     * @param tokens      la chaîne de caractère contenant toutes les informations
+     *                    pour créer notre profil. Cette chaîne de caractère change
+     *                    en fonction du profil concerné et de sa manière de
+     *                    consommer ou produire (Sinusoid,Whitenoise,...).
+     * @return City
+     */
     public static City addWhiteNoise(City city, String typeProfile, String[] tokens) {
         if (typeProfile.equals("producer")) {
             int[] Days_Array = new int[tokens.length - 10]; // On met dans un tableau les jours concernés par la
@@ -324,7 +356,7 @@ public class AddProfileMethods {
                 Days_Array[i - 11] = Integer.parseInt(tokens[i]);
             }
             city.addProducer(new WhiteNoise(tokens[6], new WeekVariation(Days_Array),
-                    new YearVariation(Integer.parseInt(tokens[7]), Integer.parseInt(tokens[8])),
+                    new YearVariation(Integer.parseInt(tokens[8]), Integer.parseInt(tokens[9])),
                     Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
                     Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5])));
         } else {
@@ -334,14 +366,11 @@ public class AddProfileMethods {
                 Days_Array[i - 11] = Integer.parseInt(tokens[i]);
             }
             city.addConsumer(new WhiteNoise(tokens[6], new WeekVariation(Days_Array),
-                    new YearVariation(Integer.parseInt(tokens[7]), Integer.parseInt(tokens[8])),
+                    new YearVariation(Integer.parseInt(tokens[8]), Integer.parseInt(tokens[9])),
                     Double.parseDouble(tokens[2]), Double.parseDouble(tokens[3]),
                     Integer.parseInt(tokens[4]), Integer.parseInt(tokens[5])));
+
         }
         return city;
-    }
-
-    public static City addDelayer(City city, String typeProfile, String[] tokens) {
-        return null;
     }
 }
