@@ -223,30 +223,26 @@ public class CSVRead extends AddProfileMethods {
 
                 if (profile.equals("DayConstant")) { // Dans un second temps on regarde quel profil on traite
                     addDayConstant(city_i, type, tokens);
-
                 } else if (profile.equals("DayConstantSquared")) {
                     addDayConstantSquared(city_i, type, tokens);
-
                 } else if (profile.equals("DayLinearSquared")) {
                     addDayLinearSquared(city_i, type, tokens);
-
                 } else if (profile.equals("DayQuadraticSquared")) {
                     addDayQuadraticSquared(city_i, type, tokens);
-
                 } else if (profile.equals("Sinusoid")) {
                     addSinusoid(city_i, type, tokens);
                 } else if (profile.equals("WhiteNoise")) {
-
+                    addWhiteNoise(city_i, type, tokens);
                 } else if (profile.equals("Delayer")) {
 
                 } else {
+                    System.out.println(profile);
                     return null; // Si on ne satisfait aucune des conditions précedentes alors le fichier n'est
                                  // pas au bon format. On renvoie alors une valeur nulle pour le HashMap.
                 }
             }
 
             ListCities.put(city_i.getId(), city_i);
-
         }
         return ListCities;
     }

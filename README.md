@@ -1,4 +1,5 @@
 Projet pour le cours d'Informatique de l'ISAE-Supaéro qui consiste à la simulation d'une réseau électrique
+Vou pouvez accéder au notre projet sur le lien https://github.com/joseafonsoneves/electricalNetworkSimulator/
 
 # Individual part
 DE OLIVEIRA MORENO NEVES, José Afonso
@@ -68,15 +69,28 @@ et importer la classe avec
     import userInterface.UserInterface;
 ```
 Un exemple de l'interface est présenté dans la figure au-dessous.
-![Exemple de l'interface](/images/interfaceExample.png)
+![Exemple de l'interface avant intégration](/images/interfaceExample.png)
 
 ## Extension 4 : construction de modèles
 BERNARD, Rémi
 
 ## Intégration
 
-Nous avons réussi à intégrer les extensions 2 et 3 et les extensions 3 et 4. 
+Nous avons réussi à intégrer les extensions 1, 2 et 3 et les extensions 3 et 4.
 
 Pour faire l'intégration entre l'extension 3 et 4 nous, n'avons pas fait rien parce que les modèles créés à l'extension 4 implémentent tous l'interface Profile.
 
-Pour faire l'intégration entre l'extension 3 et 2, un paquetage appelé integration a été créé avec deux classes qui extendent les classes UserInterface et Controller pour que il soit possible d'avoir des buttons pour ouvrir un nouveau fichier et calculer les pertes.
+Pour faire l'intégration entre les extensions 1, 2 et 3, un paquetage appelé integration a été créé avec trois classes qui extendent les classes UserInterface, DataChooserIntegration et Controller pour que il soit possible d'avoir des buttons pour ouvrir un nouveau fichier, calculer les pertes et permettre à l'utilisateur de les montrer dans le Plot.
+L'interface s'appele maintenant comme
+```
+    UserInterfaceIntegration ui = new UserInterfaceIntegration();
+    ui.show();
+```
+et l'importe se fait avec
+```
+    import integration.UserInterfaceIntegration;
+```
+Trois exemples de l'interface sont présentés dans les figures au-dessous.
+![Exemple de l'interface avant l'intégration](/images/interfaceIntegrationExample.png)
+![Exemple de choix de profiles ou pertes](/images/interfaceIntegrationProfilesChoice.png)
+![Exemple de choix de type de simulation](/images/interfaceIntegrationTypeChoice.png)
