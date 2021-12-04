@@ -1,5 +1,4 @@
-Projet pour le cours d'Informatique de l'ISAE-Supaéro qui consiste à la simulation d'une réseau électrique
-Vou pouvez accéder au notre projet sur le lien https://github.com/joseafonsoneves/electricalNetworkSimulator/
+Projet pour le cours d'Informatique de l'ISAE-Supaéro qui consiste à la simulation d'une réseau électrique.Vou pouvez accéder au notre projet sur le lien https://github.com/joseafonsoneves/electricalNetworkSimulator/
 
 # Individual part
 DE OLIVEIRA MORENO NEVES, José Afonso
