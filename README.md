@@ -72,6 +72,29 @@ Un exemple de l'interface est présenté dans la figure au-dessous.
 
 ## Extension 4 : construction de modèles
 BERNARD, Rémi
+J'ai commencé par créer tous les profils différents demandés : sinus, linéaire , constant ( une variate du linaire ) , bruit blanc gaussien , rectangulaire.
+Ils sont tous parametrables via leurs constructeurs. Ils sont tous des sous-classes de la super-Class Model qui contient les bases pours les modeles , la plage de variations , les minutes de debut et de fin , leurs noms et leurs fonction associé.
+
+La super-classe Model implemente l'interface Profil afin de permettre l'integration plus facilement via les methodes getDayPower et getYearPower.
+
+Pour permettre de combiner ces modèles la classe ModelComposer Permet à l'aide d'une liste d'oparation et de modèles de les combianer.
+Pour les opérations "simples" ( multiplication, adition , min ,max,....) il suffit grace à la librairie Bifunction "d'écrire" les ligne d'opérations dans la classe Operations qui est un paramètre de ModelComposer.On peut par exemple utiliser toutes les opérations de la librairie java.util.Math, la seul operation non disponible est la division de deux modèles.
+
+Pour appliquer d'autre opérations plus compliquées , d'autres classes rentre eu jeux.
+La classe Accumulate permet un ecretage d'un modele avec stockage d'engerie (parametrable).
+La classe Delayer qui permet de renvoyer un modèle avec un retard (decalage temporel).
+La classe CompositionWithLinear qui permet elle de composer un modele Lineaire avec d'autres fonctions pour changer les parametres  d'un modele lineaire en fonctions des jours de l'année par exemple.
+
+Les deux executables SimComplex1 et SimComplex2 fournissent des exemples.
+
+SimComplex1 contient une test des model de base et l'application de Delay et de Accumulate sur un modèle.
+SimComplex2 contient un test de minimum de 3 modèles et de somme de 3 modèles pour tester les opération. Il contient également un modèle complexe utilisant la compostion et les opérations afin de fournir un des exemples demandé , un modèle de production solaire avec composition pour le modèle du soleil et un modèle d'nennuagement.
+
+Le modèle du soleil est lineaire en fonction des périodes de l'année (se couche plus tot et se leve plus tard en hiver  , il se decale tote l'année).
+Le modèle des nuages est représenté par un bruit blanc gaussien qui affecte la produition pouvant la faire diminuer.
+
+Dans chacun de ces executables tout les exemples sont commentés sauf un seul. il suffit d'un decommenter un seul a la fois pour les tester.
+
 
 ## Intégration
 
