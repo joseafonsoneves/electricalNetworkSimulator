@@ -106,8 +106,15 @@ public class UIModel {
      * 
      * @return selected paths
      */
-    protected TreePath[] getPaths() {
+    public TreePath[] getPaths() {
         return this.paths;
+    }
+
+    /**
+     * Clear selected paths
+     */
+    public void clearPaths() {
+        this.paths = null;
     }
 
     /**

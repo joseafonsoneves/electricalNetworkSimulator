@@ -92,16 +92,15 @@ public class Controller implements ActionListener {
      * Plots the data of the selected profiles in the plot of the userInterface
      */
     protected void updatePlot() {
-        // if there were no paths selected or there was an error in selection aborts
-        if (this.getUIModel().getPaths() == null) {
-            return;
-        }
         // clears the plot and the legends but not the axis labels or the title
         this.ui.clearPlot();
-        // for every path in the list of selected paths
-        for (int i = 0; i < this.getUIModel().getPaths().length; i++) {
-            // adds the corresponding plot to the plot object
-            this.addPathToPlot(this.getUIModel().getPaths()[i], i);
+        // if there are paths to draw
+        if (this.getUIModel().getPaths() != null) {
+            // for every path in the list of selected paths
+            for (int i = 0; i < this.getUIModel().getPaths().length; i++) {
+                // adds the corresponding plot to the plot object
+                this.addPathToPlot(this.getUIModel().getPaths()[i], i);
+            }
         }
         // presents the changes to the user
         this.ui.updateUI();
@@ -249,11 +248,20 @@ public class Controller implements ActionListener {
         }
 
         if (plotNeedsUpdate) {
-            // updates the plot labels
-            this.setPlotLabels();
-            // updates the plots of the profiles shown
-            this.updatePlot();
+            this.updateOnSimTypeChange();
         }
+    }
+
+    /**
+     * Gathers the actions needed to be done in case of update of the sim type. This
+     * function is important in the integration context because its redefinition
+     * allows the adding of new actions to be done at this time
+     */
+    protected void updateOnSimTypeChange() {
+        // updates the plot labels
+        this.setPlotLabels();
+        // updates the plots of the profiles shown
+        this.updatePlot();
     }
 
     /**
@@ -265,8 +273,8 @@ public class Controller implements ActionListener {
         // only updates the paths saved if the selection is valid
         if (newPaths != null) {
             this.getUIModel().setPaths(newPaths);
+            // gets the data of the desired profiles into the plot
+            this.updatePlot();
         }
-        // gets the data of the desired profiles into the plot
-        this.updatePlot();
     }
 }

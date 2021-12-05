@@ -1,5 +1,6 @@
 package integration;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,6 +13,43 @@ import simulator.City;
 public class UIModelIntegration extends UIModel {
     /** Saves the losses that were computed */
     private HashMap<String, double[]> losses;
+    /** Saves the connectivity table of the cities */
+    private int[][] connections;
+    /**
+     * Saves if wether or not a computation of losses can be made. This is not
+     * possible when the cities were changed because a new file was read
+     */
+    private boolean canComputeLosses;
+
+    /**
+     * Constructor for the new UImodel class that initializes the attributes
+     */
+    public UIModelIntegration() {
+        super();
+        this.canComputeLosses = false;
+        this.connections = null;
+        this.losses = null;
+    }
+
+    /**
+     * Sets the cities file to the new value given and if it changed from before
+     * prohibits any computation of losses
+     * 
+     * @param file new file of cities
+     */
+    @Override
+    public void setCitiesFile(File file) {
+        // if old file is not null
+        if (this.getCitiesFile() != null) {
+            // and if the old and the new file are different
+            if (this.getCitiesFile().getAbsolutePath().compareTo(file.getAbsolutePath()) != 0) {
+                // registers that the computation of losses cannot be done
+                this.prohibitLossesComputation();
+            }
+        }
+        // nevertheless the new file is always set
+        super.setCitiesFile(file);
+    }
 
     /**
      * Sets the losses given
@@ -48,6 +86,34 @@ public class UIModelIntegration extends UIModel {
      */
     public boolean hasLosses() {
         return losses != null && losses.size() >= 1;
+    }
+
+    /**
+     * Sets the connections between cities
+     * 
+     * @param connections connections table between cities
+     */
+    public void setConnections(int[][] connections) {
+        this.connections = connections;
+    }
+
+    /**
+     * Erases existing losses and prohibits everybody to compute new ones because
+     * they would not be valid
+     */
+    protected void prohibitLossesComputation() {
+        // erases the losses that were computed
+        this.losses = null;
+        // prohibits anyone to compute new losses
+        this.canComputeLosses = false;
+    }
+
+    /**
+     * Allows the computation of losses
+     */
+    protected void allowLossesComputation() {
+        // prohibits anyone to compute new losses
+        this.canComputeLosses = true;
     }
 
     /**
@@ -141,34 +207,38 @@ public class UIModelIntegration extends UIModel {
      * Computes the losses for this model with the connectivity table given and in
      * the simulation type required
      * 
-     * @param simType     type of simulation to perform day or year
-     * @param connections table of connectivity between the cities
      * @return true if the computations were successful and false if it not
      */
-    public boolean computeLosses(int[][] connections) {
-        // converts the list of cities to the data format used in the extension 1
-        HashMap<CityWithPosition, Integer> graph = this.convertCitiesToGraph();
-        // creates a map according to extension 1
-        Map newMap = new Map(connections, graph);
-        // from here it has to discover which is the city with producers so that it can
-        // pass it to extension 1
-        CityWithPosition cityWithProducers = this.getProducerCity();
-        // if it could find one and only one city with producers
-        if (cityWithProducers != null) {
-            // it gets the road map and the distance map
-            HashMap<String, ArrayList<Integer>> roadMap = newMap.roadMap(cityWithProducers);
-            HashMap<String, Double> distanceMap = newMap.distanceMap(roadMap);
-            // we could not reach an agreement over the correctness of this approach but it
-            // was presented here to show that it can nevertheless be integrated
-            if (this.getSimType() == SimType.DAY) {
-                losses = newMap.lossDay(distanceMap);
+    public boolean computeLosses() {
+        // if the computation of losses is allowed
+        if (this.canComputeLosses) {
+            // converts the list of cities to the data format used in the extension 1
+            HashMap<CityWithPosition, Integer> graph = this.convertCitiesToGraph();
+            // creates a map according to extension 1
+            Map newMap = new Map(connections, graph);
+            // from here it has to discover which is the city with producers so that it can
+            // pass it to extension 1
+            CityWithPosition cityWithProducers = this.getProducerCity();
+            // if it could find one and only one city with producers
+            if (cityWithProducers != null) {
+                // it gets the road map and the distance map
+                HashMap<String, ArrayList<Integer>> roadMap = newMap.roadMap(cityWithProducers);
+                HashMap<String, Double> distanceMap = newMap.distanceMap(roadMap);
+                // we could not reach an agreement over the correctness of this approach but it
+                // was presented here to show that it can nevertheless be integrated
+                if (this.getSimType() == SimType.DAY) {
+                    losses = newMap.lossDay(distanceMap);
+                } else {
+                    losses = newMap.lossYear(distanceMap);
+                }
+                // returns that the computations were successful
+                return true;
             } else {
-                losses = newMap.lossYear(distanceMap);
+                // returns that the computations were not successful
+                return false;
             }
-            // returns that the computations were successful
-            return true;
         } else {
-            // returns that the computations were not successful
+            // since it was not allowed it returns a failure
             return false;
         }
     }
