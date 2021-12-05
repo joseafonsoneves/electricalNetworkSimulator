@@ -31,7 +31,8 @@ Cette extension consiste à prendre en compte la notion de perte énergétique l
 ## Extension 2 : paramétrage de la simulation par fichier
 PIGAMO, Antoine
 
-Cette extension consiste à créer une ou plusieurs villes grâce à un fichier texte. Il suffit d'importer la classe (import extension2.CSVRead) et d'utiliser la méthode Read("chemin d'accès au fichier") ou ReadSeveralCities("chemin d'accès au fichier")
+Cette extension consiste à créer une ou plusieurs villes grâce à un fichier texte. Il suffit d'importer la classe (import extension2.CSVRead) et d'utiliser la méthode read("chemin d'accès au fichier") ou readSeveralCities("chemin d'accès au fichier"). Elle permet aussi de lire des matrices de connexion entre les villes d'ajouter des positions venant d'un fichier texte à des villes. (respectivement readMatrix et addPositions).
+Vous pouvez regarder le pdf Notice_Extension_2 qui explique l'utilisation des méthodes et les différents fichiers de simulations.
 
 La description du format des fichiers textes est décrite plus bas.
 
@@ -40,35 +41,50 @@ La première ligne correspond au nom de la ville.
 Ensuite il s'agit soit de la description d'un producer ou d'un consumer
 Chaque élément doit être séparer par un point virgule : ";"
 
-Pour les profils DayConstant, les formats acceptés sont :
+Pour les profils DayConstant :
+
 [producer][DayConstantProfile][Puissance][Nom][Y=Year Variation][Début][Durée];
+
 [producer][DayConstantProfile][Puissance][Nom][W=Week Variation][Ensemble des jours];
+
 [producer][DayConstantProfile][Puissance][Nom][N=No Variation];
 
-Pour les profils DayConstantSquared, les formats acceptés sont :
+Pour les profils DayConstantSquared :
+
 [producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][Y=Year Variation][Début][Durée];
+
 [producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][W=Week Variation][Ensemble des jours];
+
 [producer][DayConstantSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance][Nom][N=No Variation];
 
-Pour les profils DayLinearSquared, les formats acceptés sont :
+Pour les profils DayLinearSquared :
+
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][Y=Year Variation][Début][Durée];
+
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
+
 [producer][DayLinearSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance droite][Nom][N=No Variation];
 
-Pour les profils DayQuadraticSquared, les formats acceptés sont :
+Pour les profils DayQuadraticSquared :
+
 [producer][DayQuadraticSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][Y=Year Variation][Début][Durée];
+
 [producer][DayQuadraticSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][W=Week Variation][Ensemble des jours];
+
 [producer][DayQuadraticSquaredProfile][Instant où démarre le carré][Durée du carré][Nombre de répétitions du carré][Période entre chaque carré][Puissance gauche][Puissance centre][Puissance droite][Nom][N=No Variation];
 
 Pour les nouveaux profils de l'extension 4 :
 
 [producer][WhiteNoise][mu][sigma][Début (minute)][Fin (minute)][ID][Y=Year Variation][Début][Durée][W=Week Variation][Ensemble des jours];
+
 [producer][Sinusoid][Amplitude][Fréquence][Phase][Début (minute)][Fin (minute)][ID][Y=Year Variation][Début][Durée][W=Week Variation][Ensemble des jours];
 
 Lorsque qu'on a plusieurs villes dans un fichier texte, les villes sont séparés par une ligne "--"
 
-De plus on a un fichier qui détaille les positions des villes.
+De plus on a un fichier qui détaille les positions des villes et leur matrice de connexion.
 Chaque ville est suivi de sa position en x et en y : [Ville][x][y].
+Le fichier est ensuite séparé par la ligne : "--", pour indiquer le début de la matrice de connexion.
+La matrice de connexion est composé uniquement de 0 et de 1. Ils sont séparés par ";".
 
 ## Extension 3 : interface utilisateur graphique Swing
 DE OLIVEIRA MORENO NEVES, José Afonso
@@ -93,6 +109,22 @@ Un exemple de l'interface est présenté dans la figure au-dessous.
 
 ## Extension 4 : construction de modèles
 BERNARD, Rémi
+
+J'ai commencé par créer tous les profils différents demandés : sinus, linéaire, constant (une variante du linaire), bruit blanc gaussien, rectangulaire. Ils sont tous paramétrables via leurs constructeurs. Ils sont tous des sous-classes de la super-Class Model qui contient les bases pour les modeles , la plage de variations , les minutes de début et de fin , leurs noms et leurs fonction associé.
+
+La super-classe Model implémente l'interface Profil afin de permettre l'intégration plus facilement via les méthodes getDayPower et getYearPower.
+
+Pour permettre de combiner ces modèles la classe ModelComposer Permet à l'aide d'une liste d'opération et de modèles de les combiner. Pour les opérations "simples" (multiplication, adition , min ,max,....) il suffit grace à la librairie Bifunction "d'écrire" les ligne d'opérations dans la classe Operations qui est un paramètre de ModelComposer.On peut par exemple utiliser toutes les opérations de la librairie java.util.Math, la seul opération non disponible est la division de deux modèles.
+
+Pour appliquer d'autre opérations plus compliquées, d'autres classes rentre eu jeux. La classe Accumulate permet un écrêtage d'un modèle avec stockage d’Energie (paramétrable). La classe Delayer qui permet de renvoyer un modèle avec un retard (decalage temporel). La classe CompositionWithLinear qui permet elle de composer un modèle Linéaire avec d'autres fonctions pour changer les parametres d'un modele lineaire en fonctions des jours de l'année par exemple.
+
+Les deux executables SimComplex1 et SimComplex2 fournissent des exemples.
+
+SimComplex1 contient une test des modeles de base et l'application de Delay et de Accumulate sur un modèle. SimComplex2 contient un test de minimum de 3 modèles et de somme de 3 modèles pour tester les opérations. Il contient également un modèle complexe utilisant la compostion et les opérations afin de fournir un des exemples demandé , un modèle de production solaire avec composition pour le modèle du soleil et un modèle d'ennuagement.
+
+Le modèle du soleil est linéaire en fonction des périodes de l'année (se couche plus tot et se leve plus tard en hiver , il se decale toute l'année). Le modèle des nuages est représenté par un bruit blanc gaussien qui affecte la production pouvant la faire diminuer.
+
+Dans chacun de ces executables tous les exemples sont commentés sauf un seul. il suffit d'un décommenter un seul a la fois pour les tester.
 
 ## Intégration
 

@@ -2,12 +2,22 @@ package extension4;
 
 import profiles.WeekVariation;
 import profiles.YearVariation;
-
+/**
+ * La classe du modèle rectangulaire
+ */
 public class Square extends Model {
-
+    /**
+     * l'amplitude du carré
+     */
     public double valueAmplitude;
+    /**
+     * valeur de la période
+     */
     public int valuePeriodInMinute;
 
+    /**
+     * crée le modèle du carré nul
+     */
     public Square() {
         super();
         this.valueAmplitude = 0.0;
@@ -15,6 +25,16 @@ public class Square extends Model {
 
     }
 
+    /**
+     * crée le modele demandé
+     * @param id0
+     * @param weekVar0
+     * @param yearVar0
+     * @param valueAmplitude0
+     * @param valuePeriodInMinute0
+     * @param startMin0
+     * @param endMin0
+     */
     public Square(String id0, WeekVariation weekVar0, YearVariation yearVar0, double valueAmplitude0,
             int valuePeriodInMinute0, int startMin0, int endMin0) {
         super(id0, weekVar0, yearVar0);
@@ -24,7 +44,10 @@ public class Square extends Model {
         this.endMin = endMin0;
 
     }
-
+    
+    /**
+     * la méthode getDayPower associé
+     */
     public double[] getDayPower(int day) {
 
         double[] cycle = new double[1440];
