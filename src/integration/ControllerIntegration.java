@@ -84,8 +84,11 @@ public class ControllerIntegration extends Controller {
                 this.getUIModel().setCities(newCities);
                 // updates the name of the file
                 this.getUIModel().setCitiesFile(profilesFile);
+                // clears the selected paths
+                this.getUIModel().clearPaths();
                 // and then updates it in the window of the plot
                 this.setPlotLabels();
+                this.updatePlot();
             }
             // if it could not read new cities from the file signals the error
             else {
@@ -101,22 +104,42 @@ public class ControllerIntegration extends Controller {
      * them and to compute the losses in power between them
      */
     protected void loadLosses() {
-        // gets the file
-        File lossesFile = CSVChooser.getFile(super.getFrame(), "CityData");
-        // if it is not null
-        if (lossesFile != null) {
-            // adds a position attribute to every city that does not have one
-            this.getUIModel().convertCitiesToCitiesWithPosition();
-            // puts the cities in the positions read from the file and reads the matrix of
-            // connections as well
-            int[][] connections = CSVRead.readMatrixAndAddPositions(this.getUIModel().getCities(),
-                    lossesFile.getAbsolutePath());
-            // makes the computations and if they were not successful
-            if (!this.getUIModel().computeLosses(connections)) {
-                // communicates it to the user
-                JOptionPane.showMessageDialog(null,
-                        "The losses computation only works for one and one only city with producers");
+        // if it already has some cities
+        if (this.getUIModel().hasCities()) {
+            // gets the file
+            File lossesFile = CSVChooser.getFile(super.getFrame(), "CityData");
+            // if it is not null
+            if (lossesFile != null) {
+                // adds a position attribute to every city that does not have one
+                this.getUIModel().convertCitiesToCitiesWithPosition();
+                // puts the cities in the positions read from the file and reads the matrix of
+                // connections as well
+                int[][] connections = CSVRead.readMatrixAndAddPositions(this.getUIModel().getCities(),
+                        lossesFile.getAbsolutePath());
+                // if the connections were well obtained
+                if (connections != null) {
+                    // adds the matrix of connections to the model
+                    this.getUIModel().setConnections(connections);
+                    // allows the computation of losses
+                    this.getUIModel().allowLossesComputation();
+                    // makes the computations and if they were not successful
+                    if (!this.getUIModel().computeLosses()) {
+                        // communicates it to the user
+                        // it was not consensual between the group that this was a valid constraint to
+                        // impose on the computations but it is presented here as an example of
+                        // integration
+                        JOptionPane.showMessageDialog(null,
+                                "Unable to compute losses\nRemember that the losses computation only works for one and one only city with producers");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null,
+                            "Connection matrix could not be obtained");
+                }
             }
+        } else {
+            // it does not make sense to compute losses of a group of cities that does not
+            // exist
+            JOptionPane.showMessageDialog(null, "First add cities!");
         }
     }
 
@@ -152,5 +175,20 @@ public class ControllerIntegration extends Controller {
                 throw new RuntimeException("Difference between selected losses and losses saved");
             }
         }
+    }
+
+    /**
+     * Gathers the actions needed to be done in case of update of the sim type. This
+     * function as already stated allows in the integration to add of new actions
+     * to be done
+     */
+    @Override
+    protected void updateOnSimTypeChange() {
+        // computes the losses if applicable
+        this.getUIModel().computeLosses();
+        // updates the plot labels
+        this.setPlotLabels();
+        // updates the plots of the profiles shown
+        this.updatePlot();
     }
 }
