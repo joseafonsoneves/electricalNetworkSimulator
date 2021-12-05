@@ -4,7 +4,6 @@ import java.awt.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import ptolemy.plot.Plot;
-import simulator.City;
 
 /**
  * Class created to implement the 3rd extension: a graphical interface. Its
@@ -13,7 +12,6 @@ import simulator.City;
  * interface
  * 
  * @author DE OLIVEIRA MORENO NEVES, José Afonso
- * @version v0.0.1 - before integration
  */
 public class UserInterface {
 	/**
@@ -24,8 +22,13 @@ public class UserInterface {
 
 	/** Frame object of the interface */
 	private JFrame frame;
-	/** Controller to the buttons implemented in the interface */
-	private Controller controller;
+	/** Reference to the Plot object that it contains */
+	private Plot plot;
+	/**
+	 * Reference to the vertical toolbar that contains the buttons to perform the
+	 * actions
+	 */
+	private VerticalToolbar toolbar;
 
 	/**
 	 * Creates all the objects present in the interface so that one can afterwards
@@ -41,8 +44,8 @@ public class UserInterface {
 		panel.setLayout(new GridBagLayout());
 
 		// Creates the plot
-		Plot plot = new Plot();
-		plot.setMarksStyle("points");
+		this.plot = new Plot();
+		this.plot.setMarksStyle("points");
 		GridBagConstraints c = new GridBagConstraints();
 		// Placed in the origin of the window
 		c.gridx = 0;
@@ -53,16 +56,12 @@ public class UserInterface {
 		c.weightx = 0.99;
 		// Occupies the vertical direction till the end of it
 		c.gridheight = GridBagConstraints.REMAINDER;
-		panel.add(plot, c);
-
-		// Creates the controller for the main window. It will be able to use the plot
-		// of the main window so it is created after it
-		this.controller = this.createController(plot);
+		panel.add(this.plot, c);
 
 		// Creates a small vertical toolbar compared to the plot and places at the right
 		// of the plot
-		VerticalToolbar toolbar = this.createToolbar();
-		toolbar.addToPanel(panel, this.controller);
+		this.toolbar = this.createToolbar();
+		toolbar.addToPanel(panel);
 
 		// adds the panel to the frame
 		this.frame.setContentPane(panel);
@@ -73,8 +72,17 @@ public class UserInterface {
 	 * 
 	 * @return frame of the user interface window
 	 */
-	protected JFrame getFrame() {
+	public JFrame getFrame() {
 		return this.frame;
+	}
+
+	/**
+	 * Gets the plot of the user interface
+	 * 
+	 * @return plot of the user interface
+	 */
+	public Plot getPlot() {
+		return this.plot;
 	}
 
 	/**
@@ -96,31 +104,14 @@ public class UserInterface {
 	}
 
 	/**
-	 * This method creates the controller. This method is important because it will
-	 * be overridden in integration steps to add other controllers to the interface.
-	 * For now it controls the buttons that correspond to actions performed by this
-	 * extension or the initial version but in the integration it will control new
-	 * buttons
+	 * This method sets a new controller as action listener of the toolbar so that
+	 * the buttons work
 	 * 
-	 * @param plot the controller must receive a reference to plot
-	 * @return creates a controller for the buttons needed for this extension
+	 * @return adds a controller for the buttons needed for this extension
 	 *         and the initial version only
 	 */
-	protected Controller createController(Plot plot) {
-		return new Controller(this.frame, plot);
-	}
-
-	/**
-	 * Adds a city to use. The interface designed is ready to work in two
-	 * configurations: with the adding of a city exteriorly to it or with the
-	 * adding of a city using it. In the case of exterior addition this is the
-	 * method that passes the city to the controller where the reference to it will
-	 * be stored
-	 * 
-	 * @param city city to choose
-	 */
-	public void addCity(City city) {
-		controller.addCity(city);
+	public void setController(Controller controller) {
+		toolbar.addController(controller);
 	}
 
 	/** Shows the main window */
@@ -137,5 +128,52 @@ public class UserInterface {
 		// defines it initial location to be in the center of the window
 		frame.setLocationRelativeTo(null);
 		frame.setVisible(true);
+	}
+
+	/** Updates the UI which right now is only to update the plot */
+	public void updateUI() {
+		this.plot.updateUI();
+	}
+
+	/**
+	 * Sets the title of the plot
+	 * 
+	 * @param s new title of the plot
+	 */
+	public void setPlotTitle(String s) {
+		this.plot.setTitle(s);
+	}
+
+	/**
+	 * Sets the xlabel of the plot
+	 * 
+	 * @param s new xlabel of the plot
+	 */
+	public void setPlotXLabel(String s) {
+		this.plot.setXLabel(s);
+	}
+
+	/**
+	 * Adds a series to the plot with a legend
+	 * 
+	 * @param seriesIndex index of the series to each to add the point
+	 * @param series      data to add
+	 * @param legend      legend to add with the series
+	 */
+	public void addPlotSeries(int seriesIndex, double series[], String legend) {
+		// adds the legend of the series
+		this.plot.addLegend(seriesIndex, legend);
+		// adds each point of the series to the plot
+		for (int j = 0; j < series.length; j++) {
+			this.getPlot().addPoint(seriesIndex, j, series[j], true);
+		}
+	}
+
+	/** Clears the plot area and the legends */
+	public void clearPlot() {
+		// clears the plot area but not the axis labels or the title
+		this.plot.clear(false);
+		// clears the legends of the plot
+		this.plot.clearLegends();
 	}
 }

@@ -60,7 +60,7 @@ public class VerticalToolbar {
      * 
      * @param panel JPanel to which to add the toolbar
      */
-    public void addToPanel(JPanel panel, Controller controller) {
+    public void addToPanel(JPanel panel) {
         // Selects the characteristics of the buttons on the toolbar
         GridBagConstraints c = new GridBagConstraints();
         // Buttons shall fill the window in both directions
@@ -71,13 +71,25 @@ public class VerticalToolbar {
         c.weightx = this.weightx;
         c.gridx = this.gridx;
 
+        // for each of the buttons on the toolbar
         for (int i = 0; i < buttons.size(); i++) {
             // descends in the grid
             c.gridy = i;
-            // adds to each button the given controller
-            buttons.get(i).addActionListener(controller);
             // adds each button to the given panel
             panel.add(buttons.get(i), c);
+        }
+    }
+
+    /**
+     * Adds the controller to each one of the buttons of the vertical toolbar
+     * 
+     * @param controller Controller to take care of the toolbar
+     */
+    public void addController(Controller controller) {
+        // for each of the buttons on the toolbar
+        for (int i = 0; i < buttons.size(); i++) {
+            // adds it the given controller
+            buttons.get(i).addActionListener(controller);
         }
     }
 }

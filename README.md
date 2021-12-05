@@ -73,15 +73,20 @@ Chaque ville est suivi de sa position en x et en y : [Ville][x][y].
 ## Extension 3 : interface utilisateur graphique Swing
 DE OLIVEIRA MORENO NEVES, José Afonso
 
-Cette extension consiste à ajouter une interface utilisateur graphique qui permette de sélectionner des producteurs ou consommateurs dont on souhaite visualiser la courbe de production ou consommation électrique. Les courbes de production ou consommation seront affichées au moyen de la bibliothèque Ptplot. L'interphace graphique est basée sur un "Plot" à la gauche et une "Toolbar" vertical à la droite. Dans cette "Toolbar", chaque button permet d'accéder à un dialogue. Dans chacun de ces dialogues, l'utilisateur peut choisir un nouveau fichier de configuration, choisir un nouveau ensemble de profiles pour montrer leurs courbes, changer le type de simulation ou calculer les pertes associés à la transmission d'énergie.
+Cette extension consiste à ajouter une interface utilisateur graphique qui permette de sélectionner des producteurs ou consommateurs dont on souhaite visualiser la courbe de production ou consommation électrique. Les courbes de production ou consommation seront affichées au moyen de la bibliothèque Ptplot. L'interphace graphique est basée sur un "Plot" à la gauche et une "Toolbar" vertical à la droite. Dans cette "Toolbar", chaque button permet d'accéder à un dialogue. Dans chacun de ces dialogues, l'utilisateur peut choisir un nouveau ensemble de profiles pour montrer leurs courbes ou changer le type de simulation. J'ai vraiment essayé de suivre le paradigme MVC comme vous pouvez voir dans la division des fichiers et dans chaque fichier.
 Pour créer l'interface, il faut seulement ajouter
 ```
+    UIModel uiModel = new UIModel();
     UserInterface ui = new UserInterface();
+    Controller controller = new Controller(ui, uiModel);
+    ui.setController(controller);
     ui.show();
 ```
 et importer la classe avec
 ```
-    import userInterface.UserInterface;
+    import extension3.Controller;
+    import extension3.UIModel;
+    import extension3.UserInterface;
 ```
 Un exemple de l'interface est présenté dans la figure au-dessous.
 ![Exemple de l'interface avant intégration](/images/interfaceExample.png)
@@ -95,7 +100,7 @@ Nous avons réussi à intégrer les extensions 1, 2 et 3 et les extensions 3 et 
 
 Pour faire l'intégration entre l'extension 3 et 4 nous, n'avons pas fait rien parce que les modèles créés à l'extension 4 implémentent tous l'interface Profile.
 
-Pour faire l'intégration entre les extensions 1, 2 et 3, un paquetage appelé integration a été créé avec trois classes qui extendent les classes UserInterface, DataChooserIntegration et Controller pour que il soit possible d'avoir des buttons pour ouvrir un nouveau fichier, calculer les pertes et permettre à l'utilisateur de les montrer dans le Plot.
+Pour faire l'intégration entre les extensions 1, 2 et 3, un paquetage appelé integration a été créé avec quatre classes qui extendent les classes UserInterface, DataChooserIntegration, Controller et UIModel pour que il soit possible d'avoir des buttons pour ouvrir un nouveau fichier, calculer les pertes et permettre à l'utilisateur de les montrer dans le Plot.
 L'interface s'appele maintenant comme
 ```
     UserInterfaceIntegration ui = new UserInterfaceIntegration();

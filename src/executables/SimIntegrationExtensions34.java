@@ -3,6 +3,8 @@ package executables;
 import java.util.ArrayList;
 import java.util.function.BiFunction;
 
+import extension3.Controller;
+import extension3.UIModel;
 import extension3.UserInterface;
 import extension4.Accumulate;
 import extension4.CompositionWithLinear;
@@ -34,12 +36,18 @@ public class SimIntegrationExtensions34 {
                 City toulouse = createToulouse();
                 City brest = createBrest();
 
-                // After creating the cities, creates the user interface and adds them
-                // to it
+                // After creating the cities, creates a model with them
+                UIModel uiModel = new UIModel();
+                uiModel.addCity(brest);
+                uiModel.addCity(toulouse);
+                // Then creates the user interface
                 UserInterface ui = new UserInterface();
+                // Then the corresponding controller
+                Controller controller = new Controller(ui, uiModel);
+                // and then sets the controller as the controller of the user interface
+                ui.setController(controller);
+                // shows the user interface to the user
                 ui.show();
-                ui.addCity(brest);
-                ui.addCity(toulouse);
         }
 
         /**

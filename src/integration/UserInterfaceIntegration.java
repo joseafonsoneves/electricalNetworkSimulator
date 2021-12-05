@@ -1,9 +1,7 @@
 package integration;
 
-import extension3.Controller;
 import extension3.UserInterface;
 import extension3.VerticalToolbar;
-import ptolemy.plot.Plot;
 
 /**
  * Class to allow the integration of different extensions with the user
@@ -24,21 +22,10 @@ public class UserInterfaceIntegration extends UserInterface {
     protected VerticalToolbar createToolbar() {
         VerticalToolbar toolbar = new VerticalToolbar(0.05, 1);
         toolbar.addButton("Load", "Loads a new configuration file");
-        toolbar.addButton("Profiles", "Selects new profiles");
+        toolbar.addButton("Data to plot", "Selects new data to plot");
         toolbar.addButton("Simulation type", "Selects the type of simulation to perform");
         toolbar.addButton("Losses", "Computes the losses");
 
         return toolbar;
-    }
-
-    /**
-     * But more buttons mean different controllers so we create a new controller for
-     * this class that we add here
-     * 
-     * @return controller for the new buttons
-     */
-    @Override
-    protected Controller createController(Plot plot) {
-        return new ControllerIntegration(super.getFrame(), plot);
     }
 }

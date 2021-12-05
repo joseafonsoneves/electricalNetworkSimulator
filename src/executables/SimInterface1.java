@@ -1,5 +1,7 @@
 package executables;
 
+import extension3.Controller;
+import extension3.UIModel;
 import extension3.UserInterface;
 import profiles.DayConstantProfile;
 import profiles.DayConstantSquaredProfile;
@@ -106,9 +108,17 @@ public class SimInterface1 {
                 brest.addProducer(new DayConstantProfile("prod2", new YearConstant(600)));
 
                 // ------- After creating the city, creates the data tree -------
+                // After creating the cities, creates a model with them
+                UIModel uiModel = new UIModel();
+                uiModel.addCity(brest);
+                uiModel.addCity(toulouse);
+                // Then creates the user interface
                 UserInterface ui = new UserInterface();
+                // Then the corresponding controller
+                Controller controller = new Controller(ui, uiModel);
+                // and then sets the controller as the controller of the user interface
+                ui.setController(controller);
+                // shows the user interface to the user
                 ui.show();
-                ui.addCity(brest);
-                ui.addCity(toulouse);
         }
 }
