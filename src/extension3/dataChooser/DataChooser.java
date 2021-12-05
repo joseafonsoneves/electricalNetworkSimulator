@@ -12,6 +12,7 @@ import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 
+import extension3.UIModel;
 import extension3.dataChooser.checkBoxTree.CheckBoxTree;
 
 import java.awt.GridLayout;
@@ -45,33 +46,37 @@ public class DataChooser extends JDialog {
     private CheckBoxTree tree;
 
     /**
-     * Simples constructor that corresponds to a simple dialog
-     * 
-     * @param owner frame that owns this dialog
-     */
-    public DataChooser(JFrame owner) {
-        super(owner, "Select the data to present", true);
-        this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-    }
-
-    /**
      * Creates a data tree out of the profiles present in a map of cities
      * 
-     * @param cities map of cities whose profiles one wants to present
+     * @param owner parent frame
+     * @param model to implement
      */
-    public DataChooser(JFrame owner, HashMap<String, City> cities) {
+    public DataChooser(JFrame owner, UIModel uiModel) {
         // Creates and sets up the dialog
         super(owner, "Select the data to present", true);
         this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 
-        // if the city was not yet added
-        if (cities == null || cities.size() == 0) {
+        // if no city was yet added
+        if (!uiModel.hasCities()) {
             JLabel warning = new JLabel("Warning: No city yet added", SwingConstants.CENTER);
             this.add(warning);
         } else {
             // creates the layout of the window
-            this.createLayout(addProfiles(new DefaultMutableTreeNode("Root"), cities));
+            this.createLayout(this.getTreeNodes(uiModel));
         }
+    }
+
+    /**
+     * Gets the tree nodes of the tree to present to the user starting always from
+     * the model. This function is important because it will allow a smoother
+     * integration when adding new things to the tree besides the profiles
+     * 
+     * @param uiModel model to convert to nodes
+     * @return root node that represents the tree
+     */
+    protected DefaultMutableTreeNode getTreeNodes(UIModel uiModel) {
+        // right now it rises from a default node called root and only has profiles
+        return addProfilesNodes(new DefaultMutableTreeNode("Root"), uiModel.getCities());
     }
 
     /**
@@ -148,7 +153,7 @@ public class DataChooser extends JDialog {
      *               present
      * @return root node of the created tree
      */
-    protected DefaultMutableTreeNode addProfiles(DefaultMutableTreeNode root, HashMap<String, City> cities) {
+    protected DefaultMutableTreeNode addProfilesNodes(DefaultMutableTreeNode root, HashMap<String, City> cities) {
         // creates the nodes to use in the loop
         DefaultMutableTreeNode cityNode;
         DefaultMutableTreeNode producersNode;

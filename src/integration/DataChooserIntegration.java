@@ -1,12 +1,10 @@
 package integration;
 
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 import javax.swing.tree.DefaultMutableTreeNode;
 
 import java.util.HashMap;
-import simulator.City;
+import extension3.UIModel;
 import extension3.dataChooser.DataChooser;
 
 /**
@@ -18,29 +16,33 @@ import extension3.dataChooser.DataChooser;
  */
 public class DataChooserIntegration extends DataChooser {
     /**
-     * Creates a data tree out of the profiles present in a map of cities
+     * Presents the constructor but it does not change
      * 
-     * @param cities map of cities whose profiles one wants to present
-     * @param losses map of losses one wants to present
+     * @param owner parent frame
+     * @param model to implement
      */
-    public DataChooserIntegration(JFrame owner, HashMap<String, City> cities, HashMap<String, double[]> losses) {
-        // uses a simple constructor from the parent
-        super(owner);
+    public DataChooserIntegration(JFrame owner, UIModelIntegration uiModel) {
+        super(owner, uiModel);
+    }
 
-        // if the city was not yet added
-        if (cities == null || cities.size() == 0) {
-            JLabel warning = new JLabel("Warning: No city yet added", SwingConstants.CENTER);
-            this.add(warning);
-        } else {
-            // gets the nodes from the cities
-            DefaultMutableTreeNode root = super.addProfiles(new DefaultMutableTreeNode("Root"), cities);
-            // and adds them to the ones of the losses if the losses were already defined
-            if (losses != null) {
-                root = this.addLosses(root, losses);
-            }
-            // creates the layout of the window with the tree with the nodes specified
-            super.createLayout(root);
+    /**
+     * Gets the tree nodes of the tree to present to the user starting always from
+     * the model. Just as presented before this method is very useful to the
+     * integration
+     * 
+     * @param uiModel model to convert to nodes
+     * @return root node that represents the tree
+     */
+    @Override
+    protected DefaultMutableTreeNode getTreeNodes(UIModel uiModel) {
+        // gets the nodes from the cities
+        DefaultMutableTreeNode root = super.addProfilesNodes(new DefaultMutableTreeNode("Root"), uiModel.getCities());
+        // and adds them to the ones of the losses if the losses were already defined
+        if (((UIModelIntegration) uiModel).hasLosses()) {
+            root = this.addLosses(root, ((UIModelIntegration) uiModel).getLosses());
         }
+
+        return root;
     }
 
     /**
@@ -50,7 +52,7 @@ public class DataChooserIntegration extends DataChooser {
      * @param root   root node of the tree to which add the new nodes
      * @param losses map of losses to add to the tree
      */
-    private DefaultMutableTreeNode addLosses(DefaultMutableTreeNode root, HashMap<String, double[]> losses) {
+    protected DefaultMutableTreeNode addLosses(DefaultMutableTreeNode root, HashMap<String, double[]> losses) {
         if (losses != null) {
             // creates the node of losses
             DefaultMutableTreeNode lossesNode = new DefaultMutableTreeNode("Losses");
