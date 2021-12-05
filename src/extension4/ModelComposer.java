@@ -2,13 +2,29 @@ package extension4;
 
 import java.util.ArrayList;
 import java.util.function.BiFunction;
-
+/**
+ * La classe permettant de créer des modèles complexes en combinant d'autre modèle entre eux (sans composition)
+ */
 public class ModelComposer extends Model {
-
+    /**
+     * Liste des modèle utiles à la création du nouveau
+     */
     private ArrayList<Model> models;
+    /**
+     * Liste des opération à faire sur les modèles
+     */
     private Operations operations;
+    /**
+     * Le nom du nouveau modèle
+     */
     private String name;
-
+    
+    /**
+     * Constructeur du nouveau modèle
+     * @param name
+     * @param _models
+     * @param operations0
+     */
     public ModelComposer(String name, ArrayList<Model> _models, Operations operations0) {
         if (operations0.op == null || _models == null)
             throw new IllegalArgumentException("None of the parameter can be null");
@@ -32,6 +48,10 @@ public class ModelComposer extends Model {
         this.name = name;
     }
 
+    /**
+     * La méthode du getDayPower associer au modèle 
+     * @param day 
+     */
     public double[] getDayPower(int day) {
         double[] cycle = new double[1440];
         ArrayList<double[]> cycles = new ArrayList<>();
@@ -53,7 +73,10 @@ public class ModelComposer extends Model {
         }
         return cycle;
     }
-
+    
+    /**
+     * renvoie l'id du nouveau modèle
+     */
     public String getId() {
         return this.name;
     }

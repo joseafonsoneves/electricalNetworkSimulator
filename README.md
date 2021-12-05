@@ -31,9 +31,8 @@ Cette extension consiste à prendre en compte la notion de perte énergétique l
 ## Extension 2 : paramétrage de la simulation par fichier
 PIGAMO, Antoine
 
-PIGAMO, Antoine
-
-Cette etension consiste à créer une ou plusieurs villes grâce à un fichier texte. Il suffit d'importer la lasse (import extension2.CSVRead) et d'utiliser la méthode Read("chemin d'accès au fichier") ou ReadSeveralCities("chemin d'accès au fichier")
+Cette extension consiste à créer une ou plusieurs villes grâce à un fichier texte. Il suffit d'importer la classe (import extension2.CSVRead) et d'utiliser la méthode read("chemin d'accès au fichier") ou readSeveralCities("chemin d'accès au fichier"). Elle permet aussi de lire des matrices de connexion entre les villes d'ajouter des positions venant d'un fichier texte à des villes. (respectivement readMatrix et addPositions).
+Vous pouvez regarder le pdf Notice_Extension_2 qui explique l'utilisation des méthodes et les différents fichiers de simulations.
 
 La description du format des fichiers textes est décrite plus bas.
 
